@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+        <!-- Castro fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+     <!-- owl-carousel -->
+    <link rel="stylesheet" href="assets/plugin/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="assets/plugin/css/owl.theme.default.min.css" />
+    <!-- animate-css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- nivo-slider -->
+    <link rel="stylesheet" href="assets/plugin/css/default.css">
+    <link rel="stylesheet" href="assets/plugin/css/nivo-slider.css">
+     <!-- font-awesome    -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+     <!-- lightbox-gallery -->
+     <link rel="stylesheet" href="assets/plugin/css/simple-lightbox.min.css">
+     <!-- flat-icon -->
+     <link rel="stylesheet" href="assets/font/flaticon.css">
+    <!-- progressbar -->
+    <link rel="stylesheet" href="assets/plugin/css/jquery.rprogessbar.min.css">
+     <!-- main-style -->
+     {{!-- carousel --}}
+     <link rel="stylesheet" href="plugins/css/owl.carousel.min.css">
+     <link rel="stylesheet" href="plugins/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
+    <!-- <link rel="stylesheet" href="responsive.css"> -->
+    <style>
+        .single-product-cart {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #efefef;
+            padding: 20px 0px;
+        }
+       ul.service-list.service-list-cart li {
+            font-size: 11px;
+            padding: 6px;
+        }
+       .cart-bottom.d-flex p {
+            margin-left: 10px;
+        }
+        .cart-product-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 10%;
+        }
+        .cart-product-details-home p:first-child {
+            font-size: 24px;
+        }
+        .sub-total-shipping.d-flex.align-items-end.w-100 {
+            justify-content: flex-end;
+        }
+        .cart-product-img img {
+            width: 70px;
+            margin-right: 0px;
+        }
+        button.float-right.closeBtn {
+        
+            font-size: 16px;
+        }
+    </style>
+    <title>Laundry Express</title>
+</head>
+<body>
+ 
+
+    <div class="home-wrapper">
+      <div class="container">
+           <div class="home-wrapper-inner bg-white" style="width: 940px; margin: 0 auto;">
+        <header>
+            <div class="">
+                {{!-- header-top --}}
+                <div class="header-top" style="background-color: #EDFAFF;padding: 8px 16px;">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-6 col-sm-6 col-xl-6">
+                            <div class="header-top-left">
+                                <a href="#"><i class="far fa-comment-alt mr-1"></i>Feedback</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-4 col-sm-4 col-xl-4 offset-md-2 offset-lg-2 offset-sm-2 offset-xl-2 d-flex align-items-end w-100 ">
+                            <div class="header-top-right w-100 d-flex justify-content-between">
+                                <a href="#" class="text-right"><i class="fas fa-comment-dollar"></i></i>Cost Estimator</a>
+                                <a href="#" class="text-right"><i class="far fa-question-circle"></i>Have any Question?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- header-midle --}}
+                <div class="header-midle bg-white border-bottom">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-6 col-sm-6 col-xl-6">
+                            <div class="header-midle-left">
+                                {{!-- <img src="" alt=""> --}}
+                                <h2><span>Laundry</span>Express</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-6 col-sm-6 col-xl-6  d-flex align-items-end w-100">
+                            <div class="header-midle-right w-100 d-flex justify-content-between">
+                                <a href="#" class="text-right">WANT A LAUNDER? <br> CALL US NOW!</a>
+                                <span class="text-lg">+880123-456789</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- main-menu --}}
+                <div class="main-menu">
+                    <nav>
+                        <ul>
+                            <li><a href="home">Home</a></li>
+                            <li><a href="#">Gallery</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Product</a></li>
+                            <li><a href="#">Order</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                      <div class="header-bottom-right">       
+                     </div> 
+                </div>
+            </div>
+        </header>
+        {{!-- breadcrumb-start --}}
+        <section class="breadcrumbs-section background_bg" data-img-src="images/checkout-breadcrumbs-img.jpg" style="background: url(images/checkout-breadcrumbs-img.jpg) center center / cover;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="page_title text-center">
+                        <h1>Checkout</h1>
+                        <ul class="breadcrumb justify-content-center">
+                            <li><a href="index.html">home</a></li>
+                            <li><a href="#">shop</a></li>
+                            <li><span>Checkout</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </section>
+        {{!-- chekout-page-wrapper --}}
+      <section class="checkout-inner-page pt_large pb_large my-5">	
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-12">
+                    <div class="checkout-process">
+                        <div id="accordion" class="checkout-parts accordion">
+                            <form role="form" action="/admin/checkout" method="post" enctype="application/x-www-form-urlencoded">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>
+                                            <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><span>01</span>Checkout Method</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" style="">
+                                        <div class="card-body">
+                                            <div class="check-tab">
+                                                <div class="row">
+                                                    <div class="new-cous col-md-6">
+                                                        <div class="form-title">
+                                                            <p>New Customer</p>
+                                                        </div>
+                                                        <div class="chek-form">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" required="" type="radio" name="ddd" id="12" value="option1" checked="">
+                                                                <label class="form-check-label" for="12">Register Account</label>
+                                                            </div>
+                                                            
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="ddd" id="13" value="option2">
+                                                                <label class="form-check-label" for="13">Stay as Guest</label>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in</p>
+                                                        <button class="btn btn-primary btn-next" type="button">Continue</button>
+                                                    </div>
+                                                    <div class="checkout-form col-md-6">
+                                                        <div class="form-title">
+                                                            <p>login</p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input class="form-control" placeholder="Enter Your Name" value="" type="email">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Password</label>
+                                                            <input class="form-control" placeholder="Enter Your Password" value="" type="password">
+                                                        </div>
+                                                        <div class="form-group forgot-password">
+                                                            <a href="#">Forgot Password!</a>
+                                                        </div>
+                                                        <div class="form-group form-wizard-buttons">
+                                                            <button class="btn btn-primary btn-submit" type="submit">Login Now</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header form-wizard-step">
+                                        <h5>
+                                            <a class="btn btn-link" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><span>02</span>Billing information</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion" style="">
+                                        <div class="card-body">
+                                            <div class="check-tab">
+                                                <div class="checkout-form">
+                                                    <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>First name <span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your Name"  type="text" name="firstName">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Last name <span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your Last Name"  type="text"name="lastName">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Email <span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your email"  type="email" name="email">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Phone Number <span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your Phone Number" value="" type="text" name="phoneNumber">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Address <span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your Address" type="text" name="address">
+                                                    </div>
+                                                    
+                                                    <div class="form-group col-md-6">
+                                                        <label>City<span class="required_sign">*</span></label>
+                                                        <input class="form-control required" placeholder="Enter Your City"  type="text">
+                                                    </div>
+                                                    
+                                                    <div class="form-group col-md-6 offset-md-6">
+                                                        <div class="form-wizard-buttons text-md-right">
+                                                            <button class="btn btn-primary btn-submit btn-next" type="button">Continue</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="card">
+                                    <div class="card-header form-wizard-step">
+                                        <h5>
+                                            <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><span>04</span>Payment Method</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="check-tab">
+                                                <div class="checkout-form">
+                                                    <div class="chek-form">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" value="Bank" checked="">
+                                                            <label class="form-check-label" for="exampleRadios3">Direct Bank Transfer</label>
+                                                            <p data-method="option3" class="payment-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios4" value="Cash">
+                                                            <label class="form-check-label" for="exampleRadios4">Cash</label>
+                                                            <p data-method="option4" class="payment-text">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios5" value="Bkash">
+                                                            <label class="form-check-label" for="exampleRadios5">Bkash</label>
+                                                            <p data-method="option5" class="payment-text">Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-wizard-buttons text-md-right">
+                                                        <button class="btn btn-primary btn-next" type="button">Continue</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card ord_tab">
+                                    <div class="card-header form-wizard-step">
+                                        <h5>
+                                            <a class="btn btn-link collapsed" data-toggle="collapse" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive"><span>05</span>Order review</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="check-tab">
+                                                <div class="order-table">
+                                                    <div class="order-review-table table-responsive">
+                                                        <table class="table table-bordered text-center">
+                                                        <thead>
+                                                            <tr class="row-1">
+                                                                <th class="row-title text-left">Product Name</th>
+                                                                <th class="row-title">Service</th>
+                                                                <th class="row-title">Quantity</th>
+                                                                <th class="row-title">Subtotal</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <input type="hidden" name="cart" value="" id="cart">
+                                                        <tbody class="product-parent">
+                                                           
+                                                            
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="row-4">
+                                                                <td class="text-left" colspan="3">Cart Subtotal</td>
+                                                                <td class="pr_subtotal" id="subtotal">$00.00</td>
+                                                                <input type="hidden" name="cartSubtotal" value="" class="cartSubTotal">
+                                                            </tr>
+                                                            <tr class="row-5">
+                                                                <td class="text-left" colspan="3">Promotional Code</td>
+                                                                <td class="pr_subtotal">-$5.00</td>
+                                                            </tr>
+                                                            <tr class="row-6">
+                                                                <td class="text-left" colspan="3">ORder Total</td>
+                                                                <td class="product-subtotal" id="total" >00.00</td>
+                                                                <input type="hidden" name="cartTotal" value="" class="cartTotal">
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="place-oreder-btn">
+                                    <button class="btn btn-secondary">Place Oreder</button>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="cart-inner-box box-2 text-center">
+                        <div class="ci-title">
+                            <h6>Cart Total</h6>
+                        </div>
+                        <div class="ci-caption">
+                            <ul>
+                                <li>Subtotal <span class="subtotal">$00.00</span></li>
+                                <li>Shipping <span class="shipping">50</span></li>
+                                <li>Coupon Code <span class="coupon">-5.00</span></li>
+                            </ul>
+                        </div>
+                        <div class="ci-btn">
+                            <ul>
+                                <li>Total Order<span class="total"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+    <!-- footer-section -->
+    <footer>
+      <div class="footer-section">
+          <div class="container">
+              <div class="row">
+                  <!-- single-footer-widget -->
+                  <div class="col-md-5 col-lg-5 col-xl-5 col-12 col-sm-12">
+                      <div class="single-widget">
+                        <div class="logo">
+                            <img src="assets/images/logo/logo.png" alt="logo.png">
+                        </div>
+                        <p>Get in touch with smart technology and get your Expected service from Technolt</p>
+                        <div class="social-link">
+                            <ul>
+                                <li><a href="https://www.facebook.com/polockgrp/"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                      </div>
+                  </div>
+                    <!-- single-footer-widget -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
+                    <div class="single-widget">
+                       <h5>Our Concern</h5>
+                        <div class="quick-link-footer">
+                            <ul>
+                                <li><a href="http://www.ngitbd.com/">NGIT</a></li>
+                                <li><a href="http://1touchbd.com/">1touch</a></li>
+                                <li><a href="https://www.facebook.com/PolockInteriorDesign">Polock Interior</a></li>
+                                <li><a href="dryexpre.com.bd">Dry Express</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                        <!-- single-footer-widget -->
+                  <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
+                    <div class="single-widget">
+                        <h5>Services</h5>
+                        <div class="quick-link-footer">
+                            <ul>
+                                <li><a href="#">Interior</a></li>
+                                <li><a href="#">Bank Management System</a></li>
+                                <li><a href="#">Home & Commercial Automation </a></li>
+                                <li><a href="#">Dry Express</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- single-footer-widget -->
+                <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
+                    <div class="single-widget">
+                        <h5>Our Address</h5>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-house"></i>
+                            </div>  
+                             <div class="add-info">
+                                3, 2, B, King of Dubai Commercial - (Bur Dubai Mankhool )
+                             </div>
+                         </div>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-mail"></i>
+                            </div>  
+                             <div class="add-info">
+                                info@polockgroup.com
+                             </div>
+                         </div>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-call"></i>
+                            </div>  
+                             <div class="add-info">
+                                +971 54 746 2503
+                             </div>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-xl-12 copyright-bottom">
+                   <div class="row">
+                       <div class="col-md-7 col-xl-7 col-lg-7 col-12 col-sm-12">
+                           <p class="text-center">Copyright ©2020 All rights reserved | technolt is made by  <a href="#">1-touch</a></p>
+                       </div>
+                       <div class="col-md-5 col-xl-5 col-lg-5 col-12 col-sm-12">
+                         <ul class="footer-link-bottom">
+                             <li><a href="#">Terms of Service</a></li>
+                             <li><a href="#">Privacy Policy</a></li>
+                             <li><a href="#">Support</a></li>
+                         </ul>
+                      </div>
+                   </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </footer>
+      </div>
+      </div>
+     
+    </div>
+     
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+    <script src="plugins/js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/pages/frontend/home.js"></script>
+    <script src="js/pages/frontend/active.js"></script>
+
+    <script>
+        const subtotalSession =  sessionStorage.getItem('subtotal');
+        const TotalSession =  sessionStorage.getItem('total');
+        let cart =  localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')):[]
+        const subtotal = document.querySelector('.subtotal');
+        const total = document.querySelector('.total');
+        const subtotal2 = document.getElementById('subtotal');
+        const total2 = document.getElementById('total');
+        let  convertedCart = JSON.stringify(cart);
+
+        //hidden-input---------------------
+        const cartSubTotal = document.querySelector('.cartSubTotal');
+        const cartTotal = document.querySelector('.cartTotal');
+        const hiddenCart = document.querySelector('#cart');
+        hiddenCart.value = convertedCart;
+        cartSubTotal.value = subtotalSession;
+        cartTotal.value = TotalSession;
+        
+
+        subtotal2.innerText = subtotalSession;
+        total2.innerText = TotalSession;
+        subtotal.innerText = subtotalSession;
+        total.innerText = TotalSession;
+
+       // display order details-------------------------
+        const PARENT =  document.querySelector('.product-parent');
+         var result = '';
+        for(var i=0;i<cart.length;i++){
+           result+= `<tr class="row-2">
+                       
+                        <input type="hidden" name="productId" value="${cart[i].id}">
+                        <td class="product-name">${cart[i].modalTitle}</td>
+                        <input type="hidden" name="modalTitle" value="${cart[i].modalTitle}">
+                        <td class="product-price"> 
+                          <ul class="service-list service-list-cart">
+                            <li>Dry Wash- ${cart[i].itemPriceOne}</li>
+                             <input type="hidden" name="dryWash" value="${cart[i].itemPriceOne}">
+                            <li>Steam Wash- ${cart[i].itemPriceTwo}</li>
+                            <input type="hidden" name="steamWash" value="${cart[i].itemPriceTwo}">
+                            <li>Dry iron -${cart[i].itemPriceThree}</li>
+                            <input type="hidden" name="dryIron" value="${cart[i].itemPriceThree}">
+                            <li>Steam Iron -${cart[i].itemPriceFour}</li>
+                            <input type="hidden" name="steamIron" value="${cart[i].itemPriceFour}">
+                          </ul>
+                        </td>
+                        <td class="product-quantity">${cart[i].quantity}</td>
+                        <input type="hidden" name="quantity" value="${cart[i].quantity}">
+                        <td class="product-subtotal">$${cart[i].totalPrice}</td>
+                        <input type="hidden" name="price" value="${cart[i].totalPrice}">
+                        <input type="hidden" name="allproducts" class="allproducts" value="">
+                    </tr>`}
+           PARENT.innerHTML = result; 
+
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="active.js"></script>
+    <script src="formValidate.js"></script>
+    <script src="home.js"></script>
+
+</body>
+
+</html>

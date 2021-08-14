@@ -1,0 +1,302 @@
+{{>header}}
+
+          
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+          {{!-- modal --}}
+               <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content custom-content-card text-center">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
+                      <div class="card-content-wrap text-center">
+                            <h3>Lab</h3>
+                        <span>Change together</span>
+                        <div class="idcard-img">
+                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                        </div>
+                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
+                        <span>Member</span>
+                        <table>
+                            <tr>
+                                <td>ID <span>:</span></td>
+                                <td>0000{{userData.[0].id}}</td>
+                            </tr>
+                              <tr>
+                                <td>Blood <span>:</span></td>
+                                <td>{{userData.[0].bloodgroup}}</td>
+                            </tr>
+                              <tr>
+                                <td>Email <span>:</span></td>
+                                <td>{{userData.[0].email}}</td>
+                            </tr>
+                              <tr>
+                                <td>Phone <span>:</span></td>
+                                <td>{{userData.[0].mobile}}</td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Dashboard</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Apply for Membership</a></li>
+                            </ol>
+                            <a href="/" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">                       
+                    <div class="row">
+                        <div class="col-sm-12">
+                             {{#if message}}
+                                    <div class="alert {{message.type}}" role="alert">
+                                        {{message.message}}
+                                    </div>
+                                {{/if}}
+                            <!-- general form elements -->
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <i class="fa fa-edit"></i> Make a Payment 
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <div class="card-body">
+                                    <form id="paymentForm" action="" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="Fa753taNsTZcgeAMufXzEqQk8twNFvI4lzFpptFu">
+                                        
+                                        <div class="form-group">
+                                            <label>Payment For <span style="color:red">*</span></label>
+                                            <select name="paymentfor" class="form-control" id="paymentFor">
+                                                <option value="">Choose One</option>
+                                                <option value="membership">Membership</option>
+                                                <option value="Id Card">Id Card</option> 
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="email", value="{{userData.[0].email}}">
+                                        <div class="form-group" id="slctMembership"> <!--hidden-->
+                                            <label>Select Member <span style="color:red">*</span></label>
+                                            <select onchange="getDistrictValue()" id="memshipname" name="paymenttitle" class="form-control find-membership-id"  required>
+                                                <option value="0">Choose an option</option>
+                                                {{#each category}}                               
+                                                <option value="{{this.name}}">{{this.name}}</option>
+                                                {{/each}}                             
+                                            
+                                            </select>
+                                        </div>
+                                        <div id="membership-card" class="col-xs-12" style=""> <!--hidden-->
+
+                                            <div class="col-xs-6">
+                                            <select name="amount" id="membership_price">
+                                                <option value="">---</option>
+                                            </select>
+                                            </div>
+                                            <div class="col-xs-6 d-flex m-t">
+                                            </div>
+                                        </div>
+                                        <div id="payment-panel" class="col-md-7"> <!--hidden-->
+                                            <div class="form-group options">
+                                                <label>Payment Option <span style="color:red">*</span></label>
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: 10px" id="payment_card_group">
+                                                    <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="cash" autocomplete="off">
+                                                        Cash
+                                                    </label>
+                                                    <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="cheque" autocomplete="off">
+                                                        Cheque
+                                                    </label>
+                                                    <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="dd-tt" autocomplete="off">DD/TT
+                                                    </label>
+                                                    <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="eft-online" autocomplete="off">EFT/Online
+
+                                                    </label>
+                                                    <label class="btn btn-primary active">
+                                                        <input type="hidden" name="paymentmethod" value="bkash">
+                                                        <input type="radio" name="payment_option" value="bkash" autocomplete="off">Bkash
+
+                                                    </label>
+                                                     <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="ssl" autocomplete="off">Pay with SSLCommerz
+                                                     </label>
+                                                    
+                                                    <label class="btn btn-primary">
+                                                        <input type="radio" name="payment_option" value="other" autocomplete="off">Other
+                                                    </label>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group payment_inputs cash cash_required d-none"> <!--hidden-->
+                                                <label>To Whom (Name of the depositor) <span style="color:red">*</span></label>
+                                                <input id="payment_person" name="payment_person" class="form-control">
+                                            </div>
+
+                                            <div class="form-group payment_inputs cash cash_required d-none"> <!--hidden-->
+                                                <label>Cash Receiver’s Cell number <span style="color:red">*</span></label>
+                                                <input id="payment_person_phone" name="payment_person_phone" class="form-control">
+                                            </div>
+
+                                            <div class="form-group payment_inputs dd-tt eft-online eft-online_required d-none"> <!--hidden-->
+                                                <label>Ref No</label>
+                                                <input id="ref_no" name="ref_no" class="form-control">
+                                            </div>
+
+                                            <div class="form-group payment_inputs cheque dd-tt eft-online cheque_required d-none"> <!--hidden-->
+                                                <label>Bank <span style="color:red">*</span></label>
+                                                <input id="bank_name" name="bank_name" class="form-control">
+                                            </div>
+
+                                            <div class="form-group payment_inputs cheque dd-tt eft-online cheque_required dd-tt_required eft-online_required d-none"> <!--hidden-->
+                                                <label>Bank Branch <span style="color:red">*</span></label>
+                                                <input id="bank_branch" name="bank_branch" class="form-control">
+                                            </div>
+                                            <div class="form-group payment_inputs cheque cheque_required d-none"> <!--hidden-->
+                                                <label>Cheque No <span style="color:red">*</span> </label>
+                                                <input id="cheque_no" name="cheque_no" class="form-control">
+                                            </div>
+
+                                            <div class="form-group payment_inputs eft-online bkash eft_required"> <!--hidden-->
+                                                <label>Transaction Id <span style="color:red">*</span></label>
+                                                <input id="transaction_id" name="transactionid" class="form-control">
+                                            </div>
+                                            <div class="form-group payment_inputs bkash bkash_required"> <!--hidden-->
+                                                <label>Bkash category <span style="color:red">*</span></label>
+                                                <select class="form-control" name="category">
+                                                    <option value="Agent">Agent</option>
+                                                    <option value="Personal">Personal</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group payment_inputs bkash bkash_required"> <!--hidden-->
+                                                <label>Sender bkash Cell No <span style="color:red">*</span></label>
+                                                <input type="tel" id="cell_no" name="senderno" class="form-control" required="">
+                                            </div>
+                                            <div class="form-group payment_inputs bkash eft-online cheque dd-tt cash other"> <!--hidden-->
+                                                <div class="col-md-2">
+                                                    <label>Upload Documents</label>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <input required type="file" accept=".jpg,jpeg,.PNG, .png, .doc,.pdf" class="custom-file-input" id="payment_document" onchange="readDocImageURL(this)" name="payment_document">
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                </div>
+
+                                                
+                                                <div id="view_document_img" class="col col-md-12 d-none" style="margin: 15px">
+                                                    <div class="col col-md-1"></div>
+                                                    <div class="col col-md-9">
+                                                        <img src="" id="view_document_img_src" width="200">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group payment_inputs bkash eft-online cheque dd-tt cash other all_required"> <!--hidden-->
+                                                <label>Payment Date <span style="color:red">*</span></label>
+                                                <input id="payment_date" name="paymentdate" value="2021-08-07" class="form-control date-picker" autocomplete="off" required="">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+
+                                        </div>
+                                        <input type="hidden" step="any" min="0" required="" id="total_attendee" name="total_attendee" class="form-control" readonly="">
+                                        
+                                        <div class="form-actions col-md-12">
+                                            <input type="submit" class="btn btn-primary" value="Save" id="submit_btn"> <!--hidden-->
+                                            <a href="https:admin/request-payment?price=500&amp;product_member=7&amp;product_type=membership" class="btn btn-primary d-none" id="btn_ssl_payment" style="width: 10rem">Pay Online</a> <!--hidden-->
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+               
+               <input type="hidden" name="" id="hiddendata" value="{{allData}}">
+            </div>
+     <script>
+       //-------dynamic upazila -----------------------------------
+       const hiddendata = document.getElementById("hiddendata").value;
+       const upazila = document.getElementById("membership_price");
+
+       const parsedata = JSON.parse(hiddendata);
+       console.log(parsedata)
+       const getDistrictValue =(e)=>{
+           upazila.innerHTML = '';
+          const districtvalue =  document.getElementById('memshipname').value;
+          let test = [districtvalue]
+           //let test = [
+          //  "Barishal",
+           // ];
+       let answer = parsedata.filter(item => (
+        test.includes(item.name)
+        )).map(item => item.price)
+       //--------------------------------------------------------------------------------
+ 
+            answer.forEach(arrfunction);
+            
+            function arrfunction(array_element) {
+                console.log("array_element",array_element)
+            
+            document.getElementById("membership_price").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+            
+            }
+       }
+   
+
+    </script>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            {{>footer}}

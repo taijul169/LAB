@@ -1,0 +1,495 @@
+{{>header}}
+
+          
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+          {{!-- delete modal --}}
+          <!-- Modal -->
+          <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  Are you sure to delete this user permanantly?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-primary">Yes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+             {{!-- modal --}}
+               <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content custom-content-card text-center">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
+                      <div class="card-content-wrap text-center">
+                            <h3>Lab</h3>
+                        <span>Change together</span>
+                        <div class="idcard-img">
+                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                        </div>
+                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
+                        <span>Member</span>
+                        <table>
+                            <tr>
+                                <td>ID <span>:</span></td>
+                                <td>0000{{userData.[0].id}}</td>
+                            </tr>
+                              <tr>
+                                <td>Blood <span>:</span></td>
+                                <td>{{userData.[0].bloodgroup}}</td>
+                            </tr>
+                              <tr>
+                                <td>Email <span>:</span></td>
+                                <td>{{userData.[0].email}}</td>
+                            </tr>
+                              <tr>
+                                <td>Phone <span>:</span></td>
+                                <td>{{userData.[0].mobile}}</td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Dashboard</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                 {{#if message}}
+                   <div class="alert {{message.type}}" role="alert">
+                     {{message.message}}
+                   </div>
+
+                 {{/if}}
+
+
+       <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-12">
+              <a href="https://bdalumni.com/admin/blogs" style="text-decoration: none;color: black">
+
+              <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-blog"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Blog</span>
+                  <span class="info-box-number count">4</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              </a>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <a href="https://bdalumni.com/admin/viewPayments" style="text-decoration: none;color: black">
+
+                <div class="info-box">
+                  <span class="info-box-icon bg-success"><i class="fas fa-credit-card"></i></span>
+          
+                  <div class="info-box-content">
+                    <span class="info-box-text">Total Payment</span>
+                    <span class="info-box-number count">36</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+              </a>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <a href="https://bdalumni.com/admin/video-list" style="text-decoration: none;color: black">
+
+              <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-video"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Videos</span>
+                  <span class="info-box-number count">10</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              </a>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <a href="https://bdalumni.com/admin/question-list" style="text-decoration: none;color: black">
+
+              <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="fas fa-question-circle"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Questions</span>
+                  <span class="info-box-number count">4</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              </a>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+          </div>
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-12">
+            <a href="https://bdalumni.com/admin/users" style="text-decoration: none;color: black">
+              <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-users"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Members</span>
+                  <span class="info-box-number count">25</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <a href="https://bdalumni.com/admin/job-opportunity-list" style="text-decoration: none;color: black">
+
+              <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-building"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Jobs Opportunity</span>
+                  <span class="info-box-number count">1</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <a href="https://bdalumni.com/admin/committee" style="text-decoration: none;color: black">
+
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Total Committee</span>
+                <span class="info-box-number count">36</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <a href="https://bdalumni.com/admin/donors" style="text-decoration: none;color: black">
+              <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="fas fa-users"></i></span>
+        
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Blood Donor</span>
+                  <span class="info-box-number count">3</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+            </a>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row --> 
+    
+      <h3>Blood Donor</h3>
+        <hr>
+
+    <input type="hidden" name="" id="bloodhidden" value="{{donatebloodData}}">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/A+" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-info">A+</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="A_positive">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/B+" style="text-decoration: none;color: black">
+            <div class="info-box">
+            <span class="info-box-icon bg-success">B+</span>
+    
+            <div class="info-box-content">
+              <span class="info-box-text">Donor</span>
+              <span class="info-box-number count" id="B_positive">0</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/O+" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning">O+</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="O_positive">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/AB+" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-danger">AB+</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="AB_positive">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+         
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/A-" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-info">A-</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="A_negative">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+         
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/B-" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-success">B-</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="B_negative">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/O-" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning">O-</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count" id="O_negative">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="/users/availablebloodlist/AB-" style="text-decoration: none;color: black">
+            <div class="info-box">
+              <span class="info-box-icon bg-danger" id="AB_negative">AB-</span>
+      
+              <div class="info-box-content">
+                <span class="info-box-text">Donor</span>
+                <span class="info-box-number count">0</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </a>
+          
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    
+   
+                    </div>
+                </section>
+                <!-- ============================================================== -->
+                <!-- RECENT SALES -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="white-box">
+                            <div class="d-md-flex mb-3">
+                                <h3 class="box-title mb-0">Recent Request</h3>
+                                <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                    <select class="form-control row border-top">
+                                        <option>March 2021</option>
+                                        <option>April 2017</option>
+                                        <option>May 2017</option>
+                                        <option>June 2017</option>
+                                        <option>July 2017</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">NAME</th>
+                                            <th class="border-top-0">District</th>
+                                            <th class="border-top-0">Date</th>
+                                            <th class="border-top-0">Payment Status</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                      {{#each allData}}
+                                      {{!-- single-user --}}
+                                        <tr>
+                                            <td>{{this.id}}</td>
+                                            <td class="txt-oflo">{{this.lastname}}</td>
+                                            <td>{{this.district}}</td>
+                                            <td class="txt-oflo">{{this.createdat}}</td>
+                                            <td><span class=" text-light bg-primary p-1">Processing</span></td>
+                                            <td><div class="action-wrap">
+                                                <ul class="d-flex">
+                                                 <li><a class="btn btn-cyan mx-1" href="/users/singleuserview/{{this.id}}">View</a></li>
+                                                 <li><a class="btn btn-success mx-1" href="">Proceed</a></li>
+                                                 <li><a class="btn btn-danger mx-1" href="/users/deleteuser/{{this.id}}" data-bs-toggle="modal" data-bs-target="#deletemodal">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+            <script>
+       //-------dynamic upazila -----------------------------------
+       const hiddendata = document.getElementById("bloodhidden").value;
+       const A_positive = document.getElementById("A_positive");
+       const B_positive = document.getElementById("B_positive");
+       const O_positive = document.getElementById("O_positive");
+       const AB_positive = document.getElementById("AB_positive");
+       const A_negative = document.getElementById("A_negative");
+       const B_negative = document.getElementById("B_negative");
+       const AB_negative = document.getElementById("AB_negative");
+       const O_negative = document.getElementById("O_negative");
+
+       const parsedata = JSON.parse(hiddendata);
+       //A+
+        let answer_one = (parsedata.filter(order => (order.bloodgroup === "A+")))
+        A_positive.innerText = answer_one.length;
+        //B+
+         let answer_two = (parsedata.filter(order => (order.bloodgroup === "B+")))
+        B_positive.innerText = answer_two .length;
+          //B+
+         let answer_three = (parsedata.filter(order => (order.bloodgroup === "O+")))
+        O_positive.innerText = answer_three.length;
+          //B+
+         let answer_four = (parsedata.filter(order => (order.bloodgroup === "AB+")))
+        AB_positive.innerText = answer_four.length;
+          //B+
+         let answer_five = (parsedata.filter(order => (order.bloodgroup === "A-")))
+        A_negative.innerText = answer_five.length;
+          //B+
+         let answer_six = (parsedata.filter(order => (order.bloodgroup === "B-")))
+        B_negative.innerText = answer_six.length;
+          //B+
+         let answer_seven = (parsedata.filter(order => (order.bloodgroup === "AB-")))
+        AB_positive.innerText = answer_seven.length;
+          //B+
+         let answer_eight = (parsedata.filter(order => (order.bloodgroup === "O-")))
+        O_negative.innerText = answer_eight.length;
+</script>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            {{>footer}}

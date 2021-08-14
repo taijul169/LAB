@@ -1,0 +1,142 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Basic Table</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/index.html" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Single Order Details</h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <!-- <tr></tr> -->
+                                    <tr>
+                                        <th>ID</th>
+                                        <td>#{{singleOrderData._id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <td>{{singleOrderData.firstName}} {{singleOrderData.lastName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile</th>
+                                        <td>{{singleOrderData.phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{singleOrderData.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Service List</th>
+                                        <td>
+                                            
+                                            <ul class="service-list">
+                                                <li id="jsonData" style="display: none;">{{singleOrderData.allProductInfo.[0]}}</li>
+                                                <script>
+                                                    const jsonDataDom =  document.getElementById('jsonData');
+                                                    const serviceList =  document.querySelector('.service-list');
+                                                    let jsonData =  jsonDataDom.innerText;
+                                                    jsonData =  JSON.parse(jsonData);
+                                                    let result = '';
+
+                                                    for(var i = 0;i<jsonData.length;i++){
+                                                        result +=`
+                                                        <li style="display:block; width:100%; border:0px; color:red;text-align:left;"><h4>${jsonData[i].modalTitle}</h4></li>
+                                                        <li><span>Dry Wash:</span><b>${jsonData[i].itemPriceOne}</b></li>
+                                                        <li><span>Steam Wash:</span><b>${jsonData[i].itemPriceTwo}</b></li>
+                                                        <li><span>Dry Iron:</span><b>${jsonData[i].itemPriceThree}</b></li>
+                                                        <li><span>Steam Iron:</span><b>${jsonData[i].itemPriceFour}</b></li>
+                                                        <li><span>quantity:</span><b>${jsonData[i].quantity}</b></li>
+                                                        <li><span>Price:</span><b class="text-danger">${jsonData[i].totalPrice}</b></li>
+                                                        `
+
+                                                    }
+                                                    serviceList.innerHTML=result;
+                                                         
+                                                         console.log(jsonData);
+                                                </script>
+                                           </ul>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cost</th>
+                                        <td><ul id="cost-box">
+                                            <li>Subtotal: <span>{{singleOrderData.cartSubTotal}} tk</span></li>
+                                            <li>Discount: <span>00.00 tk</span></li>
+                                            <li>Delivery Charge: <span>50.00tk</span></li>
+                                            <li>Total: <span id="COLOR">{{singleOrderData.OrderTotal}} tk</span></li>
+                                            
+                                        </ul></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Payment Status</th>
+                                        <td><span class="payment-status">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Action</th>
+                                        <td><a href="#" class="btn btn-success m-1">Accept</a href="#"><a href="#" class="btn btn-warning m-1">Assign</a href="#"><a href="#" class="btn btn-danger m-1">Delete</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+             {{>footer}}

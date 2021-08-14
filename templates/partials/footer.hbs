@@ -1,0 +1,56 @@
+            <footer class="footer text-center"> 2021 © E-call Admin brought to you by <a
+                href="">lawassociationbd.com</a>
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/app-style-switcher.js"></script>
+    <script src="/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    <!--Wave Effects -->
+    <script src="/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/js/custom.js"></script>
+    <!--This page JavaScript -->
+    <script>
+        const pdfGenarator= ()=>{
+          const elemnt =   document.getElementById("idcardWrap");
+          var opt = {
+                    margin:       1,
+                    width:400,
+                    filename:     'myfile.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2 },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    };
+          html2pdf()
+          .set(opt)
+          .from(elemnt)
+          .save()
+        }
+    </script> 
+    <!--chartis chart-->
+    <script src="/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+    <script src="/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="/js/pages/dashboards/dashboard1.js"></script>
+</body>
+
+</html>

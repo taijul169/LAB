@@ -1,0 +1,94 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Membership page</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/index.html" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <a href="/users/createmembership" class="btn btn-primary ml-3">Create Membership</a>
+                <div class="row p-5 border m-3 shadow">
+                    <div class="col-sm-12">
+                    
+                        <div class="card card-warning card-outline">
+                            <div class="card-body">
+                               <div id="getMembershipPrice_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="getMembershipPrice_length"><label>Show <select name="getMembershipPrice_length" aria-controls="getMembershipPrice" class="custom-select custom-select-sm form-control form-control-sm"><option value="5">5</option><option value="10">10</option><option value="25">50</option><option value="50">100</option><option value="100">All</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="getMembershipPrice_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm border" placeholder="" aria-controls="getMembershipPrice"></label></div></div></div><div class="row"><div class="col-sm-12">
+                                <table class="table table-hover color-table success-table dataTable no-footer" id="getMembershipPrice" role="grid" aria-describedby="getMembershipPrice_info" style="width: 1586px;">
+                                    <thead>
+                                    <tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 57px;">#</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 338px;">Name</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 135px;">Price</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 395px;">Remarks</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 146px;">Status</th><th class="hidden-480 sorting_disabled" rowspan="1" colspan="1" style="width: 370px;">Action</th></tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                 {{#each data }}
+                                 {{!-- single-membership --}}
+                                    <tr role="row" class="odd"><td>{{this.id}}</td><td>{{this.name}}</td><td>{{this.price}}</td><td>{{this.remark}}
+                                      </td><td><span class="badge badge-success">Active</span></td><td><div class="btn-group"><a data-id="5" data-toggle="modal" data-target="#priceDetails" href="/users/editmembership/{{this.id}}" class="btn btn-warning btn-sm btn-edit" title="Edit Membership Price"><i class="fa fa-edit"></i></a> <a id="dlt5" href="/users/deletemembership/{{this.id}}"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/users/updatestatus/{{this.id}}" class="status-btn btn btn-danger btn-sm">Deactive</a></td></tr>
+                                   {{/each  }}     
+                                   </tbody>
+                                </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="getMembershipPrice_info" role="status" aria-live="polite">Showing 1 to 5 of 7 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="getMembershipPrice_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="getMembershipPrice_previous"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="getMembershipPrice" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="getMembershipPrice_next"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}

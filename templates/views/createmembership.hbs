@@ -1,0 +1,130 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Membership page</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/index.html" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                 <a href="/users/membership" class="btn btn-primary ml-3">Membership List</a>
+                <div class="row p-5 border m-3 shadow">
+                   <div class="col-sm-12">
+                    <div class="card card-warning card-outline">
+                    <div class="card-body">
+                              {{#if message}}
+                        <div class="alert alert-success" role="alert">
+                            {{message}}
+                        </div>
+
+                        {{/if}}
+                            <form action="/users/createmembership"  method="post" class="form-horizontal">
+                                <input type="hidden" name="_token" value="S5hBPzvEvJbvFxdLBPGlxLlVqJ8UZtd4lo8ExZYE">                    <!--name-->
+                                <div class="form-group">
+                                    <label for="name" class="control-label col-sm-2">Membership Name <span style="color:red">*</span></label>
+                                    <div class="col-sm-10 col-md-12">
+                                        <input type="text" id="name" name="name" class="form-control" required="required" value="" placeholder="Membership name">
+                                    </div>
+                                </div>
+                                
+                                <!--price-->
+                                <div class="form-group">
+                                    <label for="loacaion" class="control-label col-sm-2">Membership Price <span style="color:red">*</span></label>
+                                    <div class="col-sm-10 col-md-12">
+                                        <input type="text" name="price" id="price" class="form-control" required="required" value="" placeholder="Membership Price">
+                                    </div>
+                                </div>
+                                <!-- price for -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Type  <span style="color:red">*</span></label>
+                                    <div class="col-sm-10 col-md-12">
+                                        <select name="membership_type" class="form-control" id="paymentFor" required="">
+                                            <option value="">Select Type</option>
+                                            <option value="1">One Months</option>
+                                            <option value="3">Three Months</option>
+                                            <option value="6">Six Months</option>
+                                            <option value="12">Twelve Months</option>
+                                            <option value="24">Two Years</option>
+                                            <option value="36">Three Years</option>
+                                            <option value="60">Five Years</option>
+                                            <option value="1200">Life Member</option>
+                                        </select>
+                                    </div>  
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Remarks  </label>
+                                    <div class="col-md-12">
+                                    <textarea name="remarks" class="form-control" id="" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions  col-md-12">
+                                    <button type="submit" class="btn btn-primary"><i class="fa"></i>Submit
+                                    </button>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                
+                </div>
+            
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}

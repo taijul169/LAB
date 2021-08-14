@@ -1,0 +1,1269 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+
+             {{!-- modal --}}
+               <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content custom-content-card text-center">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
+                      <div class="card-content-wrap text-center">
+                            <h3>Lab</h3>
+                        <span>Change together</span>
+                        <div class="idcard-img">
+                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                        </div>
+                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
+                        <span>Member</span>
+                        <table>
+                            <tr>
+                                <td>ID <span>:</span></td>
+                                <td>0000{{userData.[0].id}}</td>
+                            </tr>
+                              <tr>
+                                <td>Blood <span>:</span></td>
+                                <td>{{userData.[0].bloodgroup}}</td>
+                            </tr>
+                              <tr>
+                                <td>Email <span>:</span></td>
+                                <td>{{userData.[0].email}}</td>
+                            </tr>
+                              <tr>
+                                <td>Phone <span>:</span></td>
+                                <td>{{userData.[0].mobile}}</td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Profile page</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/index.html" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row p-5 border m-3 shadow">
+                  <div class="col-md-3 col-lg-3 col-xl-3">
+                      <div class="card">
+                          <div class="card-header">
+                              <h4 class="text-uppercase">Privacy</h4>
+                          </div>
+                          <div class="card-body">
+                    <form action="/users/privacyupdate/{{userData.[0].email}}" method="post" accept-charset="utf-8">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th for="toggle-btn2" class="">Donate Blood ?</th>
+                                <td>
+                                    <input onClick="changevalue('toggle-btn5','donateblood')" type="checkbox" class="form-control"  id="toggle-btn5" data-toggle="toggle" data-width="50" data-height="30">
+                                    <input type="hidden" name="donateblood" value="{{privacyData.[0].donateblood}}" id="donateblood" >
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Hide Email ?</th>
+                                <td>
+                                     <input onclick="changevalue('toggle-btn4','hideemail')" type="checkbox" class="form-control"  id="toggle-btn4"  data-toggle="toggle" data-width="50" data-height="30">
+                                     <input type="hidden" name="hideemail" value="{{privacyData.[0].hideemail}}" id="hideemail" >
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Hide Phone Number ?</th>
+                                <td>
+                                    <input onclick="changevalue('toggle-btn3','hidephone')" type="checkbox" class="form-control"  id="toggle-btn3"   data-toggle="toggle" data-width="50" data-height="30">
+                                    <input type="hidden" name="hidephone" value="{{privacyData.[0].hidephone}}" id="hidephone" >
+                                </td>
+                                <script>
+                                    
+                                    function changevalue(check_elm, hideen_elm){
+                                       console.log(check_elm)
+                                        var hidephone = document.getElementById(check_elm);
+                                         var hidephonehidden = document.getElementById(hideen_elm);
+
+                                        if(hidephonehidden.value == 1){
+                                            hidephonehidden.value = 0;
+                                            console.log("checked box value",document.getElementById('hidephone').value)
+                                        }
+                                        else{
+                                            hidephonehidden.value = 1
+
+                                        }
+                                          
+                                    }
+                                  onload = function checkunchek(){
+                                        var hidephone = document.getElementById('toggle-btn3');
+                                        var hideemail = document.getElementById('toggle-btn4');
+                                        var donateblood = document.getElementById('toggle-btn5');
+
+                                        var hidephonehidden = document.getElementById('hidephone');
+                                        var hideemailhidden = document.getElementById('hideemail');
+                                        var donatebloodhidden = document.getElementById('donateblood');
+
+                                        if(hidephonehidden.value == 1){
+                                           
+                                            hidephone.checked =  true;
+                                        }
+                                         if(hideemailhidden.value == 1){
+                                            hideemail.checked = true;
+                                        }
+                                         if(donatebloodhidden.value == 1){
+                                            donateblood.checked = true;
+                                        }
+                                        else{
+                                            hidephone.checked = false;
+                                        }
+                                    }
+                                 
+                                </script>
+                            </tr>
+                            <tr>
+                                <th>Hide Location ?</th>
+                                <td>
+                                    <input type="checkbox" class="form-control" name="useremail" id="toggle-btn6" value="1" data-toggle="toggle" data-width="50" data-height="30">
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <button type="submit" id="save_btn_edit_req" class="btn btn-primary btn-block">Update</button>
+                    </form>
+                </div>
+                      </div>
+                  </div>  
+                  <div class="col-md-9 col-lg-9 col-xl-9 " >
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Personal</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Education</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Work</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <form action="" >
+                    <div class="tab-content" id="myTabContent">
+                       
+                        <div class="tab-pane fade show active mt-5" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                {{!-- firstname --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">First Name</label>
+                                        <input type="text" class="form-control" name="{{userData.[0].firstname}}" value="Md.">
+                                    </div>
+                                </div>
+                                {{!-- midlename --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Midle Name</label>
+                                        <input type="text" class="form-control" name="midlename" value="{{userData.[0].midlename}}">
+                                    </div>
+                                </div>
+                                {{!-- lastname --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Midle Name</label>
+                                        <input type="text" class="form-control" name="lastname" value="{{userData.[0].lastname}}">
+                                    </div>
+                                </div>
+                                {{!-- lastname --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Email</label>
+                                        <input type="text" class="form-control" name="email" value="{{userData.[0].email}}">
+                                    </div>
+                                </div>
+                                {{!-- lastname --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Gender</label>
+                                        <select name="gender"    class="custom-select" id="validatedInputGroupSelect" required>
+                                                <option value="{{userData.[0].gender}}">{{userData.[0].gender}}</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                {{!-- Blood Group --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                    <label for="">Blood Group</label>
+                                            <select name="bloodgroup"class="custom-select" id="validatedInputGroupSelect" required>
+                                                <option value="{{userData.[0].bloodgroup}}">{{userData.[0].bloodgroup}}</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="o-">o-</option>
+                                                <option value="o+">o+</option>
+                                                
+                                            </select>
+                                    </div>
+                                </div>
+                                {{!-- Division --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                   <label for="">Division</label>
+                                        <select name="division" class="custom-select division" id="division" required>
+                                            <option value="{{userData.[0].divisioin}}">{{userData.[0].divisioin}}</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barishal">Barishal</option>
+                                            <option value="Chattogram">Chattogram</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Rnagpur">Rnagpur</option>
+                                            <option value="Rajshai">Rajshai</option>
+                                            <option value="Mymonshing">Mymonshing</option>
+                                            <option value="Khulna">Khulna</option>
+                                            <option value="Comilla">Comilla</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {{!-- District --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                    <div class="form-group">
+                                   <label for="">District</label>
+                                        <select name="district" class="custom-select division" id="division" required>
+                                            <option value="{{userData.[0].district}}">{{userData.[0].district}}</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barishal">Barishal</option>
+                                            <option value="Chattogram">Chattogram</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Rnagpur">Rnagpur</option>
+                                            <option value="Rajshai">Rajshai</option>
+                                            <option value="Mymonshing">Mymonshing</option>
+                                            <option value="Khulna">Khulna</option>
+                                            <option value="Comilla">Comilla</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                   {{!-- District --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                <div class="form-group">
+                                   <label for="">Upazila</label>
+                                        <select name="upazila" class="custom-select division" id="division" required>
+                                            <option value="{{userData.[0].upazila}}">{{userData.[0].upazila}}</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barishal">Barishal</option>
+                                            <option value="Chattogram">Chattogram</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Rnagpur">Rnagpur</option>
+                                            <option value="Rajshai">Rajshai</option>
+                                            <option value="Mymonshing">Mymonshing</option>
+                                            <option value="Khulna">Khulna</option>
+                                            <option value="Comilla">Comilla</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               {{!-- Mobile --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                  <div class="form-group">
+                                   <label for="">Mobile</label>
+                                    <input type="text" class="form-control" name="mobile" value="{{userData.[0].mobile}}">
+                                  </div>
+                                </div>
+
+                                {{!-- Mobile --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                  <div class="form-group">
+                                   <label for="">Mobile Secondary</label>
+                                       <input type="text" class="form-control" name="secondarymobile" value="{{userData.[0].secondarymobile}}">
+                                  </div>
+                                </div>
+                                   {{!-- password --}}
+                                <div class="col-md-6 col-lg-6 col-12 col-xl-6">
+                                  <div class="form-group">
+                                   <label for="">Password</label>
+                                       <input type="password" class="form-control" name="confirmpassword" value="{{userData.[0].confirmpassword}}">
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade mt-5" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                             <div class="tab-pane" id="account">
+                                        <div class="row">
+                                             <div class="form-row w-100">
+                                                 <div class="col-md-2 mb-3 text-center">
+                                                    <label for="">
+                                                         Degree
+                                                    </label>
+                                                 </div>
+                                                  <div class="col-md-4 mb-3 text-center">
+                                                    <label for="">
+                                                         Institute
+                                                    </label>
+                                                 </div>
+                                                  <div class="col-md-2 mb-3 text-center">
+                                                    <label for="">
+                                                         Faculty/Group
+                                                    </label>
+                                                 </div>
+                                                  <div class="col-md-2 mb-3 text-center">
+                                                    <label for="">
+                                                         Passing Year
+                                                    </label>
+                                                 </div>
+                                                  <div class="col-md-2 mb-3 text-center">
+                                                    <label for="">
+                                                         Certificate
+                                                    </label>
+                                                 </div>
+                                             </div>
+                                             {{!-- ssc --}}
+                                             <div class="form-row w-100">
+                                                    <div class="col-md-2 mb-3">
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="SSC" value="SSC" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                    </div>
+                                                
+                                                <div class="col-md-4 mb-3">
+                                                    <select name="institutessc" class="custom-select institutessc"  id="institutessc" required>
+                                                          <option value="{{userData.[0].institutessc}}">{{userData.[0].institutessc}}</option>
+                                                        {{#each sscdata }}
+                                                          <option value="{{this.institutenamessc}}">{{this.institutenamessc}}</option>
+                                                        {{/each}}                                                     
+                                                    </select>  
+                                                   
+                                                </div>
+                                                <div class="col-md-2 mb-3">
+                                                  
+                                                     <select name="sscgroup"    class="custom-select" id="validatedInputGroupSelect" required>
+                                                            <option value="{{userData.[0].sscgroup}}">{{userData.[0].sscgroup}}</option>
+                                                            <option value="Science">Science</option>
+                                                            <option value="Commerce">Commerce</option>
+                                                            <option value="Arts">Arts</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                   
+                                                       <select class="year custom-select yearssc" name="passingyearssc"  id="yearssc" required>
+                                                                <option value="{{userData.[0].passingyearssc}}">{{userData.[0].passingyearssc}}</option>
+                                                                <option value="1971">1971</option>
+                                                                <option value="1972" >1972</option>
+                                                                <option value="1973" >1973</option>
+                                                                <option value="1974" >1974</option>
+                                                                <option value="1975" >1975</option>
+                                                                <option value="1976" >1976</option>
+                                                                <option value="1977">1977</option>
+                                                                <option value="1978" >1978</option>
+                                                                <option value="1979" >1979</option>
+                                                                <option value="1980" >1980</option>
+                                                                <option value="1981" >1981</option>
+                                                                <option value="1982">1982</option>
+                                                                <option value="1983" >1983</option>
+                                                                <option value="1984" >1984</option>
+                                                                <option value="1985" >1985</option>
+                                                                <option value="1986" >1986</option>
+                                                                <option value="1987" >1987</option>
+                                                                <option value="1988" >1988</option>
+                                                                <option value="1989" >1989</option>
+                                                                <option value="1990" >1990</option>
+                                                                <option value="1991" >1991</option>
+                                                                <option value="1992" >1992</option>
+                                                                <option value="1993" >1993</option>
+                                                                <option value="1994" >1994</option>
+                                                                <option value="1995" >1995</option>
+                                                                <option value="1996" >1996</option>
+                                                                <option value="1997" >1997</option>
+                                                                <option value="1998" >1998</option>
+                                                                <option value="1999" >1999</option>
+                                                                <option value="2000" >2000</option>
+                                                                <option value="2001" >2001</option>
+                                                                <option value="2002" >2002</option>
+                                                                <option value="2003" >2003</option>
+                                                                <option value="2004" >2004</option>
+                                                                <option value="2005" >2005</option>
+                                                                <option value="2006" >2006</option>
+                                                                <option value="2007" >2007</option>
+                                                                <option value="2008" >2008</option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                                <option value="2019" >2019</option>
+                                                                <option value="2020" >2020</option>
+                                                                <option value="2020" >2021</option>
+                                                    </select>   
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    <input class="w-100" type="file" name="certificatessc" accept=".jpg,.png,.jpeg" >
+                                                </div>
+                                             </div>
+                                             {{!-- hsc --}}
+                                              <div class="form-row w-100">
+                                                    <div class="col-md-2 mb-3">
+                                                   
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="HSC" value="HSC" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                    </div>
+                                                
+                                                <div class="col-md-4 mb-3 ">
+                                                   
+                                                  <div class="form-group">
+                                                       <select name="institutehsc" class="custom-select institutehsc"  id="institutehsc" required>
+                                                          <option value="{{userData.[0].institutehsc}}">{{userData.[0].institutehsc}}</option>
+                                                        {{#each hscdata }}
+                                                          <option value="{{this.institutenamehsc}}">{{this.institutenamehsc}}</option>
+                                                        {{/each}}                                                     
+                                                    </select>  
+                                                  </div>
+                                                  
+                                                </div>
+                                                <div class="col-md-2 mb-3">
+                                                    
+                                                     <select name="hscgroup"    class="custom-select" id="validatedInputGroupSelect" required>
+                                                            <option value="{{userData.[0].hscgroup}}">{{userData.[0].hscgroup}}</option>
+                                                            <option value="Science">Science</option>
+                                                            <option value="Commerce">Commerce</option>
+                                                            <option value="Arts">Arts</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                   
+                                                       <select class="year custom-select yearhsc"  id="yearhsc" name="passingyearhsc" required>
+                                                                <option value="{{userData.[0].passingyearhsc}}">{{userData.[0].passingyearhsc}}</option>
+                                                                <option value="1971">1971</option>
+                                                                <option value="1972" >1972</option>
+                                                                <option value="1973" >1973</option>
+                                                                <option value="1974" >1974</option>
+                                                                <option value="1975" >1975</option>
+                                                                <option value="1976" >1976</option>
+                                                                <option value="1977">1977</option>
+                                                                <option value="1978" >1978</option>
+                                                                <option value="1979" >1979</option>
+                                                                <option value="1980" >1980</option>
+                                                                <option value="1981" >1981</option>
+                                                                <option value="1982">1982</option>
+                                                                <option value="1983" >1983</option>
+                                                                <option value="1984" >1984</option>
+                                                                <option value="1985" >1985</option>
+                                                                <option value="1986" >1986</option>
+                                                                <option value="1987" >1987</option>
+                                                                <option value="1988" >1988</option>
+                                                                <option value="1989" >1989</option>
+                                                                <option value="1990" >1990</option>
+                                                                <option value="1991" >1991</option>
+                                                                <option value="1992" >1992</option>
+                                                                <option value="1993" >1993</option>
+                                                                <option value="1994" >1994</option>
+                                                                <option value="1995" >1995</option>
+                                                                <option value="1996" >1996</option>
+                                                                <option value="1997" >1997</option>
+                                                                <option value="1998" >1998</option>
+                                                                <option value="1999" >1999</option>
+                                                                <option value="2000" >2000</option>
+                                                                <option value="2001" >2001</option>
+                                                                <option value="2002" >2002</option>
+                                                                <option value="2003" >2003</option>
+                                                                <option value="2004" >2004</option>
+                                                                <option value="2005" >2005</option>
+                                                                <option value="2006" >2006</option>
+                                                                <option value="2007" >2007</option>
+                                                                <option value="2008" >2008</option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                                <option value="2019" >2019</option>
+                                                                <option value="2020" >2020</option>
+                                                                <option value="2020" >2021</option>
+                                                    </select>   
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    
+                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatehsc">
+                                                </div>
+                                             </div>
+                                             {{!-- Bachelor --}}
+                                              <div class="form-row w-100">
+                                                    <div class="col-md-2 mb-3">
+                                                   
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="BACHELOR" value="BACHELOR" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                    </div>
+                                                
+                                                <div class="col-md-4 mb-3 position-relative">
+                                                    <select name="institutebachelor" class="custom-select institutebachelor"  id="institutebachelor" required>
+                                                          <option value="{{userData.[0].institutebachelor}}">{{userData.[0].institutebachelor}}</option>
+                                                        {{#each bachelordata }}
+                                                          <option value="{{this.institutenamebachelor}}">{{this.institutenamebachelor}}</option>
+                                                        {{/each}}                                                     
+                                                    </select>  
+                                                </div>
+                                                <div class="col-md-2 mb-3">
+                                                    
+                                                     <select name="subjectbachelor"  class="custom-select subjectbachelor" id="subjectbachelor" required>
+                                                               <option value="{{userData.[0].subjectbachelor}}" >{{userData.[0].subjectbachelor}}</option>
+                                                               <option value="English" >English</option>
+                                                                <option value="Persian Language and Literature" >Persian Language and Literature</option>
+                                                                <option value="Philosophy" >Philosophy</option>
+                                                                <option value="History" >History</option>
+                                                                <option value="Arabic" >Arabic</option>
+                                                                <option value="Islamic Study" >Islamic Study</option>
+                                                                <option value="Islamic History and Culture" >Islamic History and Culture</option>
+                                                                <option value="Sanskrit and Pali" >Sanskrit and Pali</option>
+                                                                <option value="Information Science and Library Management" >Information Science and Library Management</option>
+                                                                <option value="Languages and Linguistics" >Languages and Linguistics</option>
+                                                                <option value="Theater and Music" >Theater and Music</option>
+                                                                <option value="World Religions and Culture" >World Religions and Culture</option>
+                                                                <option value="Management Studies" >Management Studies</option>
+                                                                <option value="Accounting &amp; Information Systems" >Accounting &amp; Information Systems</option>
+                                                                <option value="Marketing" >Marketing</option>
+                                                                <option value="Finance" >Finance</option>
+                                                                <option value="Banking and Insurance" >Banking and Insurance</option>
+                                                                <option value="Management Information Systems" >Management Information Systems</option>
+                                                                <option value="International Business" >International Business</option>
+                                                                <option value="Tourism and Hospitality Management" >Tourism and Hospitality Management</option>
+                                                                <option value="Organization Strategy and Leadership" >Organization Strategy and Leadership</option>
+                                                                <option value="Soil, Water and Environment" >Soil, Water and Environment</option>
+                                                                <option value="Botany" >Botany</option>
+                                                                <option value="Zoology" >Zoology</option>
+                                                                <option value="Biochemistry and Molecular Biology" >Biochemistry and Molecular Biology</option>
+                                                                <option value="Psychology" >Psychology</option>
+                                                                <option value="Microbiology" >Microbiology</option>
+                                                                <option value="Fisheries Science" >Fisheries Science</option>
+                                                                <option value="Medical Psychology" >Medical Psychology</option>
+                                                                <option value="Genetic Engineering and Biotechnology" >Genetic Engineering and Biotechnology</option>
+                                                                <option value="Educational Psychology" >Educational Psychology</option>
+                                                                <option value="Applied Chemistry and Chemical Engineering" >Applied Chemistry and Chemical Engineering</option>
+                                                                <option value="Nuclear Engineering" >Nuclear Engineering</option>
+                                                                <option value="Robotics and Mechatronics" >Robotics and Mechatronics</option>
+                                                                <option value="Drawing and Painting" >Drawing and Painting</option>
+                                                                <option value="Graphic Design" >Graphic Design</option>
+                                                                <option value="Printmaking" >Printmaking</option>
+                                                                <option value="Oriental Art" >Oriental Art</option>
+                                                                <option value="Ceramics" >Ceramics</option>
+                                                                <option value="Sculpture" >Sculpture</option>
+                                                                <option value="Craft" >Craft</option>
+                                                                <option value="History of Art" >History of Art</option>
+                                                                <option value="Law" >Law</option>
+                                                                <option value="Physiotherapy(BPT)" >Physiotherapy(BPT)</option>
+                                                                <option value="Medicine" >Medicine</option>
+                                                                <option value="Surgery (MBBS)" >Surgery (MBBS)</option>
+                                                                <option value="Dental Surgery (BDS)" >Dental Surgery (BDS)</option>
+                                                                <option value="Pharmaceutical Chemistry" >Pharmaceutical Chemistry</option>
+                                                                <option value="Clinical Pharmacy and Pharmacology" >Clinical Pharmacy and Pharmacology</option>
+                                                                <option value="Pharmaceutical Technology" >Pharmaceutical Technology</option>
+                                                                <option value="Pharmacy" >Pharmacy</option>
+                                                                <option value="Physics" >Physics</option>
+                                                                <option value="Mathematics" >Mathematics</option>
+                                                                <option value="Chemistry" >Chemistry</option>
+                                                                <option value="Biomedical Physics and Technology" >Biomedical Physics and Technology</option>
+                                                                <option value="Theoretical Physics" >Theoretical Physics</option>
+                                                                <option value="Applied Mathematics" >Applied Mathematics</option>
+                                                                <option value="Statistics" >Statistics</option>
+                                                                <option value="Theoretical and Computational Chemistry" >Theoretical and Computational Chemistry</option>
+                                                                <option value="Economics" >Economics</option>
+                                                                <option value="Political Science" >Political Science</option>
+                                                                <option value="International Relations" >International Relations</option>
+                                                                <option value="Anthropology " >Anthropology </option>
+                                                                <option value="Public Administration" >Public Administration</option>
+                                                                <option value="Mass Communication and Journalism" >Mass Communication and Journalism</option>
+                                                                <option value="Communication Disorders" >Communication Disorders</option>
+                                                                <option value="Printing and Publication Studies" >Printing and Publication Studies</option>
+                                                                <option value="Television, Film and Photography" >Television, Film and Photography</option>
+                                                                <option value="Sociology" >Sociology</option>
+                                                                <option value="Development Studies" >Development Studies</option>
+                                                                <option value="Criminology" >Criminology</option>
+                                                                <option value="Japanese Studies" >Japanese Studies</option>
+                                                                <option value="Women and Gender  Studies " >Women and Gender  Studies </option>
+                                                                <option value="Peace and Conflict Studies" >Peace and Conflict Studies</option>
+                                                                <option value="Geography and Environment" >Geography and Environment</option>
+                                                                <option value="Geology" >Geology</option>
+                                                                <option value="Oceanography" >Oceanography</option>
+                                                                <option value="Disaster Science and Management" >Disaster Science and Management</option>
+                                                                <option value="Meteorology" >Meteorology</option>
+                                                                <option value="Architecture" >Architecture</option>
+                                                                <option value="Urban and Region al Planning" >Urban and Region al Planning</option>
+                                                                <option value="Humanities" >Humanities</option>
+                                                                <option value="Civil Engineering" >Civil Engineering</option>
+                                                                <option value="Water Resources Engineering " >Water Resources Engineering </option>
+                                                                <option value="Electrical and Electronic Engineering" >Electrical and Electronic Engineering</option>
+                                                                <option value="Computer Science and Engineering" >Computer Science and Engineering</option>
+                                                                <option value="Biomedical Engineering" >Biomedical Engineering</option>
+                                                                <option value="Mechanical Engineering" >Mechanical Engineering</option>
+                                                                <option value="Industrial and Production Engineering" >Industrial and Production Engineering</option>
+                                                                <option value="Naval Architecture and Marine Engineering" >Naval Architecture and Marine Engineering</option>
+                                                                <option value="Chemical Engineering" >Chemical Engineering</option>
+                                                                <option value="Materials and Metallurgical Engineering" >Materials and Metallurgical Engineering</option>
+                                                                <option value="Petroleum and Mineral Resources Engineering" >Petroleum and Mineral Resources Engineering</option>
+                                                                <option value="Glass and Ceramic Engineering" >Glass and Ceramic Engineering</option>
+                                                                <option value="Anatomy and Histology" >Anatomy and Histology</option>
+                                                                <option value="Physiology" >Physiology</option>
+                                                                <option value="Pharmacology" >Pharmacology</option>
+                                                                <option value="Parasitology" >Parasitology</option>
+                                                                <option value="Pathology" >Pathology</option>
+                                                                <option value="Surgery and Obstetrics" >Surgery and Obstetrics</option>
+                                                                <option value="Agronomy" >Agronomy</option>
+                                                                <option value="Soil Science" >Soil Science</option>
+                                                                <option value="Entomology" >Entomology</option>
+                                                                <option value="Horticulture" >Horticulture</option>
+                                                                <option value="Plant Pathology" >Plant Pathology</option>
+                                                                <option value="Crop Botany" >Crop Botany</option>
+                                                                <option value="Genetics and Plant Breeding" >Genetics and Plant Breeding</option>
+                                                                <option value="Agricultural Extension Education" >Agricultural Extension Education</option>
+                                                                <option value="Agricultural Chemistry" >Agricultural Chemistry</option>
+                                                                <option value="Agroforestry" >Agroforestry</option>
+                                                                <option value="Biotechnology" >Biotechnology</option>
+                                                                <option value="Environmental Science" >Environmental Science</option>
+                                                                <option value="Seed Science and Technology" >Seed Science and Technology</option>
+                                                                <option value="Food Safety and management" >Food Safety and management</option>
+                                                                <option value="Farm Structure and Environmental Engineering" >Farm Structure and Environmental Engineering</option>
+                                                                <option value="Farm Power and Machinery" >Farm Power and Machinery</option>
+                                                                <option value="Irrigation and Water Management" >Irrigation and Water Management</option>
+                                                                <option value="Food Technology and Rural Industries" >Food Technology and Rural Industries</option>
+                                                                <option value="Animal Breeding and Genetics" >Animal Breeding and Genetics</option>
+                                                                <option value="Animal Science" >Animal Science</option>
+                                                                <option value="Animal Nutrition" >Animal Nutrition</option>
+                                                                <option value="Poultry Science" >Poultry Science</option>
+                                                                <option value="Dairy Science" >Dairy Science</option>
+                                                                <option value="Agricultural Economics" >Agricultural Economics</option>
+                                                                <option value="Agricultural Finance" >Agricultural Finance</option>
+                                                                <option value="Agricultural Statistics" >Agricultural Statistics</option>
+                                                                <option value="Agribusiness and Marketing" >Agribusiness and Marketing</option>
+                                                                <option value="Rural Sociology" >Rural Sociology</option>
+                                                                <option value="Fisheries, Biology and Genetics" >Fisheries, Biology and Genetics</option>
+                                                                <option value="Fisheries Management" >Fisheries Management</option>
+                                                                <option value="Fisheries Technology" >Fisheries Technology</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                   
+                                                       <select class="year custom-select yearbachelor"  id="yearbachelor" required name="passingyearbachelor">
+                                                                <option value="{{userData.[0].passingyearbachelor}}">{{userData.[0].passingyearbachelor}}</option>
+                                                                <option value="1971">1971</option>
+                                                                <option value="1972" >1972</option>
+                                                                <option value="1973" >1973</option>
+                                                                <option value="1974" >1974</option>
+                                                                <option value="1975" >1975</option>
+                                                                <option value="1976" >1976</option>
+                                                                <option value="1977">1977</option>
+                                                                <option value="1978" >1978</option>
+                                                                <option value="1979" >1979</option>
+                                                                <option value="1980" >1980</option>
+                                                                <option value="1981" >1981</option>
+                                                                <option value="1982">1982</option>
+                                                                <option value="1983" >1983</option>
+                                                                <option value="1984" >1984</option>
+                                                                <option value="1985" >1985</option>
+                                                                <option value="1986" >1986</option>
+                                                                <option value="1987" >1987</option>
+                                                                <option value="1988" >1988</option>
+                                                                <option value="1989" >1989</option>
+                                                                <option value="1990" >1990</option>
+                                                                <option value="1991" >1991</option>
+                                                                <option value="1992" >1992</option>
+                                                                <option value="1993" >1993</option>
+                                                                <option value="1994" >1994</option>
+                                                                <option value="1995" >1995</option>
+                                                                <option value="1996" >1996</option>
+                                                                <option value="1997" >1997</option>
+                                                                <option value="1998" >1998</option>
+                                                                <option value="1999" >1999</option>
+                                                                <option value="2000" >2000</option>
+                                                                <option value="2001" >2001</option>
+                                                                <option value="2002" >2002</option>
+                                                                <option value="2003" >2003</option>
+                                                                <option value="2004" >2004</option>
+                                                                <option value="2005" >2005</option>
+                                                                <option value="2006" >2006</option>
+                                                                <option value="2007" >2007</option>
+                                                                <option value="2008" >2008</option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                                <option value="2019" >2019</option>
+                                                                <option value="2020" >2020</option>
+                                                                <option value="2020" >2021</option>
+                                                    </select>   
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    
+                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatebachelor">
+                                                </div>
+                                             </div>
+                                             {{!-- Masters --}}
+                                              <div class="form-row w-100">
+                                                    <div class="col-md-2 mb-3">
+                                                   
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="MASTERS" value="MASTERS" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                    </div>
+                                                
+                                                <div class="col-md-4 mb-3 position-relative">
+                                                    <select name="institutemasters" class="custom-select institutemasters"  id="institutemasters" required>
+                                                          <option value="{{userData.[0].institutemasters}}">{{userData.[0].institutemasters}}</option>
+                                                        {{#each bachelordata }}
+                                                          <option value="{{this.institutenamebachelor}}">{{this.institutenamebachelor}}</option>
+                                                        {{/each}}                                                     
+                                                    </select>  
+                                                </div>
+                                                <div class="col-md-2 mb-3">
+                                                    
+                                                     <select name="subjectmasters"  class="custom-select" id="subjectmasters" required>
+                                                               <option value="{{userData.[0].subjectmasters}}">{{userData.[0].subjectmasters}}</option>
+                                                                <option value="English" >English</option>
+                                                                <option value="Persian Language and Literature" >Persian Language and Literature</option>
+                                                                <option value="Philosophy" >Philosophy</option>
+                                                                <option value="History" >History</option>
+                                                                <option value="Arabic" >Arabic</option>
+                                                                <option value="Islamic Study" >Islamic Study</option>
+                                                                <option value="Islamic History and Culture" >Islamic History and Culture</option>
+                                                                <option value="Sanskrit and Pali" >Sanskrit and Pali</option>
+                                                                <option value="Information Science and Library Management" >Information Science and Library Management</option>
+                                                                <option value="Languages and Linguistics" >Languages and Linguistics</option>
+                                                                <option value="Theater and Music" >Theater and Music</option>
+                                                                <option value="World Religions and Culture" >World Religions and Culture</option>
+                                                                <option value="Management Studies" >Management Studies</option>
+                                                                <option value="Accounting &amp; Information Systems" >Accounting &amp; Information Systems</option>
+                                                                <option value="Marketing" >Marketing</option>
+                                                                <option value="Finance" >Finance</option>
+                                                                <option value="Banking and Insurance" >Banking and Insurance</option>
+                                                                <option value="Management Information Systems" >Management Information Systems</option>
+                                                                <option value="International Business" >International Business</option>
+                                                                <option value="Tourism and Hospitality Management" >Tourism and Hospitality Management</option>
+                                                                <option value="Organization Strategy and Leadership" >Organization Strategy and Leadership</option>
+                                                                <option value="Soil, Water and Environment" >Soil, Water and Environment</option>
+                                                                <option value="Botany" >Botany</option>
+                                                                <option value="Zoology" >Zoology</option>
+                                                                <option value="Biochemistry and Molecular Biology" >Biochemistry and Molecular Biology</option>
+                                                                <option value="Psychology" >Psychology</option>
+                                                                <option value="Microbiology" >Microbiology</option>
+                                                                <option value="Fisheries Science" >Fisheries Science</option>
+                                                                <option value="Medical Psychology" >Medical Psychology</option>
+                                                                <option value="Genetic Engineering and Biotechnology" >Genetic Engineering and Biotechnology</option>
+                                                                <option value="Educational Psychology" >Educational Psychology</option>
+                                                                <option value="Applied Chemistry and Chemical Engineering" >Applied Chemistry and Chemical Engineering</option>
+                                                                <option value="Nuclear Engineering" >Nuclear Engineering</option>
+                                                                <option value="Robotics and Mechatronics" >Robotics and Mechatronics</option>
+                                                                <option value="Drawing and Painting" >Drawing and Painting</option>
+                                                                <option value="Graphic Design" >Graphic Design</option>
+                                                                <option value="Printmaking" >Printmaking</option>
+                                                                <option value="Oriental Art" >Oriental Art</option>
+                                                                <option value="Ceramics" >Ceramics</option>
+                                                                <option value="Sculpture" >Sculpture</option>
+                                                                <option value="Craft" >Craft</option>
+                                                                <option value="History of Art" >History of Art</option>
+                                                                <option value="Law" >Law</option>
+                                                                <option value="Physiotherapy(BPT)" >Physiotherapy(BPT)</option>
+                                                                <option value="Medicine" >Medicine</option>
+                                                                <option value="Surgery (MBBS)" >Surgery (MBBS)</option>
+                                                                <option value="Dental Surgery (BDS)" >Dental Surgery (BDS)</option>
+                                                                <option value="Pharmaceutical Chemistry" >Pharmaceutical Chemistry</option>
+                                                                <option value="Clinical Pharmacy and Pharmacology" >Clinical Pharmacy and Pharmacology</option>
+                                                                <option value="Pharmaceutical Technology" >Pharmaceutical Technology</option>
+                                                                <option value="Pharmacy" >Pharmacy</option>
+                                                                <option value="Physics" >Physics</option>
+                                                                <option value="Mathematics" >Mathematics</option>
+                                                                <option value="Chemistry" >Chemistry</option>
+                                                                <option value="Biomedical Physics and Technology" >Biomedical Physics and Technology</option>
+                                                                <option value="Theoretical Physics" >Theoretical Physics</option>
+                                                                <option value="Applied Mathematics" >Applied Mathematics</option>
+                                                                <option value="Statistics" >Statistics</option>
+                                                                <option value="Theoretical and Computational Chemistry" >Theoretical and Computational Chemistry</option>
+                                                                <option value="Economics" >Economics</option>
+                                                                <option value="Political Science" >Political Science</option>
+                                                                <option value="International Relations" >International Relations</option>
+                                                                <option value="Anthropology " >Anthropology </option>
+                                                                <option value="Public Administration" >Public Administration</option>
+                                                                <option value="Mass Communication and Journalism" >Mass Communication and Journalism</option>
+                                                                <option value="Communication Disorders" >Communication Disorders</option>
+                                                                <option value="Printing and Publication Studies" >Printing and Publication Studies</option>
+                                                                <option value="Television, Film and Photography" >Television, Film and Photography</option>
+                                                                <option value="Sociology" >Sociology</option>
+                                                                <option value="Development Studies" >Development Studies</option>
+                                                                <option value="Criminology" >Criminology</option>
+                                                                <option value="Japanese Studies" >Japanese Studies</option>
+                                                                <option value="Women and Gender  Studies " >Women and Gender  Studies </option>
+                                                                <option value="Peace and Conflict Studies" >Peace and Conflict Studies</option>
+                                                                <option value="Geography and Environment" >Geography and Environment</option>
+                                                                <option value="Geology" >Geology</option>
+                                                                <option value="Oceanography" >Oceanography</option>
+                                                                <option value="Disaster Science and Management" >Disaster Science and Management</option>
+                                                                <option value="Meteorology" >Meteorology</option>
+                                                                <option value="Architecture" >Architecture</option>
+                                                                <option value="Urban and Region al Planning" >Urban and Region al Planning</option>
+                                                                <option value="Humanities" >Humanities</option>
+                                                                <option value="Civil Engineering" >Civil Engineering</option>
+                                                                <option value="Water Resources Engineering " >Water Resources Engineering </option>
+                                                                <option value="Electrical and Electronic Engineering" >Electrical and Electronic Engineering</option>
+                                                                <option value="Computer Science and Engineering" >Computer Science and Engineering</option>
+                                                                <option value="Biomedical Engineering" >Biomedical Engineering</option>
+                                                                <option value="Mechanical Engineering" >Mechanical Engineering</option>
+                                                                <option value="Industrial and Production Engineering" >Industrial and Production Engineering</option>
+                                                                <option value="Naval Architecture and Marine Engineering" >Naval Architecture and Marine Engineering</option>
+                                                                <option value="Chemical Engineering" >Chemical Engineering</option>
+                                                                <option value="Materials and Metallurgical Engineering" >Materials and Metallurgical Engineering</option>
+                                                                <option value="Petroleum and Mineral Resources Engineering" >Petroleum and Mineral Resources Engineering</option>
+                                                                <option value="Glass and Ceramic Engineering" >Glass and Ceramic Engineering</option>
+                                                                <option value="Anatomy and Histology" >Anatomy and Histology</option>
+                                                                <option value="Physiology" >Physiology</option>
+                                                                <option value="Pharmacology" >Pharmacology</option>
+                                                                <option value="Parasitology" >Parasitology</option>
+                                                                <option value="Pathology" >Pathology</option>
+                                                                <option value="Surgery and Obstetrics" >Surgery and Obstetrics</option>
+                                                                <option value="Agronomy" >Agronomy</option>
+                                                                <option value="Soil Science" >Soil Science</option>
+                                                                <option value="Entomology" >Entomology</option>
+                                                                <option value="Horticulture" >Horticulture</option>
+                                                                <option value="Plant Pathology" >Plant Pathology</option>
+                                                                <option value="Crop Botany" >Crop Botany</option>
+                                                                <option value="Genetics and Plant Breeding" >Genetics and Plant Breeding</option>
+                                                                <option value="Agricultural Extension Education" >Agricultural Extension Education</option>
+                                                                <option value="Agricultural Chemistry" >Agricultural Chemistry</option>
+                                                                <option value="Agroforestry" >Agroforestry</option>
+                                                                <option value="Biotechnology" >Biotechnology</option>
+                                                                <option value="Environmental Science" >Environmental Science</option>
+                                                                <option value="Seed Science and Technology" >Seed Science and Technology</option>
+                                                                <option value="Food Safety and management" >Food Safety and management</option>
+                                                                <option value="Farm Structure and Environmental Engineering" >Farm Structure and Environmental Engineering</option>
+                                                                <option value="Farm Power and Machinery" >Farm Power and Machinery</option>
+                                                                <option value="Irrigation and Water Management" >Irrigation and Water Management</option>
+                                                                <option value="Food Technology and Rural Industries" >Food Technology and Rural Industries</option>
+                                                                <option value="Animal Breeding and Genetics" >Animal Breeding and Genetics</option>
+                                                                <option value="Animal Science" >Animal Science</option>
+                                                                <option value="Animal Nutrition" >Animal Nutrition</option>
+                                                                <option value="Poultry Science" >Poultry Science</option>
+                                                                <option value="Dairy Science" >Dairy Science</option>
+                                                                <option value="Agricultural Economics" >Agricultural Economics</option>
+                                                                <option value="Agricultural Finance" >Agricultural Finance</option>
+                                                                <option value="Agricultural Statistics" >Agricultural Statistics</option>
+                                                                <option value="Agribusiness and Marketing" >Agribusiness and Marketing</option>
+                                                                <option value="Rural Sociology" >Rural Sociology</option>
+                                                                <option value="Fisheries, Biology and Genetics" >Fisheries, Biology and Genetics</option>
+                                                                <option value="Fisheries Management" >Fisheries Management</option>
+                                                                <option value="Fisheries Technology" >Fisheries Technology</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    
+                                                    <select class="year custom-select yearmasters" name="passingyearmasters"  id="yearmasters" required>
+                                                                <option value="{{userData.[0].passingyearmasters}}">{{userData.[0].passingyearmasters}}</option>
+                                                                <option value="1971">1971</option>
+                                                                <option value="1972" >1972</option>
+                                                                <option value="1973" >1973</option>
+                                                                <option value="1974" >1974</option>
+                                                                <option value="1975" >1975</option>
+                                                                <option value="1976" >1976</option>
+                                                                <option value="1977">1977</option>
+                                                                <option value="1978" >1978</option>
+                                                                <option value="1979" >1979</option>
+                                                                <option value="1980" >1980</option>
+                                                                <option value="1981" >1981</option>
+                                                                <option value="1982">1982</option>
+                                                                <option value="1983" >1983</option>
+                                                                <option value="1984" >1984</option>
+                                                                <option value="1985" >1985</option>
+                                                                <option value="1986" >1986</option>
+                                                                <option value="1987" >1987</option>
+                                                                <option value="1988" >1988</option>
+                                                                <option value="1989" >1989</option>
+                                                                <option value="1990" >1990</option>
+                                                                <option value="1991" >1991</option>
+                                                                <option value="1992" >1992</option>
+                                                                <option value="1993" >1993</option>
+                                                                <option value="1994" >1994</option>
+                                                                <option value="1995" >1995</option>
+                                                                <option value="1996" >1996</option>
+                                                                <option value="1997" >1997</option>
+                                                                <option value="1998" >1998</option>
+                                                                <option value="1999" >1999</option>
+                                                                <option value="2000" >2000</option>
+                                                                <option value="2001" >2001</option>
+                                                                <option value="2002" >2002</option>
+                                                                <option value="2003" >2003</option>
+                                                                <option value="2004" >2004</option>
+                                                                <option value="2005" >2005</option>
+                                                                <option value="2006" >2006</option>
+                                                                <option value="2007" >2007</option>
+                                                                <option value="2008" >2008</option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                                <option value="2019" >2019</option>
+                                                                <option value="2020" >2020</option>
+                                                                <option value="2020" >2021</option>
+                                                    </select>   
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    
+                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatemasters">
+                                                </div>
+                                             </div>
+                                             {{!-- PHD --}}
+                                              <div class="form-row w-100">
+                                                    <div class="col-md-2 mb-3">
+                                                    
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="PHD" value="PHD" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                    </div>
+                                                
+                                                <div class="col-md-4 mb-3 position-relative">
+                                                   
+                                                    <select name="institutephd" class="custom-select institutephd"  id="institutephd" required>
+                                                          <option value="{{userData.[0].institutephd}}">{{userData.[0].institutephd}}</option>
+                                                        {{#each bachelordata }}
+                                                          <option value="{{this.institutenamebachelor}}">{{this.institutenamebachelor}}</option>
+                                                        {{/each}}                                                     
+                                                    </select>  
+                                                </div>
+                                                <div class="col-md-2 mb-3">
+                                                 
+                                                     <select name="subjectphd"    class="custom-select" id="subjectphd" name="subjectphd" required>
+                                                               <option value="{{userData.[0].subjectphd}}">{{userData.[0].subjectphd}}</option>
+                                                                <option value="English" >English</option>
+                                                                <option value="Persian Language and Literature" >Persian Language and Literature</option>
+                                                                <option value="Philosophy" >Philosophy</option>
+                                                                <option value="History" >History</option>
+                                                                <option value="Arabic" >Arabic</option>
+                                                                <option value="Islamic Study" >Islamic Study</option>
+                                                                <option value="Islamic History and Culture" >Islamic History and Culture</option>
+                                                                <option value="Sanskrit and Pali" >Sanskrit and Pali</option>
+                                                                <option value="Information Science and Library Management" >Information Science and Library Management</option>
+                                                                <option value="Languages and Linguistics" >Languages and Linguistics</option>
+                                                                <option value="Theater and Music" >Theater and Music</option>
+                                                                <option value="World Religions and Culture" >World Religions and Culture</option>
+                                                                <option value="Management Studies" >Management Studies</option>
+                                                                <option value="Accounting &amp; Information Systems" >Accounting &amp; Information Systems</option>
+                                                                <option value="Marketing" >Marketing</option>
+                                                                <option value="Finance" >Finance</option>
+                                                                <option value="Banking and Insurance" >Banking and Insurance</option>
+                                                                <option value="Management Information Systems" >Management Information Systems</option>
+                                                                <option value="International Business" >International Business</option>
+                                                                <option value="Tourism and Hospitality Management" >Tourism and Hospitality Management</option>
+                                                                <option value="Organization Strategy and Leadership" >Organization Strategy and Leadership</option>
+                                                                <option value="Soil, Water and Environment" >Soil, Water and Environment</option>
+                                                                <option value="Botany" >Botany</option>
+                                                                <option value="Zoology" >Zoology</option>
+                                                                <option value="Biochemistry and Molecular Biology" >Biochemistry and Molecular Biology</option>
+                                                                <option value="Psychology" >Psychology</option>
+                                                                <option value="Microbiology" >Microbiology</option>
+                                                                <option value="Fisheries Science" >Fisheries Science</option>
+                                                                <option value="Medical Psychology" >Medical Psychology</option>
+                                                                <option value="Genetic Engineering and Biotechnology" >Genetic Engineering and Biotechnology</option>
+                                                                <option value="Educational Psychology" >Educational Psychology</option>
+                                                                <option value="Applied Chemistry and Chemical Engineering" >Applied Chemistry and Chemical Engineering</option>
+                                                                <option value="Nuclear Engineering" >Nuclear Engineering</option>
+                                                                <option value="Robotics and Mechatronics" >Robotics and Mechatronics</option>
+                                                                <option value="Drawing and Painting" >Drawing and Painting</option>
+                                                                <option value="Graphic Design" >Graphic Design</option>
+                                                                <option value="Printmaking" >Printmaking</option>
+                                                                <option value="Oriental Art" >Oriental Art</option>
+                                                                <option value="Ceramics" >Ceramics</option>
+                                                                <option value="Sculpture" >Sculpture</option>
+                                                                <option value="Craft" >Craft</option>
+                                                                <option value="History of Art" >History of Art</option>
+                                                                <option value="Law" >Law</option>
+                                                                <option value="Physiotherapy(BPT)" >Physiotherapy(BPT)</option>
+                                                                <option value="Medicine" >Medicine</option>
+                                                                <option value="Surgery (MBBS)" >Surgery (MBBS)</option>
+                                                                <option value="Dental Surgery (BDS)" >Dental Surgery (BDS)</option>
+                                                                <option value="Pharmaceutical Chemistry" >Pharmaceutical Chemistry</option>
+                                                                <option value="Clinical Pharmacy and Pharmacology" >Clinical Pharmacy and Pharmacology</option>
+                                                                <option value="Pharmaceutical Technology" >Pharmaceutical Technology</option>
+                                                                <option value="Pharmacy" >Pharmacy</option>
+                                                                <option value="Physics" >Physics</option>
+                                                                <option value="Mathematics" >Mathematics</option>
+                                                                <option value="Chemistry" >Chemistry</option>
+                                                                <option value="Biomedical Physics and Technology" >Biomedical Physics and Technology</option>
+                                                                <option value="Theoretical Physics" >Theoretical Physics</option>
+                                                                <option value="Applied Mathematics" >Applied Mathematics</option>
+                                                                <option value="Statistics" >Statistics</option>
+                                                                <option value="Theoretical and Computational Chemistry" >Theoretical and Computational Chemistry</option>
+                                                                <option value="Economics" >Economics</option>
+                                                                <option value="Political Science" >Political Science</option>
+                                                                <option value="International Relations" >International Relations</option>
+                                                                <option value="Anthropology " >Anthropology </option>
+                                                                <option value="Public Administration" >Public Administration</option>
+                                                                <option value="Mass Communication and Journalism" >Mass Communication and Journalism</option>
+                                                                <option value="Communication Disorders" >Communication Disorders</option>
+                                                                <option value="Printing and Publication Studies" >Printing and Publication Studies</option>
+                                                                <option value="Television, Film and Photography" >Television, Film and Photography</option>
+                                                                <option value="Sociology" >Sociology</option>
+                                                                <option value="Development Studies" >Development Studies</option>
+                                                                <option value="Criminology" >Criminology</option>
+                                                                <option value="Japanese Studies" >Japanese Studies</option>
+                                                                <option value="Women and Gender  Studies " >Women and Gender  Studies </option>
+                                                                <option value="Peace and Conflict Studies" >Peace and Conflict Studies</option>
+                                                                <option value="Geography and Environment" >Geography and Environment</option>
+                                                                <option value="Geology" >Geology</option>
+                                                                <option value="Oceanography" >Oceanography</option>
+                                                                <option value="Disaster Science and Management" >Disaster Science and Management</option>
+                                                                <option value="Meteorology" >Meteorology</option>
+                                                                <option value="Architecture" >Architecture</option>
+                                                                <option value="Urban and Region al Planning" >Urban and Region al Planning</option>
+                                                                <option value="Humanities" >Humanities</option>
+                                                                <option value="Civil Engineering" >Civil Engineering</option>
+                                                                <option value="Water Resources Engineering " >Water Resources Engineering </option>
+                                                                <option value="Electrical and Electronic Engineering" >Electrical and Electronic Engineering</option>
+                                                                <option value="Computer Science and Engineering" >Computer Science and Engineering</option>
+                                                                <option value="Biomedical Engineering" >Biomedical Engineering</option>
+                                                                <option value="Mechanical Engineering" >Mechanical Engineering</option>
+                                                                <option value="Industrial and Production Engineering" >Industrial and Production Engineering</option>
+                                                                <option value="Naval Architecture and Marine Engineering" >Naval Architecture and Marine Engineering</option>
+                                                                <option value="Chemical Engineering" >Chemical Engineering</option>
+                                                                <option value="Materials and Metallurgical Engineering" >Materials and Metallurgical Engineering</option>
+                                                                <option value="Petroleum and Mineral Resources Engineering" >Petroleum and Mineral Resources Engineering</option>
+                                                                <option value="Glass and Ceramic Engineering" >Glass and Ceramic Engineering</option>
+                                                                <option value="Anatomy and Histology" >Anatomy and Histology</option>
+                                                                <option value="Physiology" >Physiology</option>
+                                                                <option value="Pharmacology" >Pharmacology</option>
+                                                                <option value="Parasitology" >Parasitology</option>
+                                                                <option value="Pathology" >Pathology</option>
+                                                                <option value="Surgery and Obstetrics" >Surgery and Obstetrics</option>
+                                                                <option value="Agronomy" >Agronomy</option>
+                                                                <option value="Soil Science" >Soil Science</option>
+                                                                <option value="Entomology" >Entomology</option>
+                                                                <option value="Horticulture" >Horticulture</option>
+                                                                <option value="Plant Pathology" >Plant Pathology</option>
+                                                                <option value="Crop Botany" >Crop Botany</option>
+                                                                <option value="Genetics and Plant Breeding" >Genetics and Plant Breeding</option>
+                                                                <option value="Agricultural Extension Education" >Agricultural Extension Education</option>
+                                                                <option value="Agricultural Chemistry" >Agricultural Chemistry</option>
+                                                                <option value="Agroforestry" >Agroforestry</option>
+                                                                <option value="Biotechnology" >Biotechnology</option>
+                                                                <option value="Environmental Science" >Environmental Science</option>
+                                                                <option value="Seed Science and Technology" >Seed Science and Technology</option>
+                                                                <option value="Food Safety and management" >Food Safety and management</option>
+                                                                <option value="Farm Structure and Environmental Engineering" >Farm Structure and Environmental Engineering</option>
+                                                                <option value="Farm Power and Machinery" >Farm Power and Machinery</option>
+                                                                <option value="Irrigation and Water Management" >Irrigation and Water Management</option>
+                                                                <option value="Food Technology and Rural Industries" >Food Technology and Rural Industries</option>
+                                                                <option value="Animal Breeding and Genetics" >Animal Breeding and Genetics</option>
+                                                                <option value="Animal Science" >Animal Science</option>
+                                                                <option value="Animal Nutrition" >Animal Nutrition</option>
+                                                                <option value="Poultry Science" >Poultry Science</option>
+                                                                <option value="Dairy Science" >Dairy Science</option>
+                                                                <option value="Agricultural Economics" >Agricultural Economics</option>
+                                                                <option value="Agricultural Finance" >Agricultural Finance</option>
+                                                                <option value="Agricultural Statistics" >Agricultural Statistics</option>
+                                                                <option value="Agribusiness and Marketing" >Agribusiness and Marketing</option>
+                                                                <option value="Rural Sociology" >Rural Sociology</option>
+                                                                <option value="Fisheries, Biology and Genetics" >Fisheries, Biology and Genetics</option>
+                                                                <option value="Fisheries Management" >Fisheries Management</option>
+                                                                <option value="Fisheries Technology" >Fisheries Technology</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                   
+                                                       <select class="yearphd custom-select" name="passingyearphd" id="yearphd" required>
+                                                                <option value="{{userData.[0].passingyearphd}}">{{userData.[0].passingyearphd}}</option>
+                                                                <option value="1971">1971</option>
+                                                                <option value="1972" >1972</option>
+                                                                <option value="1973" >1973</option>
+                                                                <option value="1974" >1974</option>
+                                                                <option value="1975" >1975</option>
+                                                                <option value="1976" >1976</option>
+                                                                <option value="1977">1977</option>
+                                                                <option value="1978" >1978</option>
+                                                                <option value="1979" >1979</option>
+                                                                <option value="1980" >1980</option>
+                                                                <option value="1981" >1981</option>
+                                                                <option value="1982">1982</option>
+                                                                <option value="1983" >1983</option>
+                                                                <option value="1984" >1984</option>
+                                                                <option value="1985" >1985</option>
+                                                                <option value="1986" >1986</option>
+                                                                <option value="1987" >1987</option>
+                                                                <option value="1988" >1988</option>
+                                                                <option value="1989" >1989</option>
+                                                                <option value="1990" >1990</option>
+                                                                <option value="1991" >1991</option>
+                                                                <option value="1992" >1992</option>
+                                                                <option value="1993" >1993</option>
+                                                                <option value="1994" >1994</option>
+                                                                <option value="1995" >1995</option>
+                                                                <option value="1996" >1996</option>
+                                                                <option value="1997" >1997</option>
+                                                                <option value="1998" >1998</option>
+                                                                <option value="1999" >1999</option>
+                                                                <option value="2000" >2000</option>
+                                                                <option value="2001" >2001</option>
+                                                                <option value="2002" >2002</option>
+                                                                <option value="2003" >2003</option>
+                                                                <option value="2004" >2004</option>
+                                                                <option value="2005" >2005</option>
+                                                                <option value="2006" >2006</option>
+                                                                <option value="2007" >2007</option>
+                                                                <option value="2008" >2008</option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                                <option value="2019" >2019</option>
+                                                                <option value="2020" >2020</option>
+                                                                <option value="2020" >2021</option>
+                                                    </select>   
+                                                </div>
+                                                 <div class="col-md-2 mb-3">
+                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatephd">
+                                                </div>
+                                             </div>
+                                          
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="tab-pane fade mt-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                              <div class="tab-pane" id="address" tabindex="-1">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h5 class="info-text"></h5>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-6 col-sm-offset-1">
+                                                <div class="form-group">
+                                                    <label>Occupation</label><br>
+                                                    <select class="form-control" name="profession" aria-invalid="false" required>
+                                                        <option value="{{userData.[0].profession}}">{{userData.[0].profession}}</option>
+                                                        <option value="Student">Student</option>
+                                                        <option value="Housewife">Housewife</option>
+                                                        <option value="Government service">Government service</option>
+                                                        <option value="Private service">Private service</option>
+                                                        <option value="Business">Business</option>
+                                                        <option value="Workers">Workers</option>
+                                                        <option value="Teacher">Teacher</option>
+                                                        <option value="Doctor">Doctor</option>
+                                                        <option value="Engineer">Engineer</option>
+                                                        <option value="Lawyer">Lawyer</option>
+                                                        <option value="Army/Navy/Air">Army/Navy/Air</option>
+                                                        <option value="Others">Others</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company Name</label>
+                                                    <input type="text" name="organization" class="form-control" placeholder="Organization" value="{{userData.[0].organization}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-sm-offset-1">
+                                                <div class="form-group">
+                                                    <label>Designation</label>
+                                                    <input type="text" name="designation" class="form-control" placeholder="Designation" value="{{userData.[0].designation}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Company Address</label>
+                                                    <input type="text" name="address" class="form-control" placeholder="Address" value="{{userData.[0].address}}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                              </div>
+                        </div>
+                        <button type="submit"  class="btn btn-primary">Update</button>
+                     
+                   </div>
+                  </form> 
+                        </div>
+                    </div>
+                      
+                    
+                  </div>  
+                 
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}

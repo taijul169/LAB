@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+      <input id="alldata" type="text" value="{{data}}" >
+        <form class="row g-3 needs-validation border p-2 mt-5" novalidate>
+            
+            
+            <div class="col-md-8 mr-auto">
+              <label for="validationCustom02" class="form-label">city name</label>
+              <input id="search" type="text" class="form-control" id="validationCustom02" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div id="match-list">
+
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+          </form>
+
+    </div>
+ 
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+
+        const alldata =  document.getElementById("alldata").value;
+
+        const search =  document.getElementById("search");
+        const match_list =  document.getElementById("match-list");
+        //   search data.json and  fiter it
+        const searchStates = async searchText =>{
+        const res = alldata
+        const states = JSON.parse(res);
+         //const res =  await fetch ('../data.json');
+         //const states = await res.json();
+         console.log("the states is:", states)
+
+        //  Get matches to the current search input
+        let matches =  states.filter(state =>{
+            const regex  =  new RegExp(`^${searchText}`,'gi');
+            return state.institutenamessc.match(regex) 
+        });
+        if(searchText.length ===0){
+            matches = [];
+            match_list.innerHTML = '';
+        }
+
+        outputHtml(matches);
+    };
+    // show result in html
+    const outputHtml = matches =>{
+      if(matches.length >0){
+          const html = matches.map(match=>`
+          <div class = "card card-body mb-1">
+            <h4 onclick="getValue('${match.institutenamessc}')"><span class="text-primary">${match.institutenamessc}</span></h4>
+          </div>
+          `).join('')
+         match_list.innerHTML = html;
+         
+      }
+    }
+  const getValue = (data)=>{
+          search.value = data;
+    }
+       search.addEventListener("input",()=> searchStates(search.value))
+    </script>
+</body>
+</html>

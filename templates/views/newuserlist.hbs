@@ -1,0 +1,204 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+                 {{!-- modal for idcard --}}
+               <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content custom-content-card text-center">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
+                      <div class="card-content-wrap text-center">
+                            <h3>Lab</h3>
+                        <span>Change together</span>
+                        <div class="idcard-img">
+                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                        </div>
+                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
+                        <span>Member</span>
+                        <table>
+                            <tr>
+                                <td>ID <span>:</span></td>
+                                <td>0000{{userData.[0].id}}</td>
+                            </tr>
+                              <tr>
+                                <td>Blood <span>:</span></td>
+                                <td>{{userData.[0].bloodgroup}}</td>
+                            </tr>
+                              <tr>
+                                <td>Email <span>:</span></td>
+                                <td>{{userData.[0].email}}</td>
+                            </tr>
+                              <tr>
+                                <td>Phone <span>:</span></td>
+                                <td>{{userData.[0].mobile}}</td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Unverified User</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/index.html" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+        
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+             <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            {{!-- ssc --}}
+                            <div class="col-sm-12">
+                                 {{#if message}}
+                                    <div class="alert {{message.type}}" role="alert">
+                                        {{message.message}}
+                                    </div>
+
+                                    {{/if}}
+                                <div class="card card-warning card-outline">
+                                    <div class="card-header">
+                                        All Verified User
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped dt-responsive nowrap" id="active_blog" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>#SL</th>
+                                                    <th>User</th>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th>Profession</th>
+                                                    <th>From</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{#each unverifieduserData}}
+                                                    {{!-- single-donor --}}
+                                                <tr>
+                                                    <td>{{this.id}}</td>
+                                                    <td> <img style="width: 30px; height:30px; border-radius:50%" src="data:image/png;base64,{{this.userphoto}}" alt=""></td>
+                                                    <td>{{this.firstname}}</td>
+                                                    <td>{{this.upazila}},{{this.district}}</td>
+                                                    
+                                                    <td> {{this.profession}}  </td>
+                                                    <td>{{this.createdate}}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a  href="/users/singleuserview/{{this.id}}" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
+                                                            <a href="#" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {{/each}}                      
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                                const payment_title_el =  document.getElementById('payment_title'); 
+                                const id_el =  document.getElementById('id'); 
+                                const payment_for_el =  document.getElementById('payment_for'); 
+                                const payment_method_el =  document.getElementById('payment_method'); 
+                                const transactionid_el =  document.getElementById('transactionid'); 
+                                const category_el =  document.getElementById('category'); 
+                                const senderno_el =  document.getElementById('senderno');
+                                const amount_el =  document.getElementById('amount');
+                                const Payment_date =  document.getElementById('payment_date');
+
+                                const displayDataIntoModal =(id,payment_title,payment_for,amount,paymentdate,transactionid,category,senderno,paymentmethod)=>{
+                                    id_el.value = id;
+                                    payment_title_el.value = payment_title;
+                                    payment_for_el.value = payment_for;
+                                    payment_method_el.value = paymentmethod;
+                                    transactionid_el.value = transactionid;
+                                    category_el.value = category;
+                                    senderno_el.value = senderno;
+                                    amount_el.value = amount;
+                                    Payment_date.value = paymentdate;
+                                }
+
+                              
+
+                                //onsubmit
+                              
+                            </script>
+                            
+                        </div>
+                    </div>    
+            </section>
+
+           </div>
+            </section>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}
