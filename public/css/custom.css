@@ -2690,7 +2690,7 @@ header{
 
 #heading {
     text-transform: uppercase;
-    color: #673AB7;
+    color: #2B2854;
     font-weight: normal
 }
 
@@ -2740,13 +2740,13 @@ header{
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 1px solid #673AB7;
+    border: 1px solid #2B2854;
     outline-width: 0
 }
 
 #msform .action-button {
     width: 100px;
-    background: #673AB7;
+    background: #2B2854;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -2788,14 +2788,14 @@ header{
 
 .fs-title {
     font-size: 25px;
-    color: #673AB7;
+    color: #2B2854;
     margin-bottom: 15px;
     font-weight: normal;
     text-align: left
 }
 
 .purple-text {
-    color: #673AB7;
+    color: #2B2854;
     font-weight: normal
 }
 
@@ -2819,7 +2819,7 @@ header{
 }
 
 #progressbar .active {
-    color: #673AB7
+    color: #2B2854;
 }
 
 #progressbar li {
@@ -2877,7 +2877,9 @@ header{
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #673AB7
+	background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .progress {
@@ -2885,7 +2887,9 @@ header{
 }
 
 .progress-bar {
-    background-color: #673AB7
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .fit-image {
@@ -3036,6 +3040,24 @@ header{
 }
 span.hide-menu {
     width: 100%;
+}
+#output {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 2px solid #f4f4f4;
+	margin: 8px;
+}
+.doc-box {
+	width: 180px;
+	height: 200px;
+	border: 1px solid #f4f4f4;
+	padding: 5px;
+}
+.doc-box img {
+	width: 180px;
+	height: 146px;
+	margin: 0px 0px;
 }
 /* .tab-pane .select2-container .select2-selection--single {
 

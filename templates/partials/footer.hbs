@@ -1,6 +1,36 @@
             <footer class="footer text-center"> 2021 © E-call Admin brought to you by <a
                 href="">lawassociationbd.com</a>
             </footer>
+
+            <input type="hidden" value="{{userData.[0].idcard}}" id="idcardValue">
+
+            <script>
+                 const idcardValue = document.getElementById("idcardValue");
+                const profileCollapse = document.getElementById("profileCollapse");
+                if(idcardValue.value == 0){
+                    profileCollapse.innerHTML = `<li class="sidebar-item">
+                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/profile">
+                                                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                                                        <span class="hide-menu">My Profile</span>
+                                                    </a>
+                                                </li>`
+                }
+                else{
+                    profileCollapse.innerHTML = ` <li class="sidebar-item">
+                                                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/profile">
+                                                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                                                            <span class="hide-menu">My Profile</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="sidebar-item">
+                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                                                        <span class="hide-menu">My Id Card</span>
+                                                    </a>
+                                                </li>`
+                }
+               
+            </script>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -34,7 +64,7 @@
         const pdfGenarator= ()=>{
           const elemnt =   document.getElementById("idcardWrap");
           var opt = {
-                    margin:       1,
+                    margin:1,
                     width:400,
                     filename:     'myfile.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },

@@ -356,11 +356,8 @@ router.get('/signup',(req,res)=>{
     })
 
 // create user(signup route)
-router.post('/signup', (req,res)=>{
-        
+router.post('/signup', (req,res)=>{        
     try {
-
-       
         const SQL_INSERT = "INSERT INTO userinfo (firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,userphoto,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,certificatessc,institutehsc,hscgroup,passingyearhsc,certificatehsc,institutebachelor,subjectbachelor,passingyearbachelor,certificatebachelor,institutemasters,subjectmasters,passingyearmasters,certificatemasters,institutephd,subjectphd,passingyearphd,certificatephd,profession,organization,designation,address,jwtoken) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         const {
             firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,institutehsc,hscgroup,passingyearhsc,institutebachelor,subjectbachelor,passingyearbachelor,institutemasters,subjectmasters,passingyearmasters,institutephd,subjectphd,passingyearphd,profession,organization,designation,address
@@ -377,9 +374,15 @@ router.post('/signup', (req,res)=>{
         const RANDOM_NUM_TWO = Math.round((Math.random()*10000));
         const jwtoken =  `@1231@3#CV${RANDOM_NUM*1000}${RANDOM_NUM_TWO*1000}${RANDOM_NUM}${RANDOM_NUM_TWO}`
         // single-image-prcessed-------------------
+        var userphoto_demo = "";
         const fileOne = req.files.userphoto;
-        const newfileOne = fileOne.data;
-        const userphoto_demo = newfileOne.toString('base64');
+        if(fileOne){
+            var newfileOne = fileOne.data;
+            userphoto_demo = newfileOne.toString('base64');
+        }
+
+        
+       
          // single-image-prcessed-------------------
          const fileTwo = req.files.certificatessc;
          const newfileTwo = fileTwo.data;
@@ -388,24 +391,37 @@ router.post('/signup', (req,res)=>{
         const fileThree = req.files.certificatehsc;
         const newfileThree = fileThree.data;
         const certificatehsc_demo = newfileThree.toString('base64');
-        // single-image-prcessed-------------------
+
+
+       // single-image-prcessed-------------------
+        var certificatebachelor_demo = '';
         const fileFour = req.files.certificatebachelor;
-        const newfileFour = fileFour.data;
-        const certificatebachelor_demo = newfileFour.toString('base64');
-    
+        if(fileFour){
+          
+        var newfileFour = fileFour.data;
+         certificatebachelor_demo = newfileFour.toString('base64');
+        } 
         // single-image-prcessed-------------------
+        var certificatemasters_demo = '';
         const fileFive = req.files.certificatemasters;
-        const newfileFive = fileFive.data;
-        const certificatemasters_demo = newfileFive.toString('base64');
-        // single-image-prcessed-------------------
-        const fileSix = req.files.certificatemasters;
-        const newfileSix = fileSix.data;
-        const certificatephd_demo = newfileSix.toString('base64');
+        if(fileFive){ 
+        var newfileFive = fileFive.data;
+        certificatemasters_demo = newfileFive.toString('base64');
+        }
+          // single-image-prcessed-------------------
+          var certificatephd_demo = '';
+          const fileSix = req.files.certificatemasters;
+          if(fileSix){ 
+          var newfileSix = fileSix.data;
+          certificatephd_demo = newfileSix.toString('base64');
+          }
+        
         // privacy table data insert
         const sql = "INSERT INTO privacy (useremail) VALUES(?)";
         con.query(sql,[email],(err,result)=>{
 
         })
+
        con.query(SQL_INSERT,[firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,userphoto_demo,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,certificatessc_demo,institutehsc,hscgroup,passingyearhsc,certificatehsc_demo,institutebachelor,subjectbachelor,passingyearbachelor,certificatebachelor_demo,institutemasters,subjectmasters,passingyearmasters,certificatemasters_demo,institutephd,subjectphd,passingyearphd,certificatephd_demo,profession,organization,designation,address,jwtoken,createdat],(err,result)=>{
            console.log(err)
            if(!err){
@@ -418,10 +434,140 @@ router.post('/signup', (req,res)=>{
         
     }
 
- 
 });
 
+// PROFILE IN ROUTE------------------------------
+router.get("/users/profile",auth,(req,res)=>{
+    const sql_ssc = `SELECT institutenamessc  FROM ssc`;
+        const sql_hsc = `SELECT institutenamehsc  FROM hsc`;
+        const sql_bachelor = `SELECT institutenamebachelor  FROM bachelor`;
+                con.query(sql_ssc,(err,result)=>{
+                    let sscdata= result;
+                    con.query(sql_hsc,(err,result)=>{
+                        let hscdata= result;     
+                        con.query(sql_bachelor,(err,result)=>{
+                            let bachelordata = result;
+                            const sql = `SELECT * FROM privacy WHERE useremail = '${req.userData[0].email}'`;
+                            con.query(sql,(err,result)=>{
+                                console.log(result)
+                                res.render("profile",{userData:req.userData,privacyData:result,sscdata,hscdata,bachelordata})
+                            })
+                        })
+                    })
+                })
+})
 
+// User Profile update route
+router.post('/users/profile',auth, (req,res)=>{        
+    try {
+        const {
+            firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,institutehsc,hscgroup,passingyearhsc,institutebachelor,subjectbachelor,passingyearbachelor,institutemasters,subjectmasters,passingyearmasters,institutephd,subjectphd,passingyearphd,profession,organization,designation,address
+        } = req.body;
+        // single-image-prcessed-------------------
+        
+        if(req.files){
+            const fileOne = req.files.userphoto;
+            const SQL_UPDATE = `UPDATE  userinfo SET firstname=?,midlename=?,lastname=?,email=?,gender=?,dateofbirth=?,bloodgroup=?,division=?,district=?,upazila=?,userphoto=?,mobile=?,secondarymobile=?,confirmpassword=?,institutessc=?,sscgroup=?,passingyearssc=?,institutehsc=?,hscgroup=?,passingyearhsc=?,institutebachelor=?,subjectbachelor=?,passingyearbachelor=?,institutemasters=?,subjectmasters=?,passingyearmasters=?,institutephd=?,subjectphd=?,passingyearphd=?,profession=?,organization=?,designation=?,address=? WHERE  id = ${req.userData[0].id}`;
+            const newfileOne = fileOne.data;
+            const userphoto_demo = newfileOne.toString('base64');
+            con.query(SQL_UPDATE,[firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,userphoto_demo,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,institutehsc,hscgroup,passingyearhsc,institutebachelor,subjectbachelor,passingyearbachelor,institutemasters,subjectmasters,passingyearmasters,institutephd,subjectphd,passingyearphd,profession,organization,designation,address],(err,result)=>{
+                console.log("first error",err)
+                if(!err){
+                    res.redirect(`/users/profile`)
+                }
+            })
+        }
+        else{
+            const SQL_UPDATE = `UPDATE  userinfo SET firstname=?,midlename=?,lastname=?,email=?,gender=?,dateofbirth=?,bloodgroup=?,division=?,district=?,upazila=?,mobile=?,secondarymobile=?,confirmpassword=?,institutessc=?,sscgroup=?,passingyearssc=?,institutehsc=?,hscgroup=?,passingyearhsc=?,institutebachelor=?,subjectbachelor=?,passingyearbachelor=?,institutemasters=?,subjectmasters=?,passingyearmasters=?,institutephd=?,subjectphd=?,passingyearphd=?,profession=?,organization=?,designation=?,address=? WHERE  id = ${req.userData[0].id}`;
+            con.query(SQL_UPDATE,[firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,institutehsc,hscgroup,passingyearhsc,institutebachelor,subjectbachelor,passingyearbachelor,institutemasters,subjectmasters,passingyearmasters,institutephd,subjectphd,passingyearphd,profession,organization,designation,address],(err,result)=>{
+                console.log("second error",err)
+                if(!err){
+                    res.redirect(`/users/profile`)
+                }
+            })
+        }
+    
+        //  // single-image-prcessed-------------------
+        //  const fileTwo = req.files.certificatessc;
+        //  const newfileTwo = fileTwo.data;
+        //  const certificatessc_demo = newfileTwo.toString('base64');
+        //   // single-image-prcessed-------------------
+        // const fileThree = req.files.certificatehsc;
+        // const newfileThree = fileThree.data;
+        // const certificatehsc_demo = newfileThree.toString('base64');
+        // // single-image-prcessed-------------------
+        // const fileFour = req.files.certificatebachelor;
+        // const newfileFour = fileFour.data;
+        // const certificatebachelor_demo = newfileFour.toString('base64');
+    
+        // // single-image-prcessed-------------------
+        // const fileFive = req.files.certificatemasters;
+        // const newfileFive = fileFive.data;
+        // const certificatemasters_demo = newfileFive.toString('base64');
+        // // single-image-prcessed-------------------
+        // const fileSix = req.files.certificatemasters;
+        // const newfileSix = fileSix.data;
+        // const certificatephd_demo = newfileSix.toString('base64');
+       
+     
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+});
+// User Profile Documents update route
+router.post('/users/documentupdate',auth, (req,res)=>{        
+    try {      
+        // single-image-prcessed-------------------
+        
+        if(req.files){
+            console.log(req.files)
+            const SQL_UPDATE = `UPDATE  userinfo SET certificatessc=? WHERE  id = ${req.userData[0].id}`;
+            const fileTwo = req.files.certificatessc;
+            const newfileTwo = fileTwo.data;
+            const certificatessc_demo = newfileTwo.toString('base64');
+            con.query(SQL_UPDATE,[certificatessc_demo,],(err,result)=>{
+                console.log("first error",err)
+                if(!err){
+                    res.redirect(`/users/profile`)
+                }
+            })
+        }
+        else{
+            res.redirect(`/users/profile`)
+           
+        }
+    
+        //  // single-image-prcessed-------------------
+        //  const fileTwo = req.files.certificatessc;
+        //  const newfileTwo = fileTwo.data;
+        //  const certificatessc_demo = newfileTwo.toString('base64');
+        //   // single-image-prcessed-------------------
+        // const fileThree = req.files.certificatehsc;
+        // const newfileThree = fileThree.data;
+        // const certificatehsc_demo = newfileThree.toString('base64');
+        // // single-image-prcessed-------------------
+        // const fileFour = req.files.certificatebachelor;
+        // const newfileFour = fileFour.data;
+        // const certificatebachelor_demo = newfileFour.toString('base64');
+    
+        // // single-image-prcessed-------------------
+        // const fileFive = req.files.certificatemasters;
+        // const newfileFive = fileFive.data;
+        // const certificatemasters_demo = newfileFive.toString('base64');
+        // // single-image-prcessed-------------------
+        // const fileSix = req.files.certificatemasters;
+        // const newfileSix = fileSix.data;
+        // const certificatephd_demo = newfileSix.toString('base64');
+       
+     
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+});
 
 // MEMBERSHIP ROUTE------------------------------
 // router.get("/users/newpayment",auth,(req,res)=>{
@@ -443,15 +589,6 @@ router.post("/users/createmembership", auth,(req,res)=>{
         console.log(err)
     })
     res.render("createmembership",{message:"Created Successfully"})
-})
-// PROFILE IN ROUTE------------------------------
-router.get("/users/profile",auth,(req,res)=>{
-    const sql = `SELECT * FROM privacy WHERE useremail = '${req.userData[0].email}'`;
-    con.query(sql,(err,result)=>{
-        console.log(result)
-        res.render("profile",{userData:req.userData,privacyData:result})
-    })
-    
 })
 
 // SIGN IN ROUTE------------------------------
@@ -547,10 +684,21 @@ router.get("/admin/idcardpayment",auth,(req,res)=>{
 });
 // update  idcard payment list  ROUTE------------------------------
 router.get("/admin/makeeligbleforidcard/:id",auth,(req,res)=>{
-    const sql = `SELECT * FROM payment where paymentfor = 'Id Card'`;
-    con.query(sql,(err,idcardpaymentData)=>{   
-        res.render("idcardpayment",{userData:req.userData,idcardpaymentData})
-    })
+    const id =  req.params.id;
+    let sql_update = `UPDATE payment SET status = 1  WHERE id = ${id}`;
+    con.query(sql_update,(err,updatepayment)=>{ 
+        con.query(`SELECT DISTINCT email FROM payment WHERE id = ${id}`,(err, emailResult)=>{
+            console.log("this is email",emailResult[0].email)
+            con.query(`UPDATE userinfo SET idcard = 1 WHERE email = '${emailResult[0].email}'`,(err, updateResult)=>{
+                console.log("idcard eligible true",updateResult)
+                res.redirect("/admin/idcardpayment")
+            })
+            
+        })
+       
+        
+    });
+    
 });
 // General user signin--------------
 router.post('/signin', async(req,res)=>{

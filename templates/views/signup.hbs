@@ -128,6 +128,22 @@
                                         <div class="col-5">
                                             <h2 class="steps">Step 1 - 3</h2>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="image-preview">
+                                                <span class="d-block p-2">Photograph Preview</span>
+                                                <img id="output" src="/images/avatar.jpg"/>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            var loadFile = function(event) {
+                                                var reader = new FileReader();
+                                                reader.onload = function(){
+                                                var output = document.getElementById('output');
+                                                output.src = reader.result;
+                                                };
+                                                reader.readAsDataURL(event.target.files[0]);
+                                            };
+                                        </script>
                                     </div>
                                     {{!-- name --}}
                                     <div class="form-row">
@@ -208,8 +224,8 @@
                                         </select>
                                       </div>
                                       <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Photo</label>
-                                        <input type="file" name="userphoto" class="form-control is-valid" id="validationServer01"  required>
+                                        <label for="validationServer01">Photo*</label>
+                                        <input type="file" name="userphoto" class="form-control is-valid"  id="validationServer01" onchange="loadFile(event)" required>
                                        </div>
                                          <div class="col-md-4 mb-3">
                                         <label for="validationServer01">Mobile*</label>
@@ -218,19 +234,34 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Mobile Two*</label>
-                                        <input type="text" name="secondarymobile" class="form-control is-valid" id="validationServer01"  required>
+                                        <label for="validationServer01">Mobile Two</label>
+                                        <input type="text" name="secondarymobile" class="form-control " id="validationServer01">
                                         </div>
                                      
                                       <div class="col-md-4 mb-3">
                                         <label for="validationServer01">Password*</label>
-                                        <input type="password" name="password" class="form-control is-valid" id="validationServer01"  required>
+                                        <input type="password" name="password" class="form-control" id="password"  required>
                                         </div>
                                       <div class="col-md-4 mb-3">
                                         <label for="validationServer01">Confirm Password *</label>
-                                        <input type="password" name="confirmpassword" class="form-control is-valid" id="validationServer01"  required>
+                                        <input onkeyup="disError()" type="password" name="confirmpassword" class="form-control " id="conpassword"  required>
+                                        <label for="message" id="errormsg" class="text-danger"></label>
                                        </div>
                                     </div>
+                                    <script>
+                                        const password =  document.getElementById("password");
+                                        const conpassword =  document.getElementById("conpassword");
+                                        const errormsg =  document.getElementById("errormsg");
+                                        const disError = ()=>{
+                                          if(!(password.value == conpassword.value)){
+                                             errormsg.innerText = "Password Dosen't match!!"; 
+                                          }
+                                          else{
+                                              errormsg.innerText = "";
+                                          }
+                                        }
+
+                                    </script>
                                 </div> 
                                 <input type="button" name="next" class="next action-button" value="Next" />
                             </fieldset>
@@ -437,19 +468,16 @@
                                                     </select>   
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                    
-                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatehsc">
+                                                    <input type="file" required accept=".jpg,.png,.jpeg" name="certificatehsc">
                                                 </div>
                                              </div>
                                              {{!-- Bachelor --}}
                                               <div class="form-row w-100">
                                                     <div class="col-md-2 mb-3">
-                                                   
                                                      <input class="form-control valid" name="degree" id="degree" type="text" placeholder="BACHELOR" value="BACHELOR" required="" readonly="" aria-required="true" aria-invalid="false">
                                                     </div>
-                                                
                                                 <div class="col-md-4 mb-3 position-relative">
-                                                    <select name="institutebachelor" class="custom-select institutebachelor"  id="institutebachelor" required>
+                                                    <select name="institutebachelor" class="custom-select institutebachelor is-valid"  id="institutebachelor" required>
                                                           <option value="">Select Option</option>
                                                         {{#each bachelordata }}
                                                           <option value="{{this.institutenamebachelor}}">{{this.institutenamebachelor}}</option>
@@ -458,7 +486,7 @@
                                                 </div>
                                                 <div class="col-md-2 mb-3">
                                                     
-                                                     <select name="subjectbachelor"  class="custom-select subjectbachelor" id="subjectbachelor" required>
+                                                     <select name="subjectbachelor"  class="custom-select subjectbachelor is-valid" id="subjectbachelor" required>
                                                                <option value="" >Choose One</option>
                                                                <option value="English" >English</option>
                                                                 <option value="Persian Language and Literature" >Persian Language and Literature</option>
@@ -594,8 +622,7 @@
                                                     </select>
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                   
-                                                       <select class="year custom-select yearbachelor"  id="yearbachelor" required name="passingyearbachelor">
+                                                       <select class="year custom-select yearbachelor"  id="yearbachelor" name="passingyearbachelor">
                                                                 <option value="">Select Option</option>
                                                                 <option value="1971">1971</option>
                                                                 <option value="1972" >1972</option>
@@ -651,7 +678,6 @@
                                                     </select>   
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                    
                                                     <input type="file" accept=".jpg,.png,.jpeg" name="certificatebachelor">
                                                 </div>
                                              </div>

@@ -66,7 +66,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Institutionlist</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">ID Card Payment</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -94,7 +94,7 @@
                     <form id="editistitution">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel" ><input class="form-control text-uppercase w-100" type="text" id="degree" readonly name="degree"></h5>
+                        <h5 class="modal-title" id="staticBackdropLabel" ><input class="form-control text-uppercase w-100" type="text" id="email" readonly name="degree"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
@@ -134,9 +134,8 @@
                       
                     </div>
                     <div class="modal-footer">
-                         <button class="btn btn-primary">Make Eligble for ID</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                       
+                         <a class="btn btn-primary" id="eligiblebtn">Make Eligble for ID</a>
+                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                   </form> 
@@ -185,7 +184,7 @@
                                 
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.paymenttitle}}','{{this.paymentfor}}','{{this.amount}}','{{this.paymentdate}}','{{this.transactionid}}','{{this.senderno}}','{{this.paymentmethod}}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
+                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.paymenttitle}}','{{this.paymentfor}}','{{this.amount}}','{{this.paymentdate}}','{{this.transactionid}}','{{this.senderno}}','{{this.paymentmethod}}','{{this.email}}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
                                                             <a href="/users/deletemypayment/{{this.id}}" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>
@@ -203,6 +202,7 @@
                             <script>
 
                                 const payment_title_el =  document.getElementById('payment_title'); 
+                                const eligiblebtn =  document.getElementById('eligiblebtn'); 
                                 const id_el =  document.getElementById('id'); 
                                 const payment_for_el =  document.getElementById('payment_for'); 
                                 const payment_method_el =  document.getElementById('payment_method'); 
@@ -211,8 +211,9 @@
                                 const senderno_el =  document.getElementById('senderno');
                                 const amount_el =  document.getElementById('amount');
                                 const Payment_date =  document.getElementById('payment_date');
+                                const email_el =  document.getElementById('email');
 
-                                const displayDataIntoModal =(id,payment_title,payment_for,amount,paymentdate,transactionid,senderno,paymentmethod)=>{
+                                const displayDataIntoModal =(id,payment_title,payment_for,amount,paymentdate,transactionid,senderno,paymentmethod,email)=>{
                                     id_el.value = id;
                                     payment_title_el.value = payment_title;
                                     payment_for_el.value = payment_for;
@@ -221,6 +222,8 @@
                                     senderno_el.value = senderno;
                                     amount_el.value = amount;
                                     Payment_date.value = paymentdate;
+                                    email_el.value =  email;
+                                    eligiblebtn.href = `/admin/makeeligbleforidcard/${id}`
                                 }
 
                               
