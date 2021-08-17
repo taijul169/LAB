@@ -85,6 +85,16 @@ hbs.registerHelper("paymentStatus",(value)=>{
 
 })
 
+// category-status
+hbs.registerHelper("categoryStatus",(value)=>{
+    if(value == 0){
+        return new handlebars.SafeString(`<span style="font-size: 10px;border-radius:40px" class="bg-danger px-3 py-1 text-light font-bold">Deactivated</span>`)
+    }
+    else{
+        return new handlebars.SafeString(`<span style="font-size: 10px;border-radius:40px" class="bg-success px-3 py-1 text-light font-bold">Active</span>`)
+    }
+
+});
 // helper -register
 hbs.registerHelper("navrole", function(value){
     if(value == 1){
@@ -200,11 +210,28 @@ hbs.registerHelper("navrole", function(value){
                  
                 </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/committee"
-                            aria-expanded="false">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                        href="#committeecollapse"
+                        aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#committeecollapse">
                              <i class="fa fa-users" aria-hidden="true"></i>
-                            <span class="hide-menu">Committee</span>
+                            <span class="hide-menu">Committee <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></span></span>
                         </a>
+                        <ul id="committeecollapse" class="pl-3 collapse">
+                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/addcommittee">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
+                                <span class="hide-menu">Add Committee</span>
+                            </a>
+                          
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/committeelist"
+                                aria-expanded="false">
+                               <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                <span class="hide-menu">Committee List</span>
+                            </a>
+                        </li>
+                    </ul>
                     </li>
                      <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/event"
@@ -227,12 +254,28 @@ hbs.registerHelper("navrole", function(value){
                             <span class="hide-menu">Notice</span>
                         </a>
                     </li>
-                       <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/membership"
-                            aria-expanded="false">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#membershipCollapse"
+                        aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#membershipCollapse">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            <span class="hide-menu">Membership</span>
+                            <span class="hide-menu">Membership <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></span>
                         </a>
+                        <ul id="membershipCollapse" class="pl-3 collapse">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/createmembership">
+                                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                                    <span class="hide-menu">Create Category</span>
+                                </a>
+                                
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/membershipcategory"
+                                    aria-expanded="false">
+                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                    <span class="hide-menu">Category</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users/settings"

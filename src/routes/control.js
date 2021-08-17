@@ -10,6 +10,8 @@ const dotenv =  require('dotenv');
 dotenv.config({path:'../config.env'});
 // middleware
 const auth = require('../middleware/authenticate')
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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')
 
 // localStorage
 // var LocalStorage = require('node-localstorage').LocalStorage,
@@ -21,6 +23,7 @@ const router = express.Router();
 const mysql =  require('mysql2');
 const { query } = require('express');
 const { json } = require('body-parser');
+const { route } = require('./api');
 var con = mysql.createPool({
     host:'localhost',
     user:'root',
@@ -37,8 +40,9 @@ else{
 
 
 //---------------------------Admin access---------------------------------------------------------------
+
+//------------------------ Add institution/district Start----------------------------------------------------------
 router.get("/users/addinstitution",auth,(req,res)=>{
-    // res.render('addinstitution', {message: req.flash('message'), errormsg: req.flash('errormsg')});
     res.render('addinstitution',{userData:req.userData})
 })
 
@@ -262,22 +266,9 @@ router.get("/users/editdivision/:id/:division/:district/:upazila",(req,res)=>{
         res.redirect('/users/institutionlist')
     })
 })
-// demo-register---------------------
-// router.get('/demo-register', async(req,res)=>{
-//     try {
-//         const sql = `SELECT * FROM ssc`;
-//         con.query(sql,(err,result)=>{
-//             console.log(result)
-//             result = JSON.stringify(result)
-//             let data = result;
-//             res.render('demo-register',{data});
-//         })
-//     } catch (error) {
-        
-//     }
-    
-// })
 
+
+//------------------------ Add institution/district Start----------------------------------------------------------
 
 // User home route---------------------
 router.get('/admin',auth,(req,res)=>{   
@@ -425,7 +416,24 @@ router.post('/signup', (req,res)=>{
        con.query(SQL_INSERT,[firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,userphoto_demo,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,certificatessc_demo,institutehsc,hscgroup,passingyearhsc,certificatehsc_demo,institutebachelor,subjectbachelor,passingyearbachelor,certificatebachelor_demo,institutemasters,subjectmasters,passingyearmasters,certificatemasters_demo,institutephd,subjectphd,passingyearphd,certificatephd_demo,profession,organization,designation,address,jwtoken,createdat],(err,result)=>{
            console.log(err)
            if(!err){
-               res.redirect('/signin')
+            // email send
+            const msg = {
+                to:`${email}`,
+                from:'software1.polock@gmail.com',
+                subject:'Email Verification',
+                text:'This is awesome email sent from LAB'
+            }
+            sgMail.send(msg, function(err, info){
+                if(err){
+                    console.log("Email has not been sent!!")
+                }
+                else{
+                    console.log("Email has been sent.")
+                    res.redirect('/signin')
+                }
+            })
+
+              
            }
        })
         
@@ -473,6 +481,11 @@ router.post('/users/profile',auth, (req,res)=>{
             con.query(SQL_UPDATE,[firstname,midlename,lastname,email,gender,dateofbirth,bloodgroup,division,district,upazila,userphoto_demo,mobile,secondarymobile,confirmpassword,institutessc,sscgroup,passingyearssc,institutehsc,hscgroup,passingyearhsc,institutebachelor,subjectbachelor,passingyearbachelor,institutemasters,subjectmasters,passingyearmasters,institutephd,subjectphd,passingyearphd,profession,organization,designation,address],(err,result)=>{
                 console.log("first error",err)
                 if(!err){
+                    req.session.message={
+                        type:'alert-success',
+                        intro:'Updated!',
+                        message:'Updated successfully.'
+                    }
                     res.redirect(`/users/profile`)
                 }
             })
@@ -487,28 +500,7 @@ router.post('/users/profile',auth, (req,res)=>{
             })
         }
     
-        //  // single-image-prcessed-------------------
-        //  const fileTwo = req.files.certificatessc;
-        //  const newfileTwo = fileTwo.data;
-        //  const certificatessc_demo = newfileTwo.toString('base64');
-        //   // single-image-prcessed-------------------
-        // const fileThree = req.files.certificatehsc;
-        // const newfileThree = fileThree.data;
-        // const certificatehsc_demo = newfileThree.toString('base64');
-        // // single-image-prcessed-------------------
-        // const fileFour = req.files.certificatebachelor;
-        // const newfileFour = fileFour.data;
-        // const certificatebachelor_demo = newfileFour.toString('base64');
-    
-        // // single-image-prcessed-------------------
-        // const fileFive = req.files.certificatemasters;
-        // const newfileFive = fileFive.data;
-        // const certificatemasters_demo = newfileFive.toString('base64');
-        // // single-image-prcessed-------------------
-        // const fileSix = req.files.certificatemasters;
-        // const newfileSix = fileSix.data;
-        // const certificatephd_demo = newfileSix.toString('base64');
-       
+        
      
         
     } catch (error) {
@@ -521,47 +513,53 @@ router.post('/users/documentupdate',auth, (req,res)=>{
     try {      
         // single-image-prcessed-------------------
         
-        if(req.files){
-            console.log(req.files)
-            const SQL_UPDATE = `UPDATE  userinfo SET certificatessc=? WHERE  id = ${req.userData[0].id}`;
+            const SQL_UPDATE = `UPDATE  userinfo SET certificatessc= ?, certificatehsc= ?,certificatebachelor= ?,certificatemasters= ?,certificatephd= ? WHERE  id = ${req.userData[0].id}`;
+            var certificatessc_demo = `${req.userData[0].certificatessc}`
             const fileTwo = req.files.certificatessc;
-            const newfileTwo = fileTwo.data;
-            const certificatessc_demo = newfileTwo.toString('base64');
-            con.query(SQL_UPDATE,[certificatessc_demo,],(err,result)=>{
+            if(fileTwo){
+                var newfileTwo = fileTwo.data;
+                certificatessc_demo = newfileTwo.toString('base64');
+            }
+            var certificatehsc_demo = `${req.userData[0].certificatehsc}`
+            const fileThree = req.files.certificatehsc;
+            if(fileThree){
+                var newfileThree = fileThree.data;
+                certificatehsc_demo = newfileThree.toString('base64');
+            }
+
+            var certificatebachelor_demo = `${req.userData[0].certificatebachelor}`
+            const fileFour = req.files.certificatebachelor;
+            if(fileFour){
+                var newfileFour= fileFour.data;
+                certificatebachelor_demo = newfileFour.toString('base64');
+            }
+            
+            var certificatemasters_demo = `${req.userData[0].certificatemasters}`
+            const fileFive = req.files.certificatemasters;
+            if(fileFive){
+                var newfileFive= fileFive.data;
+                certificatemasters_demo = newfileFive.toString('base64');
+            }
+            var certificatephd_demo = `${req.userData[0].certificatephd}`
+            const fileSix = req.files.certificatephd;
+            if(fileSix){
+                var newfileSix= fileSix.data;
+                certificatephd_demo = newfileSix.toString('base64');
+            }
+           
+           
+            con.query(SQL_UPDATE,[certificatessc_demo,certificatehsc_demo,certificatebachelor_demo,certificatemasters_demo,certificatephd_demo,],(err,result)=>{
                 console.log("first error",err)
                 if(!err){
+
+                    req.session.message={
+                        type:'alert-success',
+                        intro:'Updated!',
+                        message:'Documents Updated successfully.'
+                    }
                     res.redirect(`/users/profile`)
                 }
-            })
-        }
-        else{
-            res.redirect(`/users/profile`)
-           
-        }
-    
-        //  // single-image-prcessed-------------------
-        //  const fileTwo = req.files.certificatessc;
-        //  const newfileTwo = fileTwo.data;
-        //  const certificatessc_demo = newfileTwo.toString('base64');
-        //   // single-image-prcessed-------------------
-        // const fileThree = req.files.certificatehsc;
-        // const newfileThree = fileThree.data;
-        // const certificatehsc_demo = newfileThree.toString('base64');
-        // // single-image-prcessed-------------------
-        // const fileFour = req.files.certificatebachelor;
-        // const newfileFour = fileFour.data;
-        // const certificatebachelor_demo = newfileFour.toString('base64');
-    
-        // // single-image-prcessed-------------------
-        // const fileFive = req.files.certificatemasters;
-        // const newfileFive = fileFive.data;
-        // const certificatemasters_demo = newfileFive.toString('base64');
-        // // single-image-prcessed-------------------
-        // const fileSix = req.files.certificatemasters;
-        // const newfileSix = fileSix.data;
-        // const certificatephd_demo = newfileSix.toString('base64');
-       
-     
+            }) 
         
     } catch (error) {
         console.log(error)
@@ -576,21 +574,193 @@ router.post('/users/documentupdate',auth, (req,res)=>{
 //         res.render("newpayment",{data,userData:req.userData})
 //     })
 // });
-
-// CREATE MEMBERSHIP  ROUTE------------------------------
-router.get("/users/createmembership",(req,res)=>{
-    res.render("createmembership")
+//--------------------------------------------------MEMBERSHIP CATEGORY ALL START---------------------------------------------------------
+// CREATE MEMBERSHIP-CATEGORY  ROUTE------------------------------
+router.get("/admin/createmembership",auth,(req,res)=>{
+    res.render("createmembership",{userData:req.userData})
 })
-// CREATE MEMBERSHIP  ROUTE------------------------------
-router.post("/users/createmembership", auth,(req,res)=>{
-    const SQL_INSERT = "INSERT INTO membership (name,price,type,remark) VALUES(?,?,?,?)";
-    const {name,price,type,remark} = req.body;
-    con.query(SQL_INSERT,[name,price,type,remark],(err,result)=>{
-        console.log(err)
+// CREATE MEMBERSHIP-CATEGORY ROUTE------------------------------
+router.post("/admin/createmembership", auth,(req,res)=>{
+    if(req.userData[0].admin == 1){
+        const SQL_INSERT = "INSERT INTO membership (name,price,type,remark,useremail) VALUES(?,?,?,?,?)";
+        const {name,price,membership_type,remark} = req.body;
+        con.query(SQL_INSERT,[name,price,membership_type,remark,req.userData[0].email],(err,result)=>{
+            console.log(err)
+        })
+        req.session.message={
+            type:'alert-success',
+            intro:'Created!',
+            message:'New Category Created successfully.'
+        }
+        res.redirect("/admin/createmembership")
+    }
+    else{
+        res.redirect('/signin')
+    }
+    
+})
+
+//  MEMBERSHIP-CATEGORYLIST VIEW  ROUTE------------------------------
+router.get("/admin/membershipcategory", auth,(req,res)=>{
+    con.query("SELECT * FROM membership",(err,data)=>{
+        res.render("membershipcategory",{userData:req.userData,data})
+    })  
+})
+//CATEGORY UPDATE
+router.get("/admin/editcategory/:id/:name/:price/:type/:remark",(req,res)=>{
+    const id =  req.params.id;
+    const name =  req.params.name;
+    const price =  req.params.price;
+    const type =  req.params.type;
+    const remark =  req.params.remark;
+    con.query(`UPDATE membership SET  name=?,price=?,type=?,remark=? WHERE id = ${id}`,[name,price,type,remark],(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Updated!',
+            message:'Category Updated.'
+        }
+        res.redirect("/admin/membershipcategory")
+      }
     })
-    res.render("createmembership",{message:"Created Successfully"})
+    
+})
+//CATEGORY ACTIVATION
+router.get("/admin/categoryactive/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`UPDATE membership SET  status = 1 WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Activated!',
+            message:'Category Activated.'
+        }
+        res.redirect("/admin/membershipcategory")
+      }
+    })
+    
 })
 
+//CATEGORY DEACTIVATION
+router.get("/admin/categorydeactivate/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`UPDATE membership SET  status = 0 WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Dectivated!',
+            message:'Category Dectivated.'
+        }
+        res.redirect("/admin/membershipcategory")
+      }
+    })
+    
+})
+//CATEGORY DELETE
+router.get("/admin/deletecategory/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`DELETE FROM membership  WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Delted!',
+            message:'Category Deleted!!.'
+        }
+        res.redirect("/admin/membershipcategory")
+      }
+    })
+    
+})
+//-------------------------------------------MEMBERSHIP CATEGORY ALL END-------------------------------------------
+
+
+
+//-------------------------------------------COMMITTEE START -------------------------------------------
+//  ADD COMMITEE VIEW  ROUTE------------------------------
+router.get("/admin/addcommittee", auth,(req,res)=>{
+    con.query("SELECT * FROM membership",(err,data)=>{
+        res.render("addcommittee",{userData:req.userData,data})
+    })  
+})
+//  ADD COMMITEE VIEW  ROUTE------------------------------
+router.post("/admin/addcommittee", auth,(req,res)=>{
+    const {name,type,startdate,enddate} = req.body;
+    console.log(req.body)
+     // createdDate---------------
+     const createdat = new Date().toLocaleDateString()
+    con.query(`INSERT into committee(name,type,startdate,enddate,createdby,createdat) VALUES(?,?,?,?,?,?)`,[name,type,startdate,enddate,req.userData[0].firstname,createdat],(err,insertedData)=>{
+
+        req.session.message={
+            type:'alert-success',
+            intro:'Created!',
+            message:'Committee Created!!.'
+        }
+        res.redirect('/admin/addcommittee')
+    })
+   
+})
+
+// COMMITEE LIST VIEW  ROUTE------------------------------
+router.get("/admin/committeelist", auth,(req,res)=>{
+    con.query("SELECT * FROM committee",(err,data)=>{
+        res.render("committeelist",{userData:req.userData,data})
+    })  
+})
+
+//COMMITTEE ACTIVATION
+router.get("/admin/committeeactive/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`UPDATE committee SET  status = 1 WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Activated!',
+            message:'committee Activated.'
+        }
+        res.redirect("/admin/committeelist")
+      }
+    })
+    
+})
+
+//COMMITTEE DEACTIVATION
+router.get("/admin/committeedeactivate/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`UPDATE committee SET  status = 0 WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Dectivated!',
+            message:'committee Dectivated.'
+        }
+        res.redirect("/admin/committeelist")
+      }
+    })
+    
+})
+//Committee DELETE
+router.get("/admin/deletecommittee/:id",(req,res)=>{
+    const id =  req.params.id;
+    con.query(`DELETE FROM committee  WHERE id = ${id}`,(err,updateresult)=>{
+        console.log(updateresult)
+      if(!err){
+        req.session.message={
+            type:'alert-success',
+            intro:'Delted!',
+            message:'committee Deleted!!.'
+        }
+        res.redirect("/admin/committeelist")
+      }
+    })
+    
+})
+//-------------------------------------------COMMITTEE END -------------------------------------------
 // SIGN IN ROUTE------------------------------
 router.get("/signin",(req,res)=>{
     res.render("signin")
@@ -866,6 +1036,31 @@ router.get('/users/deleteuser/:id',(req,res)=>{
 
   
 })
+
+
+router.get('/users/sendemail',(req,res)=>{
+    const msg = {
+        to:'taijul.islam169@gmail.com',
+        from:'software1.polock@gmail.com',
+        subject:'Testing Node email Service',
+        text:'This is awesome email sent from node app'
+    }
+    sgMail.send(msg, function(err, info){
+        if(err){
+            console.log("Email has not been sent!!")
+        }
+        else{
+            console.log("Email has been sent.")
+        }
+    })
+
+})
+
+
+
+
+// Email send demo-------------------------
+
 //================================================================= LAB END======================================================
 
 // route for showing create-item page
