@@ -109,61 +109,50 @@
                  </div>
                 </div>
                 </div>
+               {{!-- commitee Edit modal --}}
+               <!-- Button trigger modal -->
                 <!-- Modal -->
-                <div class="modal fade" id="categoryupdate" data-bs-backdrop="static"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <form id="categorysubmitbtn">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel" ><input class="form-control text-uppercase w-100" type="text" id="degree" readonly name="degree"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-                            </div>
-                            <div class="modal-body">
-                            
-                                <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="text" name="id" class="form-control" readonly id="id_category">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Category Name</label>
-                                    <input type="text" name="name" class="form-control " id="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Price</label>
-                                    <input type="text" name="price" class="form-control " id="price">
-                                </div>
-            
-                                <select name="membership_type" class="form-control" id="membership_type">
-                                    <option value="">Select Type</option>
-                                    <option value="1">One Months</option>
-                                    <option value="3">Three Months</option>
-                                    <option value="6">Six Months</option>
-                                    <option value="12">Twelve Months</option>
-                                    <option value="24">Two Years</option>
-                                    <option value="36">Three Years</option>
-                                    <option value="60">Five Years</option>
-                                    <option value="1200">Life Member</option>
-                                </select>
-                                <div class="form-group">
-                                    <label for="">Remarks</label>
-                                    <textarea name="remark" cols="10" rows="5" class="form-control" id="remarks"></textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-secondary">Update</button>
-                            </div>
-                        </div>
-                    </form> 
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                         
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <form id="editnotice">
+                      <div class="modal-body">
+                          <div class="form-group">
+                              <label for="">ID</label>
+                              <input type="text" readonly value=""  class="form-control" id="com_id">
+                          </div>
+                            <div class="form-group">
+                                <label for="">Title</label> 
+                                <input type="text" value=""  class="form-control" id="title">
+                          </div>
+                            <div class="form-group">
+                                <label for="">Details</label>
+                              <textarea  value="" class="form-control" id="details" cols="10" rows="4"></textarea>
+                              
+                          </div>
+                          
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                    </form>
+                    
                     </div>
                 </div>
+            </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Category page</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">Blog page</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -184,12 +173,13 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
+       
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <!-- Row -->
-                <a href="/admin/createmembership" class="btn btn-primary ml-3">Create Membership</a>
-                <div class="row pt-2  m-3 shadow">
+                <a href="/admin/createblog" class="btn btn-primary ml-3"><i class="fa fa-plus-circle mr-2"></i> Create Blog</a>
+                <div class="row pt-2 m-1">
                     <div class="col-sm-12">
                         {{#if message}}
                             <div class="alert alert-success" role="alert">
@@ -197,22 +187,25 @@
                             </div>
 
                         {{/if}}
-                        <div class="card card-warning card-outline">
+                        <div class="card card-warning card-outline shadow">
                             <div class="card-body">
-                               <div id="getMembershipPrice_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="getMembershipPrice_length"><label>Show <select name="getMembershipPrice_length" aria-controls="getMembershipPrice" class="custom-select custom-select-sm form-control form-control-sm"><option value="5">5</option><option value="10">10</option><option value="25">50</option><option value="50">100</option><option value="100">All</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="getMembershipPrice_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm border" placeholder="" aria-controls="getMembershipPrice"></label></div></div></div><div class="row"><div class="col-sm-12">
-                                <table class="table table-hover color-table success-table dataTable no-footer" id="getMembershipPrice" role="grid" aria-describedby="getMembershipPrice_info" style="width: 1586px;">
-                                    <thead>
-                                    <tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 57px;">#</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 338px;">Name</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 135px;">Price</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 135px;">Type</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 395px;">Remarks</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 146px;">Status</th><th class="hidden-480 sorting_disabled" rowspan="1" colspan="1" style="width: 370px;">Action</th></tr>
+                               
+                             <div class="table-responsive" style="overflow-x:auto;">
+                                  <table class="table table-hover color-table success-table dataTable no-footer" id="getMembershipPrice" role="grid" aria-describedby="getMembershipPrice_info">
+                                    <thead id="customtable">
+                                       <tr><th>#SL</th><th>Title</th><th>Details</th><th>created_at</th><th>Created By</th><th>Status</th><th class="text-center">action</th></tr>
                                     </thead>
                                     <tbody>
                                     
-                                 {{#each data }}
-                                 {{!-- single-membership --}}
-                                    <tr role="row" class="odd"><td>{{this.id}}</td><td>{{this.name}}</td><td>{{this.price}}</td><td>{{this.type}}</td><td>{{this.remark}}
-                                      </td><td>{{categoryStatus this.status}}</td><td><div class="btn-group"><a onclick="categoryEdit({{this.id}},'{{this.name}}',{{this.price}},'{{this.type}}','{{this.remark}}')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#categoryupdate"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit Membership Price"><i class="fa fa-edit"></i></a><a id="dlt5" href="/admin/deletecategory/{{this.id}}" onclick="return confirm('Are you sure to delete this category permanantly??')"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/admin/categorydeactivate/{{this.id}}" class="status-btn btn btn-danger btn-sm">Deactive</a><a href="/admin/categoryactive/{{this.id}}" class="status-btn btn btn-primary btn-sm ml-1">Activate</a></td></tr>
-                                   {{/each  }}     
+                                      {{#each noticeList }}
+                                      {{!-- single-membership --}}
+                                          <tr role="row" class="odd"><td>{{counter @index}}</td><td>{{this.title}}</td><td>{{makeShortString  this.details}}</td><td >{{this.created_at}}</td><td>{{this.created_by}}</td><td>{{categoryStatus this.status}}</td>
+                                          <td></td><td><div class="btn-group"><a onclick="noticeEditFunc({{this.id}},'{{this.title}}','{{this.details}}')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit notice"><i class="fa fa-edit"></i></a><a id="dlt5" href="/admin/deleteblog/{{this.id}}" onclick="return confirm('Are you sure to delete this  permanantly??')"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/admin/blogdeactivate/{{this.id}}" class="status-btn btn btn-danger btn-sm" title="Deactivate"><img class="img-fluid" style="width: 15px;" src="/images/disable.png" alt=""></a><a href="/admin/blogactive/{{this.id}}" class="status-btn btn btn-primary btn-sm ml-1" title="Activate"><i class="fa fa-check" aria-hidden="true"></i></a></td></tr>
+                                      {{/each  }}     
                                    </tbody>
-                                </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="getMembershipPrice_info" role="status" aria-live="polite">Showing 1 to 5 of 7 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="getMembershipPrice_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="getMembershipPrice_previous"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="getMembershipPrice" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="getMembershipPrice_next"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                                </table>
+                             </div>
+                                </div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="getMembershipPrice_info" role="status" aria-live="polite">Showing 1 to 5 of 7 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="getMembershipPrice_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="getMembershipPrice_previous"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="getMembershipPrice" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="getMembershipPrice_next"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
                             </div>
                         </div>
                     </div>
@@ -221,35 +214,26 @@
                 </div>
             
                 </div>
+                <script>
 
-                      <script>
+                const title_el =  document.getElementById('title'); 
+                const id_el =  document.getElementById('com_id'); 
+                const details_el =  document.getElementById('details');  
 
-                                const name_el =  document.getElementById('name'); 
-                                const id_el =  document.getElementById('id_category'); 
-                                const price_el =  document.getElementById('price'); 
-                                const remarks_el =  document.getElementById('remarks'); 
-                                const membership_type_el =  document.getElementById('membership_type'); 
-                                const categoryEdit = (id,name,price,type,remark)=>{
-                                    id_el.value = id;
-                                    name_el.value = name;
-                                    price_el.value = price;
-                                    membership_type_el.value = type;
-                                    remarks_el.value = remark;  
-                                }
-                                //onsubmit
-                                const categorysubmitbtn = document.getElementById("categorysubmitbtn");
-                                categorysubmitbtn.addEventListener("submit",(e)=>{
-                                    e.preventDefault();
-                                    const id =  document.getElementById("id_category").value;
-                                    const name =  document.getElementById("name").value;
-                                    const price =  document.getElementById("price").value;
-                                    const type =  document.getElementById("membership_type").value;
-                                    const remark =  document.getElementById("remarks").value;
-                                    window.location.href = `/admin/editcategory?id=${id}&name=${name}&price=${price}&type=${type}&remark=${remark}`;
-                                    
-                                })
-                                
-                            </script>
+                function noticeEditFunc(id,title,details){
+               
+                    id_el.value = id;
+                    title_el.value = title;
+                    details_el.value = details;
+                    
+                }               
+                //onsubmit
+                var editnotice = document.getElementById("editnotice");
+                editnotice.addEventListener("submit",(e)=>{
+                    e.preventDefault();
+                    window.location.href = `/admin/editblog/${id_el.value}/${title_el.value}/${details_el.value}`;
+                }) 
+            </script>
                 <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -262,6 +246,10 @@
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
             </div>
+
+
+
+          
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->

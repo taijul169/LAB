@@ -1,7 +1,7 @@
 
 const express =  require('express');
-const multer = require("multer");
 const bycript = require("bcryptjs");
+const crypto = require("crypto");
 const bodyParser =  require("body-parser");
 const flash =  require('connect-flash')
 const jwt = require("jsonwebtoken");
@@ -10,8 +10,8 @@ const dotenv =  require('dotenv');
 dotenv.config({path:'../config.env'});
 // middleware
 const auth = require('../middleware/authenticate')
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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')
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey('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')
 
 // localStorage
 // var LocalStorage = require('node-localstorage').LocalStorage,
@@ -268,20 +268,38 @@ router.get("/users/editdivision/:id/:division/:district/:upazila",(req,res)=>{
 })
 
 
-//------------------------ Add institution/district Start----------------------------------------------------------
+//------------------------ Add institution/district end----------------------------------------------------------
 
 // User home route---------------------
-router.get('/admin',auth,(req,res)=>{   
-    //-------------------
-    const sql = "SELECT * FROM userinfo WHERE verify = 0";
-    con.query(sql,(err, allData)=>{
-       const sql_blood = `SELECT * FROM userinfo WHERE donateblood = 1`;
-        con.query(sql_blood,(err, data)=>{
-            const donatebloodData=  JSON.stringify(data)
-            res.render('admin-home',{userData:req.userData,allData,donatebloodData})
-        })
+router.get('/admin',auth,(req,res)=>{
+    let sql;
+    if(req.userData[0].adminrole == 2){
+        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
+             if(!err){
+                sql = `SELECT * FROM userinfo where verify = 0 AND district = '${adminData[0].adminarea}'`  
+                con.query(sql,(err,allData)=>{   
+                    res.render("admin-home",{userData:req.userData,allData})
+                })
+             }
+    })
        
-    }) 
+    }else{
+        sql = `SELECT * FROM userinfo where verify = 0`;
+        con.query(sql,(err,allData)=>{   
+            res.render("admin-home",{userData:req.userData,allData})
+        })
+    } 
+
+    //-------------------
+    // const sql = "SELECT * FROM userinfo WHERE verify = 0";
+    // con.query(sql,(err, allData)=>{
+    //    const sql_blood = `SELECT * FROM userinfo WHERE donateblood = 1`;
+    //     con.query(sql_blood,(err, data)=>{
+    //         const donatebloodData=  JSON.stringify(data)
+    //         res.render('admin-home',{userData:req.userData,allData,donatebloodData})
+    //     })
+       
+    // }) 
    
        
    });
@@ -301,8 +319,40 @@ router.get('/users',auth,(req,res)=>{
 // FRONT END=======================================================================
 // index---------------------
 router.get('/', (req,res)=>{
-    res.render('index') 
+ 
+    con.query("SELECT * FROM notice WHERE status = 1 ORDER BY ID DESC LIMIT 2 ",(err,noticeData)=>{
+        // noticeData = JSON.stringify(noticeData)
+        if(!err){
+            con.query("SELECT * FROM blog WHERE status = 1 ORDER BY ID DESC LIMIT 3 ",(err,blogData)=>{
+                if(!err){
+                   
+                   res.render('index',{noticeData,blogData}) 
+                }
+            })
+        }
+       
     })
+   
+ });
+ // single notice view---------------------
+router.get('/singlenoticeview/:id', (req,res)=>{
+   const id =  req.params.id;
+   
+    con.query(`SELECT * FROM notice WHERE id = ${id}`,(err,noticeData)=>{
+        res.render('singlenoticeview',{noticeData}) 
+    })
+   
+ });
+//  single-blog-view
+ router.get('/singleblogview/:id', (req,res)=>{
+    const id =  req.params.id;
+     con.query(`SELECT * FROM blog WHERE id = ${id}`,(err,blogData)=>{
+         res.render('singleblogview',{blogData}) 
+     })
+    
+  });
+
+
 // -register---------------------
 router.get('/signup',(req,res)=>{
     try {
@@ -313,13 +363,13 @@ router.get('/signup',(req,res)=>{
         const sql_ssc = `SELECT institutenamessc  FROM ssc`;
         const sql_hsc = `SELECT institutenamehsc  FROM hsc`;
         const sql_bachelor = `SELECT institutenamebachelor  FROM bachelor`;
+        const sql_email = 'SELECT email From userinfo'
         con.query(sql_division,(err,result)=>{
      
             // result = JSON.stringify(result)
-
-
             // let datadistrict = result;
             let dataDivison = result;
+            let emailData;
             con.query(sql,(err,result)=>{
                 result = JSON.stringify(result)
                 let data = result;
@@ -331,8 +381,11 @@ router.get('/signup',(req,res)=>{
                         // hscdata=JSON.stringify(hscdata)
                         con.query(sql_bachelor,(err,result)=>{
                             let bachelordata = result;
-                            // bachelordata =JSON.stringify(bachelordata)
-                            res.render('signup',{dataDivison,data,sscdata,hscdata,bachelordata});
+                            con.query(sql_email,(err,resultEmail)=>{
+                                emailData =JSON.stringify(resultEmail)
+                             res.render('signup',{dataDivison,data,sscdata,hscdata,bachelordata,emailData});
+                            })
+                           
                         })
                     })
                 })
@@ -344,8 +397,26 @@ router.get('/signup',(req,res)=>{
         console.log(error)
         
     }
-    })
+ });
 
+
+
+
+
+//  Email verify   
+router.get('/emailverify', (req,res)=>{
+        res.render('emailverify') 
+});
+// Verify email route   
+router.get('/verify-email', (req,res)=>{
+    const token = req.query.token;
+    console.log(token);
+    con.query(`UPDATE userinfo SET verifyemail = 1 WHERE jwtoken='${token}'`,(err,data)=>{
+        console.log(err)
+        console.log(data)
+    })
+    res.render('emailverifiedmessage') 
+    });        
 // create user(signup route)
 router.post('/signup', (req,res)=>{        
     try {
@@ -363,7 +434,9 @@ router.post('/signup', (req,res)=>{
         // SECRETTOKEN GEREARATION
         const RANDOM_NUM = Math.round((Math.random()*10000));
         const RANDOM_NUM_TWO = Math.round((Math.random()*10000));
-        const jwtoken =  `@1231@3#CV${RANDOM_NUM*1000}${RANDOM_NUM_TWO*1000}${RANDOM_NUM}${RANDOM_NUM_TWO}`
+        // const jwtoken =  `@1231@3#CV${RANDOM_NUM*1000}${RANDOM_NUM_TWO*1000}${RANDOM_NUM}${RANDOM_NUM_TWO}`;
+        const jwtoken = crypto.randomBytes(64).toString('hex');
+
         // single-image-prcessed-------------------
         var userphoto_demo = "";
         const fileOne = req.files.userphoto;
@@ -371,9 +444,6 @@ router.post('/signup', (req,res)=>{
             var newfileOne = fileOne.data;
             userphoto_demo = newfileOne.toString('base64');
         }
-
-        
-       
          // single-image-prcessed-------------------
          const fileTwo = req.files.certificatessc;
          const newfileTwo = fileTwo.data;
@@ -419,17 +489,27 @@ router.post('/signup', (req,res)=>{
             // email send
             const msg = {
                 to:`${email}`,
-                from:'software1.polock@gmail.com',
+                from:'taijul.islam169@gmail.com',
                 subject:'Email Verification',
-                text:'This is awesome email sent from LAB'
+                text:`Hello, thanks for regirstering on our site.Please Copy and paste the address below to verify your account.
+                      http://${req.headers.host}/verify-email?token=${jwtoken}`,
+                html:`
+                <h1>Hello</h1>
+                <p>Thanks for registering on our site.</p>
+                <p>Please click the link below to verify your account.</p>
+                <a href="http://${req.headers.host}/verify-email?token=${jwtoken}">Verify your account</a>
+
+                `      
             }
             sgMail.send(msg, function(err, info){
                 if(err){
+                    console.log(info)
                     console.log("Email has not been sent!!")
                 }
                 else{
                     console.log("Email has been sent.")
-                    res.redirect('/signin')
+                    
+                    res.render('emailverify',{email:email})
                 }
             })
 
@@ -457,7 +537,7 @@ router.get("/users/profile",auth,(req,res)=>{
                             let bachelordata = result;
                             const sql = `SELECT * FROM privacy WHERE useremail = '${req.userData[0].email}'`;
                             con.query(sql,(err,result)=>{
-                                console.log(result)
+                               
                                 res.render("profile",{userData:req.userData,privacyData:result,sscdata,hscdata,bachelordata})
                             })
                         })
@@ -498,11 +578,7 @@ router.post('/users/profile',auth, (req,res)=>{
                     res.redirect(`/users/profile`)
                 }
             })
-        }
-    
-        
-     
-        
+        }    
     } catch (error) {
         console.log(error)
         
@@ -574,6 +650,18 @@ router.post('/users/documentupdate',auth, (req,res)=>{
 //         res.render("newpayment",{data,userData:req.userData})
 //     })
 // });
+
+// // FORM VALIDATION  ROUTE------------------------------
+// router.get("/formvalidation",(req,res)=>{
+//     res.render("formvalidation")
+// })
+
+// // FORM VALIDATION  ROUTE------------------------------
+// router.post("/users/formvalidation",(req,res)=>{
+
+//     console.log(req.body)
+//     res.render("formvalidation")
+// })
 //--------------------------------------------------MEMBERSHIP CATEGORY ALL START---------------------------------------------------------
 // CREATE MEMBERSHIP-CATEGORY  ROUTE------------------------------
 router.get("/admin/createmembership",auth,(req,res)=>{
@@ -607,12 +695,13 @@ router.get("/admin/membershipcategory", auth,(req,res)=>{
     })  
 })
 //CATEGORY UPDATE
-router.get("/admin/editcategory/:id/:name/:price/:type/:remark",(req,res)=>{
-    const id =  req.params.id;
-    const name =  req.params.name;
-    const price =  req.params.price;
-    const type =  req.params.type;
-    const remark =  req.params.remark;
+router.get("/admin/editcategory",(req,res)=>{
+    const query = req.query;
+    const id = query.id;
+    const name = query.name;
+    const price = query.price;
+    const type = query.type;
+    const remark = query.remark;
     con.query(`UPDATE membership SET  name=?,price=?,type=?,remark=? WHERE id = ${id}`,[name,price,type,remark],(err,updateresult)=>{
         console.log(updateresult)
       if(!err){
@@ -761,17 +850,24 @@ router.get("/admin/deletecommittee/:id",(req,res)=>{
     
 })
 //-------------------------------------------COMMITTEE END -------------------------------------------
-// SIGN IN ROUTE------------------------------
-router.get("/signin",(req,res)=>{
-    res.render("signin")
-})
+
+
+// ================================PAYMENT===============================
+
 // Apply Membership  ROUTE------------------------------
 router.get("/users/newpayment",auth,(req,res)=>{
     const sql = 'SELECT * FROM membership';
     con.query(sql,(err,data)=>{
-        const category = data;
-        const allData = JSON.stringify(category)
-        res.render("newpayment",{userData:req.userData,category,allData})
+        if(!err){
+            con.query('SELECT DISTINCT paymentfor FROM payment',(err,result)=>{
+              if(!err){
+                const category = data;
+                const allData = JSON.stringify(category)
+                res.render("newpayment",{userData:req.userData,category,allData,result})
+              }
+            })
+        }
+        
     })
     
 })
@@ -823,27 +919,100 @@ router.get("/users/deletemypayment/:id",auth,(req,res)=>{
                 intro:'Deleted!',
                 message:'Deleted Successfully.'
             }
-            res.redirect("/users/mypayment")
+            if( req.userData[0].admin == 1){
+                res.redirect("/admin/idcardpayment")
+            }
+            else{
+                res.redirect("/users/mypayment")
+            }
+            
         }
     })
     
-})
+});
 
+
+// ================================USER MENAGEMENT/VERIFIED USER/UNVERIFIED USER/BLOCK USER===============================
 // Verified User  ROUTE------------------------------
 router.get("/admin/verifieduser",auth,(req,res)=>{
-    const sql = `SELECT * FROM userinfo where verify = 1`;
-    con.query(sql,(err,verifieduserData)=>{   
-        res.render("verifieduser",{userData:req.userData,verifieduserData})
-    })
+    let sql;
+    if(req.userData[0].adminrole == 2){
+        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
+           
+             if(!err){
+                sql = `SELECT * FROM userinfo where verify = 1 AND district = '${adminData[0].adminarea}'`  
+                con.query(sql,(err,verifieduserData)=>{   
+                    res.render("verifieduser",{userData:req.userData,verifieduserData})
+                })
+             }
+            
+        })
+       
+    }else{
+        sql = `SELECT * FROM userinfo where verify = 1`;
+        con.query(sql,(err,verifieduserData)=>{   
+            res.render("verifieduser",{userData:req.userData,verifieduserData})
+        })
+    }
     
-})
+   
+    
+});
 // Unverified/New  User  ROUTE------------------------------
 router.get("/admin/newuserlist",auth,(req,res)=>{
-    const sql = `SELECT * FROM userinfo where verify = 0`;
-    con.query(sql,(err,unverifieduserData)=>{   
-        res.render("newuserlist",{userData:req.userData,unverifieduserData})
-    })
+    let sql ;
+    if(req.userData[0].adminrole == 2){
+        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
+          
+             if(!err){
+                sql = `SELECT * FROM userinfo where verify = 0 AND district = '${adminData[0].adminarea}'`  
+                con.query(sql,(err,verifieduserData)=>{   
+                    res.render("verifieduser",{userData:req.userData,verifieduserData})
+                })
+             }
+            
+        })
+       
+    }else{
+        sql = `SELECT * FROM userinfo where verify = 0`;
+        con.query(sql,(err,verifieduserData)=>{   
+            res.render("verifieduser",{userData:req.userData,verifieduserData})
+        })
+    }
 })
+
+// Block  User  ROUTE------------------------------
+router.get("/admin/blockuserlist",auth,(req,res)=>{
+    let sql ;
+    if(req.userData[0].adminrole == 2){
+        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
+          
+             if(!err){
+                sql = `SELECT * FROM userinfo where block = 1 AND district = '${adminData[0].adminarea}'`  
+                con.query(sql,(err,verifieduserData)=>{   
+                    res.render("blocklist",{userData:req.userData,verifieduserData})
+                })
+             }
+            
+        })
+       
+    }else{
+        sql = `SELECT * FROM userinfo where block = 1`;
+        con.query(sql,(err,verifieduserData)=>{   
+            res.render("blocklist",{userData:req.userData,verifieduserData})
+        })
+    }
+});
+
+//Block user post method
+router.post("/admin/blockuser/:id",auth,(req,res)=>{
+    const id = req.params.id;
+    con.query(`UPDATE userinfo SET block = 1 WHERE id = ${id}`,(err,result)=>{
+        if(!err){
+            return true;
+        }
+    })
+});
 
 // admin idcard payment list  ROUTE------------------------------
 router.get("/admin/idcardpayment",auth,(req,res)=>{
@@ -870,9 +1039,15 @@ router.get("/admin/makeeligbleforidcard/:id",auth,(req,res)=>{
     });
     
 });
+
+
+// SIGN IN ROUTE------------------------------
+router.get("/signin",(req,res)=>{
+    res.render("signin")
+})
+
 // General user signin--------------
 router.post('/signin', async(req,res)=>{
-
     try {
         let token;
         const { email, password } = req.body;
@@ -881,28 +1056,39 @@ router.post('/signin', async(req,res)=>{
             if(result.length>0){
                  const passMatch = (password === result[0].confirmpassword);
                   token = result[0].jwtoken;
-                // const passMatch = await bcrypt.compare(password, result[0].password); 
-                if(passMatch){                   
-                    res.cookie("jwtoken",token,{
-                        expires:new Date(Date.now()+259000000),
-                        httpOnly:true
-                    });
-                    req.session.message={
-                        type:'alert-success',
-                        intro:'logedin!',
-                        message:'Successfully Login.'
-                    }
 
-                    if(result[0].admin === 1){
-                        res.redirect('/admin')
+                // const passMatch = await bcrypt.compare(password, result[0].password); 
+                if(passMatch == true && result[0].verifyemail == 1){
+                    if(result[0].verify == 1){
+                        res.cookie("jwtoken",token,{
+                            expires:new Date(Date.now()+259000000),
+                            httpOnly:true
+                        });
+                        req.session.message={
+                            type:'alert-success',
+                            intro:'logedin!',
+                            message:'Successfully Login.'
+                        }
+    
+                        if(result[0].admin === 1){
+                            res.redirect('/admin')
+                        }
+                        else{
+                            res.redirect('/users')
+                        } 
+
                     }
                     else{
-                        res.redirect('/users')
-                    }   
+                        res.render('signin',{errorMsg :`You are not yet verified by the authority!!\n Please contact with admin.`})
+                    }                   
+                      
                 }
                 else{
                    res.render('signin',{errorMsg :'Invalid Login!!'})
                 }
+            }
+            else{
+                res.render('signin',{errorMsg:'Email dose not exist!!!'})
             }
                
             })
@@ -959,9 +1145,11 @@ router.get("/users/singledonorview/:id",auth,(req,res)=>{
 })
 // singleuserview  ROUTE------------------------------
 router.get("/users/singleuserview/:id",auth,(req,res)=>{
+ if(req.userData[0].admin == 1){
     const id = req.params.id;
     const sql = `SELECT * FROM userinfo WHERE id = ${id}`;
     con.query(sql,(err,singleuserData)=>{
+        
         const sql_privacy = `SELECT * FROM privacy WHERE useremail = '${singleuserData[0].email}'`;
         con.query(sql_privacy,(err,privacyData)=>{
             console.log(privacyData)
@@ -969,20 +1157,30 @@ router.get("/users/singleuserview/:id",auth,(req,res)=>{
         }) 
         
     })
+ }else{
+     res.status(500).send("Permission Denied!!")
+ }
     
 })
 // AVAILABLEBLOODLIST  ROUTE------------------------------
 router.get("/users/availablebloodlist/:bloodgroup",auth,(req,res)=>{
     const bloodgroup = req.params.bloodgroup;
-    const sql = `SELECT * FROM userinfo WHERE bloodgroup = '${bloodgroup}' AND donateblood = 1`;
+    let sql;
+    if(req.userData[0].admin == 1){
+         sql = `SELECT * FROM userinfo WHERE bloodgroup = '${bloodgroup}' AND donateblood = 1 AND email != '${req.userData[0].email}'`;
+    }
+    else{
+        sql  = `SELECT * FROM userinfo WHERE bloodgroup = '${bloodgroup}' AND donateblood = 1 AND district = '${req.userData[0].district}' AND email != '${req.userData[0].email}'`;
+    }
+   
     let nodata;
     con.query(sql,(err, bloodData)=>{
        if(bloodData.length<1){
           nodata = 'No Data found!!!' 
-          res.render('availablebloodlist',{bloodData,bloodgroup,nodata})
+          res.render('availablebloodlist',{bloodData,userData:req.userData,bloodgroup,nodata})
        }
        else{
-        res.render('availablebloodlist',{bloodData,bloodgroup})  
+        res.render('availablebloodlist',{bloodData,userData:req.userData,bloodgroup})  
        }
         
     })
@@ -1029,7 +1227,7 @@ router.get('/users/verify/:id',(req,res)=>{
 // USER DELETE-----------------------------------
 router.get('/users/deleteuser/:id',(req,res)=>{
     const id = req.params.id;
-    var sql = `DELETE userinfo WHERE id = ${id}`;
+    var sql = `DELETE FROM userinfo WHERE id = ${id}`;
     con.query(sql,(err,updateresult)=>{
         res.redirect('/admin');
     })
@@ -1038,23 +1236,411 @@ router.get('/users/deleteuser/:id',(req,res)=>{
 })
 
 
-router.get('/users/sendemail',(req,res)=>{
-    const msg = {
-        to:'taijul.islam169@gmail.com',
-        from:'software1.polock@gmail.com',
-        subject:'Testing Node email Service',
-        text:'This is awesome email sent from node app'
+// =========================================ADMIN CREATE READ UPDATE DELETE==============================================
+// CREATE ADMIN GET METHOD-----------------------------------
+router.get('/admin/create-admin',auth,(req,res)=>{
+    
+    if(req.userData[0].adminrole == 1){
+        res.render("create-admin",{userData:req.userData})
     }
-    sgMail.send(msg, function(err, info){
-        if(err){
-            console.log("Email has not been sent!!")
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ })
+
+// CREATE ADMIN POST METHOD-----------------------------------
+ router.post('/admin/create-admin',auth,(req,res)=>{ 
+    const {email,adminrole,adminarea,password} = req.body;
+    const sql_all_email = `SELECT email,id FROM userinfo WHERE email = '${email}' AND verify = 1`;
+    con.query(sql_all_email,(err,validuser)=>{
+       if(validuser.length >0){
+        console.log("valid user:",validuser[0].id)
+        const sql_already_admin = `SELECT email FROM admininfo WHERE email = '${email}'`
+        con.query(sql_already_admin,(err,result)=>{
+           
+            if(result.length>0){
+                req.session.message={
+                    type:'alert-danger',
+                    intro:'already admin',
+                    message:'Already Admin.'
+                }
+                res.redirect("/admin/create-admin")
+            }
+            else{
+                const sql = "INSERT INTO admininfo (email,adminrole,adminarea,userid) VALUES (?,?,?,?)";
+                if(password == req.userData[0].confirmpassword){
+                    con.query(sql,[email,adminrole,adminarea,validuser[0].id],(err,result)=>{
+                        con.query(`UPDATE userinfo SET admin = 1, adminrole = '${adminrole}' WHERE email = '${email}'`,(err,updateresult)=>{
+        
+                            if(result){
+                                req.session.message={
+                                    type:'alert-success',
+                                    intro:'success',
+                                    message:'Admin created Successfully.'
+                                }
+                                res.redirect("/admin/create-admin")
+                            }
+                        })
+                        console.log("Admin created Successfully!!")
+                    })
+                   
+                }
+                else{
+                    req.session.message={
+                        type:'alert-danger',
+                        intro:'Wrong password!',
+                        message:'Wrong Password!!.'
+                    }
+                    res.redirect("/admin/create-admin")
+                }
+            }
+        })  
+     
+       }
+       else{
+        req.session.message={
+            type:'alert-danger',
+            intro:'Wrong email!',
+            message:'User dose not exist!!!!.'
         }
-        else{
-            console.log("Email has been sent.")
+        res.redirect("/admin/create-admin")
+       }
+    }) 
+
+  
+
+ });
+  
+
+
+//  ADMIN LIST GET METHOD-----------------------------------
+router.get('/admin/admin-list',auth,(req,res)=>{
+  
+    if(req.userData[0].adminrole == 1){
+        con.query('SELECT * FROM admininfo',(err, alladminData)=>{
+            res.render("admin-list",{userData:req.userData,alladminData});
+        })
+       
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ });
+
+ //  ADMIN UPDATE POST METHOD-----------------------------------
+router.get('/admin/update-admin',auth,(req,res)=>{
+    const id = req.query.id;
+    const email = req.query.email;
+    const adminrole = req.query.adminrole;
+    const adminarea = req.query.adminarea;
+
+    con.query(`UPDATE admininfo SET adminrole = ?,adminarea = ? WHERE id = ${id}`,[adminrole,adminarea],(err,updateresult)=>{
+
+        if(!err){
+            con.query(`UPDATE userinfo SET adminrole = ? WHERE email='${email}'`,[adminrole],(err,update)=>{
+                if(!err){
+                    req.session.message={
+                        type:'alert-success',
+                        intro:'updated!',
+                        message:'Admin data updated!.'
+                    }
+                    res.redirect("/admin/admin-list")
+                }
+            })
+            
+        }
+    });
+ });
+
+  //  ADMIN UPDATE POST METHOD-----------------------------------
+router.get('/admin/deleteadmin/:id/:email',auth,(req,res)=>{
+    const id = req.params.id;
+    const email = req.params.email;
+    const sql = `DELETE FROM admininfo WHERE id = ${id}`;
+    con.query(sql,(err,updateresult)=>{
+       console.log(err)
+        if(!err){
+            con.query(`UPDATE userinfo SET admin = 0, adminrole = null WHERE email = '${email}'`,(err,result)=>{
+              if(!err){
+                req.session.message={
+                    type:'alert-success',
+                    intro:'Deleted!',
+                    message:'Admin Deleted Successfully.'
+                }
+                res.redirect("/admin/admin-list")
+              }
+            })
+          
+        }
+    });
+ });
+
+ // ==============================================NOTICE CRUD START================================================
+ // notice list-----------------------------------
+router.get('/admin/noticelist',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        con.query('SELECT * FROM notice',(err,noticeList)=>{
+            
+            if(!err){
+                res.render("noticelist",{userData:req.userData,noticeList})
+            }
+        })
+       
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ })
+
+//  get creatnotice page
+ router.get('/admin/createnotice',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        res.render("createnotice",{userData:req.userData})
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ });
+
+
+ //create notice POST METHOD-----------------------------------
+ router.post('/admin/createnotice',auth,(req,res)=>{ 
+    const {title,details,file} = req.body;
+    var processed_file = '';
+    if(req.files){ 
+        var documentFile = req.files.file;
+        var newdocumentFile = documentFile.data;
+        processed_file = newdocumentFile.toString('base64');
+    }
+    var created_by = `${req.userData[0].firstname} ${req.userData[0].lastname}` 
+     // createdDate---------------
+     const created_at = new Date().toLocaleDateString();
+    const sql = 'INSERT INTO notice (title,details,file,created_by,created_at)VALUES(?,?,?,?,?)';
+    con.query(sql,[title,details,processed_file,created_by,created_at],(err, result)=>{ 
+        console.log(err);
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'created!',
+                message:'Notice Created Successfully.'
+            }
+            res.redirect("/admin/createnotice")
         }
     })
 
+ });
+
+ // instituiton update----------------------
+router.get("/admin/editnotice/:id/:title/:details",(req,res)=>{
+    const id =  req.params.id;
+    const title =  req.params.title;
+    const details =  req.params.details;
+    let sql_update =`UPDATE notice SET title=?,details=? WHERE id = ${id}`;
+    
+    con.query(sql_update,[title,details],(err, updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Updated!',
+            message:'Updated successfully.'
+        }
+        res.redirect('/admin/noticelist')
+    })
 })
+// notice delete----------------------
+router.get("/admin/deletenotice/:id",(req,res)=>{
+    const id =  req.params.id;
+    
+    let sql_delete =  `DELETE  FROM notice WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Deleted!',
+            message:'Deleted successfully.'
+        }
+        res.redirect('/admin/noticelist')
+    })
+});
+  
+
+// notice deactive----------------------
+router.get("/admin/noticedeactivate/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE notice SET status = 0  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-danger',
+            intro:'Deactivated!',
+            message:'Deactivated successfully.'
+        }
+        res.redirect('/admin/noticelist')
+    })
+});
+// notice active----------------------
+router.get("/admin/noticeactive/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE notice SET status = 1  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'activated!',
+            message:'activated successfully.'
+        }
+        res.redirect('/admin/noticelist')
+    })
+});
+
+// ==============================================BLOG CRUD START================================================
+ // blog list-----------------------------------
+ router.get('/admin/bloglist',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        con.query('SELECT * FROM blog',(err,noticeList)=>{    
+            if(!err){
+                res.render("bloglist",{userData:req.userData,noticeList})
+            }
+        }) 
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ })
+
+//  get creatnotice page
+ router.get('/admin/createblog',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        res.render("createblog",{userData:req.userData})
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ });
+
+
+ //create notice POST METHOD-----------------------------------
+ router.post('/admin/createblog',auth,(req,res)=>{ 
+    const {title,details,file} = req.body;
+    var processed_file = '';
+    if(req.files){ 
+        var documentFile = req.files.file;
+        var newdocumentFile = documentFile.data;
+        processed_file = newdocumentFile.toString('base64');
+    }
+    var created_by = `${req.userData[0].firstname} ${req.userData[0].lastname}` 
+     // createdDate---------------
+     const created_at = new Date().toLocaleDateString();
+     const views = null;
+    const sql = 'INSERT INTO blog (title,details,file,views,created_by,created_at)VALUES(?,?,?,?,?,?)';
+    con.query(sql,[title,details,processed_file,views,created_by,created_at],(err, result)=>{ 
+        console.log(err);
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'created!',
+                message:'Blog Created Successfully.'
+            }
+            res.redirect("/admin/createblog")
+        }
+    })
+
+ });
+
+ // instituiton update----------------------
+router.get("/admin/editblog/:id/:title/:details",(req,res)=>{
+    const id =  req.params.id;
+    const title =  req.params.title;
+    const details =  req.params.details;
+    let sql_update =`UPDATE blog SET title=?,details=? WHERE id = ${id}`;
+    
+    con.query(sql_update,[title,details],(err, updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Updated!',
+            message:'Updated successfully.'
+        }
+        res.redirect('/admin/bloglist')
+    })
+})
+// blog delete----------------------
+router.get("/admin/deleteblog/:id",(req,res)=>{
+    const id =  req.params.id;
+    
+    let sql_delete =  `DELETE  FROM blog WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Deleted!',
+            message:'Deleted successfully.'
+        }
+        res.redirect('/admin/bloglist')
+    })
+});
+  
+
+// blog deactive----------------------
+router.get("/admin/blogdeactivate/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE blog SET status = 0  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-danger',
+            intro:'Deactivated!',
+            message:'Deactivated successfully.'
+        }
+        res.redirect('/admin/bloglist')
+    })
+});
+// blog active----------------------
+router.get("/admin/blogactive/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE blog SET status = 1  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'activated!',
+            message:'activated successfully.'
+        }
+        res.redirect('/admin/bloglist')
+    })
+});
+
+// router.get('/users/sendemail',(req,res)=>{
+//     const msg = {
+//         to:'taijul.islam169@gmail.com',
+//         from:'software1.polock@gmail.com',
+//         subject:'Testing Node email Service',
+//         text:'This is awesome email sent from node app'
+//     }
+//     sgMail.send(msg, function(err, info){
+//         if(err){
+//             console.log("Email has not been sent!!")
+//         }
+//         else{
+//             console.log("Email has been sent.")
+//         }
+//     })
+
+// })
 
 
 
@@ -1063,498 +1649,7 @@ router.get('/users/sendemail',(req,res)=>{
 
 //================================================================= LAB END======================================================
 
-// route for showing create-item page
-// router.get("/create-item", auth, async(req, res)=>{
-    
-//     try{
-//         const adminData = req.userData;
-//         const allItem = await Item.find();
-//         res.render("create-item",{allItem, adminData});
-//     }
-//     catch(error){
-//         res.render("create-item",{error})
-//     }
-    
-// });
 
-
-// // create new item-------------------
-
-
-// // file-uploading-functionality
-// var storage = multer.diskStorage({
-//     destination: function(req, res,cb){
-//         // cb= callback
-//         cb(null,'public/uploads/item')
-//     },
-//     filename:function(req, file, cb){
-//         cb(null, Date.now() + file.originalname)
-//     }
-// })
-
-// var upload = multer({storage: storage})
-// // creating-new item-------------------------------------------
-// router.post('/create-item', upload.single('itemImage') ,async(req,res)=>{
-//         const item = new Item({
-//             category:req.body.category,
-//             itemName:req.body.Item_Name,
-//             serviceProvide:[{steamWash:req.body.steamWash,dryWash:req.body.dryWash,steamIron:req.body.steamIron,dryIron:req.body.dryIron}],
-//             image:req.file.filename, 
-//        });
-//    try {
-//      const savedItem = await item.save();
-//     //  const allItem = await Item.find();
-//     //  console.log(allItem);
-//      res.render('create-item',{message:"New Item has been created."});
-//    } catch (error) {
-
-//     res.json({message: error}) 
-//    }
-// });
-
-
-
-// // getting create-admin page-------------------------
-// router.get('/create-admin',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("create-admin",{adminData});
-// });
-
-// //create admin------
-// router.post('/create-admin', async(req,res)=>{
-
-//     const admin = new Admin({
-//         firstName:req.body.firstName,
-//         adminRole: req.body.adminRole,
-//         email: req.body.email,
-//         phone: req.body.phone,
-//         gender: req.body.gender,
-//         age: req.body.age,
-//         password: req.body.password,
-//    });
-
-   
-// try {
-    
-//  const savedAdmin = await admin.save();
-//   // call  a function for generating a jsonwebtoken --------------- 
-//   const token = await admin.generateAuthToken();
-    
-//   // setting cookie in the browser--------------------
-// //   res.cookie("jwt",token,{
-// //       httpOnly:true
-// //   });
-//  res.render('create-admin',{message:"New admin has been created."});
- 
-// } 
-// catch (error) {
-//   res.send(error)
-// //   res.json({message: error}) 
-//  }  
-// })
-
-
-// //============================================== CHECK REVIEWS AND RATINGS GET AND POST=========================================
-
-// // getting create-admin page-------------------------
-// router.get('/check-reviews',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("check-reviews",{adminData});
-// });
-
-
-// //============================================== SINGLE DOCTOR PROFILE VIEW=========================================
-
-// // getting single-doctor-profile-------------------------
-// router.get('/single-doctor-profile',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("single-doctor-profile",{adminData});
-// });
-// //============================================== ALL DOCTORLIST=========================================
-
-// // getting all doctor list-------------------------
-// router.get('/doctor-list',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("doctor-list",{adminData});
-// });
-
-// //============================================== ALL SERVICES WE HAVE PROVIDED=========================================
-
-// // getting service list-------------------------
-// router.get('/service-list',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("service-list",{adminData});
-// });
-
-
-// //============================================== CREATE OFFER =========================================
-
-// // getting service list-------------------------
-// router.get('/create-offer',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("create-offer",{adminData});
-// });
-
-
-// //============================================== INVOICE =========================================
-
-// // getting service list-------------------------
-// router.get('/invoice-view',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("invoice-view",{adminData});
-// });
-
-// //============================================== CREATE MESSAGE =========================================
-
-// // getting create message page-------------------------
-// router.get('/create-message',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("create-message",{adminData});
-// });
-
-// //============================================== MESSAGE LIST=========================================
-// // getting  message-list page-------------------------
-// router.get('/message-list',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("message-list",{adminData});
-// });
-
-// //==============================================SINGLE MESSAGE VIEW=========================================
-// // getting  message-list page-------------------------
-// router.get('/single-message-view',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("single-message-view",{adminData});
-// });
-// //==============================================NEW REQUEST=========================================
-// // getting  message-list page-------------------------
-// router.get('/new-request',auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("request",{adminData});
-// });
-// //Updations
-
-
-
-// //loading item update form
-// router.get('/update-item/:id',async(req,res,next)=>{
-//     console.log('update')
-//     console.log('update id',req.params.id);
-//     const id=req.params.id;
-
-//    const singleItem =await Item.findOne({_id: id})
-//    console.log(singleItem)
-        
-
-//         res.render('update_item',{singleItem})
-//     })
-//     router.get('/update-item/',async(req,res,next)=>{
-//             res.render('update_item')
-//     });
-
-
-
-// // Update a specific item
-// router.post('/update-item/', upload.single('itemImage'), async(req,res)=>{
-//     const id=req.query.id;
-//     console.log(id)
-//     const myquery={_id:id}
-//     if(req.file){
-//         var newValues = { $set:{
-//             category:req.body.category,
-//             itemName:req.body.Item_Name,
-//             serviceProvide:[{steamWash:req.body.steamWash,dryWash:req.body.dryWash,steamIron:req.body.steamIron,dryIron:req.body.dryIron,}],
-//             image:req.file.filename,
-            
-           
-//             }
-//         }
-//     }
-//     else{
-//         var newValues = { $set:{
-//             category:req.body.category,
-//             itemName:req.body.Item_Name,
-//             serviceProvide:[{steamWash:req.body.steamWash,dryWash:req.body.dryWash,steamIron:req.body.steamIron,dryIron:req.body.dryIron,}],
-          
-            
-           
-//             }
-//         }
-       
-//     }
-//     const updateResult =  await Item.findByIdAndUpdate(myquery,newValues,{
-//         useFindAndModify:false
-//     });
-//     res.redirect('/admin/create-item')
-   
-// });
-
-
-
-// //loading admin update form
-// router.get('/update-admin/:id',async(req,res,next)=>{
-//     console.log('update')
-//     console.log('update id',req.params.id);
-//     const id=req.params.id;
-
-//    const admin =await Admin.findOne({_id: id})
-//    console.log(admin)
-        
-
-//         res.render('update_profile',{admin})
-//     });
-
-
-
-//     // Update admin profile
-// router.post('/update-admin/', async(req,res)=>{
-//     const id=req.query.id;
-//     console.log(id)
-//     const myquery={_id:id}
-   
-    
-//         var newValues = { $set:{
-//             firstName:req.body.firstName,
-//             email:req.body.email,
-//             adminRole:req.body.adminRole,   
-//             }
-//         }
-       
-    
-//     const updateResult =  await Admin.findByIdAndUpdate(myquery,newValues,{
-//         useFindAndModify:false
-//     });
-//     res.redirect('/admin/profile')
-   
-// });
-
-   
-
-
-
-
-
-// //     Deletions
-
-
-
-
-
-// // Delete a specific post by id
-// router.get('/delete-item/:id',(req, res)=>{
-//     Item.findByIdAndDelete({_id:req.params.id}, err=>{
-//         if(err){
-//             console.log(err);
-//         }else{
-//             res.redirect('/admin/create-item');
-//         }
-//     });
-// })
-
-
-
-
-
-
-
-
-// //                                          Login/Logout functionality
-
-
-// // getting login page-------------------------
-// router.get('/login',(req,res)=>{
-//     res.render('login');
-// })
-
-
-
-
-// // login- functionality----------------
-// router.post("/login", async(req, res)=>{
-    
-//     const errorMsg = "Invalid Login!!";
-//     const wrongkeyword =  "Wrong Keywords!!";
-    
-//     try {
-//         const email  = req.body.loginEmail;
-//         const password  = req.body.loginpassword;
-//         console.log(email);
-//         if(email === "" || password === ""){
-//             res.render("login",{emptyMsg:"Field is required!!"})
-//         }
-//         else{
-//              // res.write({message:"Successfully logged in.."})
-//              const userData = await Admin.findOne({email:email});
-//              console.log(userData);
-//             // macthing database password and user input password by bycriptjs--------------------
-//             const isMatch = await bycript.compare(password, userData.password);
-//             if(isMatch){
-
-//           // call  a function for generating a jsonwebtoken  ----------------
-//             const token = await userData.generateAuthToken();
-//             // setting cookie in the browser--------------------
-//             res.cookie("jwt",token, {
-//                 // expires:new Date(Date.now() + 100000000),
-//                 httpOnly:true
-//             });    
-//             const logSuccMsg ="welcome"
-//             res.render("index",{userData,logSuccMsg});
-       
-//         }
-//         else{
-//             res.render("login",{wrongkeyword});
-//         }
-
-//         }
-    
-        
-//     } catch (error) {
-//         res.send("login",{errorMsg});
-//     }
-// });
-
-// // logout functionality--------------------
-
-// router.get("/logout", auth, async(req,res)=>{
-//     try {
-//         res.clearCookie("jwt");
-//         console.log("logout success...");
-//         // await req.userData.save();
-//         res.render("login");
-//     } catch (error) {
-//         res.status(500).send(error)
-        
-//     }
-// });
-
-
-
-
-
-
-
-// //                                                   Order related works
-
-
-// // orderlist-route
-// router.get("/order-list/", auth, async(req,res)=>{
-//     try{
-//         const adminData = req.userData;
-//         const allOrder = await Orderlist.find();
-//         res.render("order-list",{allOrder, adminData});
-//     }
-//     catch(error){
-//         res.render("index",{error})
-//     }
-// });  
-// // orderview-route
-// router.get("/order-view/", auth, async(req,res)=>{
-//     try {
-//     const id =  req.query.id;
-//     const singleOrderData = await Orderlist.findOne({_id:id});
-//     const adminData = req.userData;
-//     console.log(singleOrderData);
-//     res.render("order-view",{adminData,singleOrderData});
-        
-//     } catch (error) {
-
-//         res.render("order-view",{adminData});
-//     }
-    
-// });
-
-
-
-// //create order------
-// router.post("/checkout/", async(req,res)=>{
-    
-//     let cart = req.body.cart;
-//     const orderlist = new Orderlist({ 
-//         firstName:req.body.firstName,
-//         lastName:req.body.lastName,
-//         email: req.body.email,
-//         phone: req.body.phoneNumber,
-//         address: req.body.address,
-//         city: req.body.city,
-//         paymentMethod: req.body.payment_option,
-//         allProductInfo:[ req.body.cart]
-            
-//         //     {
-//         //         productName:req.body.modalTitle,
-//         //         service:{
-//         //             dryWash:req.body.dryWash,
-//         //             steamWash:req.body.steamWash,
-//         //             dryIron:req.body.dryIron,
-//         //             steamIron:req.body.steamIron
-//         //         },
-//         //         quantity:req.body.quantity,
-//         //         price:req.body.price    
-            
-//         // },
-//         ,
-//         cartSubTotal: req.body.cartSubtotal,
-//         OrderTotal: req.body.cartTotal,
-       
-//    });
-
-// try {
-    
-//  const saveOrder = await orderlist.save();
-//  console.log(saveOrder);
-//  res.render('checkout',{message:"New order has been created."});
- 
-// } 
-// catch (error) {
-//   res.send(error)
-// //   res.json({message: error}) 
-//  }  
-// })
-
-
-
-
-
-
-
-
-
-
-// // profile-route
-// router.get("/profile", auth, (req,res)=>{
-//     const adminData = req.userData;
-//     res.render("profile",{adminData});
-// });
-
-
-
-// // 404-route
-// router.get("/404", auth, (req,res)=>{
-//     res.render('404')
-// });
-
-
-
-
-
-// // front-end-home-
-// router.get("/home", async(req,res)=>{
-
-//     try{
-//         const allItem = await Item.find(); 
-//         res.render("home",{allItem});  
-//     }
-//     catch(error){
-//         res.render("home",{error})
-//     }
-// });
-// // front-cart view-
-// router.get("/cart-view", async(req,res)=>{
-
-//    res.render('cart-view')
-// });
-// // front-checkout-
-// router.get("/checkout", async(req,res)=>{
-//     res.render('checkout')
-//  });
 
 
 

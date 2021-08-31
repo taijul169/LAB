@@ -14,50 +14,103 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                 {{!-- modal id Card--}}
-               <!-- Button trigger modal -->
+                <!-- Button trigger modal -->
                 <!-- Modal -->
-                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content custom-content-card text-center">
+               <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" >
+                  <div class="modal-content custom-content-card text-center ">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">User ID Card</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
-                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
-                      <div class="card-content-wrap text-center">
-                            <h3>Lab</h3>
-                        <span>Change together</span>
-                        <div class="idcard-img">
-                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                   
+                     {{!-- card view --}}
+                    <div class="custom-card shadow"  id="idcardWrap">
+                        {{!-- card-front --}}
+                        <div class="card-front ">
+                              {{!-- front-header --}}
+                            <div class="card-front-header d-flex justify-content-between">
+                              <div class="logo-card">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
+                              </div>
+                              <div class="qrcode-card">
+                                <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
+                                <input type="hidden" id="qr_code_value_name" value={{userData.[0].name}}>
+                                <input type="hidden" id="qr_code_value_email" value={{userData.[0].email}}>
+                                <input type="hidden" id="qr_code_value_phone" value={{userData.[0].phone}}>
+                                <input type="hidden" id="qr_code_value_division" value={{userData.[0].division}}>
+                                {{!-- qr_code display --}}
+                                <div id="output_qr"></div>
+                                
+                                 {{!-- <img style="width: 50px;" src="/images/qr.png" alt="qr"> --}}
+                              </div>
+                            </div>
+                          
+                            {{!-- front-image-card --}}
+                            <div class="front-image-card">
+                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 80px;" alt="proimg">
+                              {{!-- <div class="img-shape">
+                               
+                              </div> --}}
+                            </div>
+                            <div class="name_title">
+                              <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
+                              <h5>Vice President</h5>
+                              <span class="d-block">Central committee (LAB)</span>
+                              <small>Valid Till 24-07-2023</small>
+                              
+                            </div>
+                            <div class="info-card text-left mt-2">
+                            <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
+                            <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
+                            <p>Mob: <span>+88{{userData.[0].mobile}}</span></p>
+                            </div>
+                            <div class="id-card-footer">
+                              <div class="auth d-flex justify-content-between">
+                                <div class="auth-president">
+                                  <span>President</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                                <h6>Authorised By:</h6>
+                                <div class="auth-secretary">
+                                  <span>Secretary</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                              </div>
+                            </div>
                         </div>
-                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
-                        <span>Member</span>
-                        <table>
-                            <tr>
-                                <td>ID <span>:</span></td>
-                                <td>0000{{userData.[0].id}}</td>
-                            </tr>
-                              <tr>
-                                <td>Blood <span>:</span></td>
-                                <td>{{userData.[0].bloodgroup}}</td>
-                            </tr>
-                              <tr>
-                                <td>Email <span>:</span></td>
-                                <td>{{userData.[0].email}}</td>
-                            </tr>
-                              <tr>
-                                <td>Phone <span>:</span></td>
-                                <td>{{userData.[0].mobile}}</td>
-                            </tr>
-                        </table>
-                      </div>
+                         <div class="html2pdf__page-break"></div>
+                        {{!-- card-Back --}}
+                        <div class="card-front back text-center mt-1 position-relative" > 
+                         <div class="logo-card-back mb-1 ">
+                              <img style="width: 45px;" src="/images/logo.png" alt="logo">
+                         </div>
+                         <div class="heading-back text-uppercase mt-3">
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size:5px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                          </div>
+                          <div class="contact-info-card">
+                            <ul>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].mobile}}</li>
+                              <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
+                              <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
+                            </ul>
+                      
+                          
+                          </div>
+                          <div class="id-card-footer back">
+                            www.labbd.org
+                            </div>
+                        </div>
+                      
                     </div>
+                   
+                   
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
                     </div>
-                    </div>
+                 </div>
                 </div>
                 </div>
             <!-- ============================================================== -->

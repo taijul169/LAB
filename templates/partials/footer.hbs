@@ -53,23 +53,25 @@
     <script src="/js/app-style-switcher.js"></script>
     <script src="/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <!--Wave Effects -->
     <script src="/js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="/js/custom.js"></script>
+    <script src="/jsqrcode.min.js"></script>
     <!--This page JavaScript -->
     <script>
         const pdfGenarator= ()=>{
           const elemnt =   document.getElementById("idcardWrap");
           var opt = {
                     margin:1,
-                    width:400,
-                    filename:     'myfile.pdf',
+                    //width:250,
+                    filename:     'mycard.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2 },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    jsPDF:        { unit: 'mm', format: 'credit-card', orientation: 'portrait' }
                     };
           html2pdf()
           .set(opt)
@@ -77,9 +79,28 @@
           .save()
         }
     </script> 
+     <script>
+        const value_qr_id =  document.getElementById("qr_code_value_id");
+        const value_qr_name =  document.getElementById("qr_code_value_name");
+        const value_qr_email =  document.getElementById("qr_code_value_email");
+        const value_qr_phone =  document.getElementById("qr_code_value_phone");
+        const value_qr_division =  document.getElementById("qr_code_value_division");
+       
+         let qrcode = new QRCode("output_qr", {
+            text: `Id:${value_qr_id.value}\n Name:${value_qr_name.value}\n Email:${value_qr_email.value}\n Phone:${value_qr_phone.value}\n Address:${value_qr_division.value}\n`,
+            width: 25,
+            height: 25,
+            colorDark : "#363638",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+        //const qr_code =   new QRCode(document.getElementById("qr_display"),"http://jindo.dev.naver.com/collie");  
+       // qr_code.makeCode(value_qr.value);                    
+    </script>
     <!--chartis chart-->
     <script src="/plugins/bower_components/chartist/dist/chartist.min.js"></script>
     <script src="/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+ 
     <script src="/js/pages/dashboards/dashboard1.js"></script>
 </body>
 

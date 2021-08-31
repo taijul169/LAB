@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
         <!-- Castro fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -40,9 +41,15 @@
     <title>law association of Bangladesh</title>
 </head>
 <body>
-  
+
+
 {{!-- modal-wrapper-end --}}
     <div class="home-wrapper">
+        {{!-- alert --}}
+        <div class="custom-alert-box" id="custom-alert-box" style="position: fixed; top:0%;right:0%;z-index:999; width:300px;opacity:1">
+            
+        </div>
+        
       <div class="containe">
            <div class="home-wrapper-inner bg-white">
         <header>
@@ -65,8 +72,8 @@
                     </div>
                   </div>
                 </div>
-                {{!-- main-menu --}}
-               <div class="container-fluid "style="width: 90%;">
+                 {{!-- main-menu --}}
+               <div class="container-fluid position-relative"style="width: 90%;" >
                 <div class="main-menu p-4">
                     <div class="row">
                         <div class="col-md-2 col-lg-2 col-2">
@@ -74,21 +81,36 @@
                              <h4>LAB</h4>     
                         </div> 
                        </div>
-                        <div class="col-lg-10 col-xl-10 col-md-10 ">
-                       <nav class="text-right">
-                          <ul>
+                        <div class="col-lg-10 col-xl-10 col-md-10 col-10">
+                        <nav class="text-right ">
+                            <div class="res-menu-box" id="menucontroler">
+                                <i id="open" class="fa fa-bars active" aria-hidden="true"></i>
+                                <i id="close" class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                          <ul class="main-menu-header" id="main-menu-header">
                             <li><a class="active" href="/">Home</a></li>
-                            <li><a href="event">Events</a></li>
-                            <li><a href="blog">Blog</a></li>
-                            <li><a href="notice">Notice</a></li>
-                            <li><a href="committee">Committee</a></li>
-                            <li><a href="faq">Faq</a></li>
-                            <li><a href="Video">Videos</a></li>
-                            <li><a href="contact">Contact</a></li>
+                            <li><a href="#">Events</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Notice</a></li>
+                            <li><a href="#">Committee</a></li>
+                            <li><a href="#">Faq</a></li>
+                            <li><a href="#">Videos</a></li>
+                            <li><a href="#">Contact</a></li>
                             <li><a href="/signup">Signup</a></li>
                             <li><a href="/signin">Login</a></li>
                          </ul>
                         </nav>
+                        <script>
+                          const nav =   document.getElementById("main-menu-header");
+                          const open =   document.getElementById("open");
+                          const close =   document.getElementById("close");
+                          const closecontroler =   document.getElementById("menucontroler");
+                          menucontroler.addEventListener("click",()=>{
+                              nav.classList.toggle("active");
+                              open.classList.toggle("active");
+                              close.classList.toggle("active");
+                          })
+                        </script>
                       </div>
                     </div>
                      
@@ -104,7 +126,7 @@
                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3 border p-5 shadow">
                         <h2 id="heading">Sign Up For Your Membership</h2>
                         <p>Fill all form field to go to next step</p>
-                        <form id="msform" class="was-validated" method="POST" action="/signup" enctype="multipart/form-data">
+                        <form id="msform"  method="POST" action="/signup" enctype="multipart/form-data">
                             {{!-- hiddendata --}}
                             <input type="hidden" value="{{data}}" id="hiddendata">
                             {{!-- <input type="hidden" value="{{datadistrict}}" id="datadistrict"> --}}
@@ -114,7 +136,7 @@
                                 <li class="active" id="account"><strong>About</strong></li>
                                 <li id="personal"><strong>Education</strong></li>
                                 <li id="payment"><strong>Work</strong></li>
-                                <li id="confirm"><strong>Finish</strong></li>
+                                <li id="confirm" ><strong>Finish</strong></li>
                             </ul>
                             <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -130,8 +152,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="image-preview">
-                                                <span class="d-block p-2">Photograph Preview</span>
-                                                <img id="output" src="/images/avatar.jpg"/>
+                                                <span class="d-block p-2">Photograph</span>
+                                                <label for="" id="errormsgPhotograph" class="text-danger"></label>
+                                               <div class="inputOutput">
+                                                   <img id="output" src="/images/avatar.jpg"/>
+                                                   <input type="file" name="userphoto" class="form-control is-valid"  id="userphoto" onchange="loadFile(event)" required>
+                                               </div> 
+                                                
                                             </div>
                                         </div>
                                         <script>
@@ -149,43 +176,77 @@
                                     <div class="form-row">
                                         <div class="col-md-4 mb-3">
                                         <label for="validationServer01">First name *</label>
-                                        <input type="text" name="firstname" class="form-control is-valid" id="validationServer01"  required>
+                                        <input type="text" name="firstname" class="form-control" id="firstname"  required>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="validationServer02">Midle Name</label>
-                                            <input type="text" name="midlename" class="form-control is-valid" id="validationServer02" >
+                                            <input type="text" name="midlename" class="form-control" id="validationServer02" >
                                            
                                         </div>
                                          <div class="col-md-4 mb-3">
                                             <label for="validationServer02">Last name *</label>
-                                            <input type="text" name="lastname" class="form-control is-valid" id="validationServer02" required>
+                                            <input type="text" name="lastname" class="form-control" id="validationServer02">
                                         </div>
                                     </div>
+                                    {{!-- second-row --}}
                                     <div class="form-row">
                                         <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Email *</label>
-                                        <input type="Email" name="email" class="form-control is-valid" id="validationServer01"  required>
+                                            <label for="validationServer01">Mobile*</label>
+                                            <input type="text" name="mobile" class="form-control" id="mobile" >
+                                       </div>
+                                         <div class="col-md-4 mb-3">
+                                            <label for="validationServer01">Mobile Two</label>
+                                            <input type="text" name="secondarymobile" class="form-control " id="validationServer01">
                                         </div>
+                                        <div class="col-md-4 mb-3">
+                                            <input type="hidden" id="hiddenEmail" value={{emailData}}>
+                                            <label for="validationServer01" aria-autocomplete="none">Email* <span id="emailexitMsg" class="text-danger"></span></label>
+                                            <input onchange="emailChek()" type="email" name="email" class="form-control" id="email" >
+                                        </div>
+                                        <script>
+                                           const email =  document.getElementById("email");
+                                           const emailData =  document.getElementById("hiddenEmail");
+                                          var emailexitMsg =  document.getElementById("emailexitMsg");
+                                           emailexitMsg.innerText = ""
+                                           const EmailParseData = JSON.parse(emailData.value);
+                                           
+                                           function emailChek(){
+                                               console.log(EmailParseData)
+                                                EmailParseData.map((data,index)=>{
+                                                  if(email.value == data.email){
+                                                     emailexitMsg.innerText = "This email already exist!!!";
+                                                     console.log("email  exist!!!")
+                                                  }else{
+                                                      emailexitMsg.innerText = '';
+                                                  }
+                                                     
+                                              })
+                                           }
+                                           
+                                        </script>
                                      
-                                      <div class="col-md-4 mb-3">
-                                          <label for="">Gender</label>
-                                        <select name="gender"    class="custom-select" id="validatedInputGroupSelect" required>
-                                            <option value="">Choose One</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                      </div>
+                                   
+                                    </div>
+                                    {{!-- third-row --}}
+                                    <div class="form-row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Gender</label>
+                                            <select name="gender"    class="custom-select" id="gender" required>
+                                                <option>Choose One</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                        
                                       <div class="col-md-4 mb-3">
                                         <label for="validationServer01">Date of Birth *</label>
-                                        <input type="date" name="dateofbirth" class="form-control is-valid" id="validationServer01"  required>
-                                       </div>
+                                        <input type="date" name="dateofbirth" class="form-control" id="dateofbirth">
                                     </div>
-                                    <div class="form-row">
                                      <div class="col-md-4 mb-3">
                                           <label for="">Blood Group</label>
-                                        <select name="bloodgroup"class="custom-select" id="validatedInputGroupSelect" required>
-                                            <option value="">Choose One</option>
+                                        <select name="bloodgroup" class="form-control"  id="bloodgroup">
+                                            <option >Choose One</option>
                                             <option value="A+">A+</option>
                                             <option value="A-">A-</option>
                                             <option value="B+">B+</option>
@@ -201,7 +262,7 @@
                                    <div class="col-md-4 mb-3">
                                      <label for="">Division</label>
                                         <select onchange="getDivisionValue()" name="division" class="custom-select division" id="division" required>
-                                            <option value="">Choose One</option>
+                                            <option >Choose One</option>
                                              {{#each dataDivison}}
                                               <option value="{{this.division}}">{{this.division}}</option>
                                             {{/each}}
@@ -218,26 +279,14 @@
                                             {{/each}} --}}
                                         </select>
                                       </div>
-                                         <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3">
                                      <label for="">Upazila</label>
                                         <select name="upazila"    class="custom-select upazila" id="upazila" required>
                                         </select>
                                       </div>
-                                      <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Photo*</label>
-                                        <input type="file" name="userphoto" class="form-control is-valid"  id="validationServer01" onchange="loadFile(event)" required>
-                                       </div>
-                                         <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Mobile*</label>
-                                        <input type="text" name="mobile" class="form-control is-valid" id="validationServer01"  required>
-                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4 mb-3">
-                                        <label for="validationServer01">Mobile Two</label>
-                                        <input type="text" name="secondarymobile" class="form-control " id="validationServer01">
-                                        </div>
-                                     
+                                   
+                                    <div class="form-row mt-3">
                                       <div class="col-md-4 mb-3">
                                         <label for="validationServer01">Password*</label>
                                         <input type="password" name="password" class="form-control" id="password"  required>
@@ -263,12 +312,20 @@
 
                                     </script>
                                 </div> 
-                                <input type="button" name="next" class="next action-button" value="Next" />
+                                    <input type="button" name="next" class="next action-button"  value="Next"/>
                             </fieldset>
 
                             {{!-- education --}}
                             <fieldset>
                                 <div class="tab-pane" id="account">
+                                        <div class="row mb-4">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Education Information:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 2 - 3</h2>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                              <div class="form-row w-100">
                                                  <div class="col-md-2 mb-3 text-center">
@@ -300,7 +357,7 @@
                                              {{!-- ssc --}}
                                              <div class="form-row w-100">
                                                     <div class="col-md-2 mb-3">
-                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="SSC" value="SSC" required="" readonly="" aria-required="true" aria-invalid="false">
+                                                     <input class="form-control valid" name="degree" id="degree" type="text" placeholder="SSC" value="SSC"  readonly="" aria-required="true" aria-invalid="false">
                                                     </div>
                                                 
                                                 <div class="col-md-4 mb-3">
@@ -314,7 +371,7 @@
                                                 </div>
                                                 <div class="col-md-2 mb-3">
                                                   
-                                                     <select name="sscgroup"    class="custom-select" id="validatedInputGroupSelect" required>
+                                                     <select name="sscgroup"    class="custom-select" id="groupssc" required>
                                                             <option value="">Choose</option>
                                                             <option value="Science">Science</option>
                                                             <option value="Commerce">Commerce</option>
@@ -379,7 +436,7 @@
                                                     </select>   
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                    <input class="w-100" type="file" name="certificatessc" accept=".jpg,.png,.jpeg" >
+                                                    <input class="w-100" type="file" name="certificatessc" id="certificatessc" accept=".jpg,.png,.jpeg" >
                                                 </div>
                                              </div>
                                              {{!-- hsc --}}
@@ -392,7 +449,7 @@
                                                 <div class="col-md-4 mb-3 ">
                                                    
                                                   <div class="form-group">
-                                                       <select name="institutehsc" class="custom-select institutehsc"  id="institutehsc" required>
+                                                       <select name="institutehsc" class="custom-select institutehsc"  id="institutehsc" >
                                                           <option value="">Select Option</option>
                                                         {{#each hscdata }}
                                                           <option value="{{this.institutenamehsc}}">{{this.institutenamehsc}}</option>
@@ -403,7 +460,7 @@
                                                 </div>
                                                 <div class="col-md-2 mb-3">
                                                     
-                                                     <select name="hscgroup"    class="custom-select" id="validatedInputGroupSelect" required>
+                                                     <select name="hscgroup"    class="custom-select" id="grouphsc">
                                                             <option value="">Choose</option>
                                                             <option value="Science">Science</option>
                                                             <option value="Commerce">Commerce</option>
@@ -412,7 +469,7 @@
                                                 </div>
                                                  <div class="col-md-2 mb-3">
                                                    
-                                                       <select class="year custom-select yearhsc"  id="yearhsc" name="passingyearhsc" required>
+                                                       <select class="year custom-select yearhsc"  id="yearhsc" name="passingyearhsc">
                                                                 <option value="">Select Option</option>
                                                                 <option value="1971">1971</option>
                                                                 <option value="1972" >1972</option>
@@ -468,7 +525,7 @@
                                                     </select>   
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                    <input type="file" required accept=".jpg,.png,.jpeg" name="certificatehsc">
+                                                    <input type="file" required accept=".jpg,.png,.jpeg" name="certificatehsc" id="certificatehsc">
                                                 </div>
                                              </div>
                                              {{!-- Bachelor --}}
@@ -678,7 +735,7 @@
                                                     </select>   
                                                 </div>
                                                  <div class="col-md-2 mb-3">
-                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatebachelor">
+                                                    <input type="file" accept=".jpg,.png,.jpeg" name="certificatebachelor" id="certificatebachelor">
                                                 </div>
                                              </div>
                                              {{!-- Masters --}}
@@ -1120,6 +1177,14 @@
                             <fieldset>
 
                                 <div class="tab-pane" id="address" tabindex="-1">
+                                       <div class="row mb-4">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Work Information:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 3 - 3</h2>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <h5 class="info-text"></h5>
@@ -1164,29 +1229,9 @@
                                             </div>
                                         </div>
                                 </div>
-                               <input type="submit" class="action-button" value="Submit" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                               <input onclick="errorDisplay()" type="submit" class="action-button" value="Submit" id="submitbtn"/> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                             </fieldset>
-                            {{!-- <fieldset>
-                                <div class="form-card">
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <h2 class="fs-title">Finish:</h2>
-                                        </div>
-                                        <div class="col-5">
-                                            <h2 class="steps">Step 4 - 4</h2>
-                                        </div>
-                                    </div> <br><br>
-                                    <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-                                    <div class="row justify-content-center">
-                                        <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-                                    </div> <br><br>
-                                    <div class="row justify-content-center">
-                                        <div class="col-7 text-center">
-                                            <h5 class="purple-text text-center">You Have Successfully Signed Up</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset> --}}
+                          
                         </form>
                     </div>
                 </div>
@@ -1298,19 +1343,17 @@
      
     </div>
    
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+   
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="plugins/js/owl.carousel.min.js"></script>
     <script src="plugins/js/step.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/pages/frontend/home.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="formValidate.js"></script>
-    <script src="home.js"></script>
     <script>
+
         $('.division').select2();
         $('.yearssc').select2();
         $('.yearhsc').select2();
@@ -1384,7 +1427,63 @@
      
     <script>
        
-       
+         $('#userphoto').bind('change', function() {
+                var a=(this.files[0].size);
+                if(Math.round(a / (1024 * 1024)) > 1) {
+                    $('#errormsgPhotograph').html("Please select image size less than 1 MB")
+                }
+                else{
+                    $('#errormsgPhotograph').html("")
+                }
+            });
+
+            const customAlertBox = $("#custom-alert-box");
+            const certificatehsc = $('#certificatehsc');
+            const certificatessc = $('#certificatessc');
+            const certificatebachelor = $('#certificatebachelor');
+              $('#certificatessc').bind('change', function() {
+                var a=(this.files[0].size);
+                if(Math.round(a / (1024 * 1024)) > 1) {
+                    customAlertBox.html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 Please select image size less than 1 MB (Ssc Certiificate)
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 </div>`)
+                }
+                else{
+                    customAlertBox.html("")
+                }
+            });
+             $('#certificatehsc').bind('change', function() {
+                var a=(this.files[0].size);
+                if(Math.round(a / (1024 * 1024)) > 1) {
+                    customAlertBox.html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 Please select image size less than 1 MB (Hsc Certificate)
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 </div>`)
+                }
+                else{
+                    customAlertBox.html("")
+                }
+            });
+             $('#certificatebachelor').bind('change', function() {
+                var a=(this.files[0].size);
+                if(Math.round(a / (1024 * 1024)) > 1) {
+                    customAlertBox.html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 Please select image size less than 1 MB (Bachelor Certificate)
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 </div>`)
+                }
+                else{
+                    customAlertBox.html("")
+                }
+            });
+
          
     </script>
 

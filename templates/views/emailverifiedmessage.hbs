@@ -39,161 +39,7 @@
     <!-- <link rel="stylesheet" href="responsive.css"> -->
     <title>law association of Bangladesh</title>
 </head>
-<style>
-    .wrapper {
-        display: flex;
-        align-items: center;
-        flex-direction: column; 
-        justify-content: center;
-        width: 100%;
-        min-height: 100%;
-        padding: 20px;
-        }
 
-        #formContent {
-        -webkit-border-radius: 10px 10px 10px 10px;
-        border-radius: 10px 10px 10px 10px;
-        background: #fff;
-        padding: 30px;
-        width: 90%;
-        max-width: 450px;
-        position: relative;
-        padding: 0px;
-        -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-        text-align: center;
-        }
-
-        #formFooter {
-        background-color: #f6f6f6;
-        border-top: 1px solid #dce8f1;
-        padding: 25px;
-        text-align: center;
-        -webkit-border-radius: 0 0 10px 10px;
-        border-radius: 0 0 10px 10px;
-        }
-
-
-
-        /* TABS */
-
-        h2.inactive {
-        color: #cccccc;
-        }
-
-        h2.active {
-        color: #0d0d0d;
-        border-bottom: 2px solid #5fbae9;
-        }
-
-
-
-        /* FORM TYPOGRAPHY*/
-
-        input[type=button], input[type=submit], input[type=reset]  {
-        background: #0f0c29;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        border: none;
-        color: white;
-        padding: 15px 80px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-        box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        margin: 5px 20px 40px 20px;
-        -webkit-transition: all 0.3s ease-in-out;
-        -moz-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-        }
-
-        input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-        background-color: #39ace7;
-        }
-
-        input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
-        -moz-transform: scale(0.95);
-        -webkit-transform: scale(0.95);
-        -o-transform: scale(0.95);
-        -ms-transform: scale(0.95);
-        transform: scale(0.95);
-        }
-
-        input[type=email],input[type=password] {
-        background-color: #f6f6f6;
-        border: none;
-        color: #0d0d0d;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 5px;
-        width: 85%;
-        border: 2px solid #f6f6f6;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        }
-
-        input[type=email]:focus, input[type=password]:focus{
-        background-color: #fff;
-        border-bottom: 2px solid #0d0d0d;
-        }
-
-        input[type=text]:placeholder {
-        color: #cccccc;
-        }
-        /* Simple CSS3 Fade-in Animation */
-        .underlineHover{
-            color: #EF004F;
-        }
-        .underlineHover:after {
-        display: block;
-        left: 0;
-        bottom: -10px;
-        width: 0;
-        height: 2px;
-        background-color: #0d0d0d;
-        content: "";
-        transition: width 0.2s;
-        }
-
-        .underlineHover:hover {
-        color: #0d0d0d;
-        }
-
-        .underlineHover:hover:after{
-        width: 100%;
-        }
-
-        h1{
-            color:#0d0d0d;
-        }
-
-
-        /* OTHERS */
-
-        *:focus {
-            outline: none;
-        } 
-
-        #icon {
-        width:30%;
-        }
-
-</style>
 <body>
   
 {{!-- modal-wrapper-end --}}
@@ -220,8 +66,8 @@
                     </div>
                   </div>
                 </div>
-                 {{!-- main-menu --}}
-               <div class="container-fluid position-relative"style="width: 90%;" >
+                {{!-- main-menu --}}
+               <div class="container-fluid "style="width: 90%;">
                 <div class="main-menu p-4">
                     <div class="row">
                         <div class="col-md-2 col-lg-2 col-2">
@@ -229,36 +75,21 @@
                              <h4>LAB</h4>     
                         </div> 
                        </div>
-                        <div class="col-lg-10 col-xl-10 col-md-10 col-10">
-                        <nav class="text-right ">
-                            <div class="res-menu-box" id="menucontroler">
-                                <i id="open" class="fa fa-bars active" aria-hidden="true"></i>
-                                <i id="close" class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                          <ul class="main-menu-header" id="main-menu-header">
+                        <div class="col-lg-10 col-xl-10 col-md-10 ">
+                       <nav class="text-right">
+                          <ul>
                             <li><a class="active" href="/">Home</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Notice</a></li>
-                            <li><a href="#">Committee</a></li>
-                            <li><a href="#">Faq</a></li>
-                            <li><a href="#">Videos</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="event">Events</a></li>
+                            <li><a href="blog">Blog</a></li>
+                            <li><a href="notice">Notice</a></li>
+                            <li><a href="committee">Committee</a></li>
+                            <li><a href="faq">Faq</a></li>
+                            <li><a href="Video">Videos</a></li>
+                            <li><a href="contact">Contact</a></li>
                             <li><a href="/signup">Signup</a></li>
-                            <li><a href="/signin">Login</a></li>
+                            <li><a href="login">Login</a></li>
                          </ul>
                         </nav>
-                        <script>
-                          const nav =   document.getElementById("main-menu-header");
-                          const open =   document.getElementById("open");
-                          const close =   document.getElementById("close");
-                          const closecontroler =   document.getElementById("menucontroler");
-                          menucontroler.addEventListener("click",()=>{
-                              nav.classList.toggle("active");
-                              open.classList.toggle("active");
-                              close.classList.toggle("active");
-                          })
-                        </script>
                       </div>
                     </div>
                      
@@ -269,51 +100,15 @@
     {{!-- signupform-wrapper --}}
     <!-- MultiStep Form -->
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-9 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
-                       
-                      {{#if errorMsg}}
-                        <div class="alert alert-danger" role="alert">
-                            {{errorMsg}}
-                        </div>
-
-                        {{/if}}
-                         {{#if wrongkeyword}}
-                        <div class="alert alert-danger" role="alert">
-                            {{wrongkeyword}}
-                        </div>
-
-                        {{/if}}
-                         {{#if emptyMsg}}
-                        <div class="alert alert-danger" role="alert">
-                            {{emptyMsg}}
-                        </div>
-
-                        {{/if}}
-                    <div class="wrapper fadeInDown">
-                    <div id="formContent">
-                        <!-- Tabs Titles -->
-                        
-                        <!-- Icon -->
-                        <div class="fadeIn first py-2">
-                            <img src="https://scontent.fdac5-2.fna.fbcdn.net/v/t1.6435-9/211743443_1921365914689477_8680410227895188112_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=8631f5&_nc_eui2=AeHntDAznyYexRLfyix9nQ862raQjYVaAtDatpCNhVoC0OkOa1oCRyQYCGTLMGb9FYrun1YVb2iCWWnpGay_kkW2&_nc_ohc=xx3O0PVwIPsAX9YSzPr&_nc_ht=scontent.fdac5-2.fna&oh=7be75872777d97537672b36e7855455f&oe=612EFE17" id="icon" alt="User Icon" />
-                            <h1>LAB</h1>
-                        </div>
-                        <!-- Login Form -->
-                        <form method="POST" action="/signin" class="was-validated">
-                            <input type="email" id="login" class="fadeIn second is-valid" name="email" placeholder="Email" required>
-                            <input type="password" id="password" class="fadeIn third is-valid" name="password" placeholder="password" required>
-                            <input type="submit" class="fadeIn fourth" value="Log In">
-                        </form>
-
-                        <!-- Remind Passowrd -->
-                        <div id="formFooter">
-                        <a class="underlineHover" href="/signup">Not a member? Join today</a>
-                        </div>
-
-                    </div>
-                    </div>
-                 </div>
+            <div style="height: 450px;" class="row justify-content-center align-items-center">
+               <div class="card  border p-5 text-center w-100">
+                   <div class="chek_icon">
+                       <i class="fa fa-check text-success" style="font-size: 24px;"></i>
+                   </div>
+                   <strong>Email Verified</strong>
+                   <span class="py-3">Congrations! Your email has been successfully verifed.</span>
+                   <a href="/signin" class="btn btn-primary d-inline w-25 m-auto my-2">Return to Login</a>
+               </div>
             </div>
         </div>
     <!-- footer-section -->

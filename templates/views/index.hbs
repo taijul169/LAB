@@ -60,7 +60,7 @@
                   </div>
                 </div>
                 {{!-- main-menu --}}
-               <div class="container-fluid "style="width: 90%;">
+               <div class="container-fluid position-relative"style="width: 90%;" >
                 <div class="main-menu p-4">
                     <div class="row">
                         <div class="col-md-2 col-lg-2 col-2">
@@ -68,9 +68,13 @@
                              <h4>LAB</h4>     
                         </div> 
                        </div>
-                        <div class="col-lg-10 col-xl-10 col-md-10 ">
-                       <nav class="text-right">
-                          <ul>
+                        <div class="col-lg-10 col-xl-10 col-md-10 col-10">
+                        <nav class="text-right ">
+                            <div class="res-menu-box" id="menucontroler">
+                                <i id="open" class="fa fa-bars active" aria-hidden="true"></i>
+                                <i id="close" class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                          <ul class="main-menu-header" id="main-menu-header">
                             <li><a class="active" href="/">Home</a></li>
                             <li><a href="#">Events</a></li>
                             <li><a href="#">Blog</a></li>
@@ -83,6 +87,17 @@
                             <li><a href="/signin">Login</a></li>
                          </ul>
                         </nav>
+                        <script>
+                          const nav =   document.getElementById("main-menu-header");
+                          const open =   document.getElementById("open");
+                          const close =   document.getElementById("close");
+                          const closecontroler =   document.getElementById("menucontroler");
+                          menucontroler.addEventListener("click",()=>{
+                              nav.classList.toggle("active");
+                              open.classList.toggle("active");
+                              close.classList.toggle("active");
+                          })
+                        </script>
                       </div>
                     </div>
                      
@@ -97,7 +112,7 @@
                         <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 col-12">
                             <div class="home-slider-wrapper heroSlide owl-carousel owl-theme">
                                 <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide01.jpg); height:800px;">
+                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide01.jpg); ">
                                 <div class="container">
                                     <div class="single-left text-left pb-5">
                                         <h2 class="animate__animated animate__fadeInDown">Commited to  <br> Excellence <br></h2>
@@ -106,7 +121,7 @@
                                   </div>
                                 </div>
                                 <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide02.jpg);height:800px;">
+                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide02.jpg);">
                                    <div class="container ">
                                          <div class="single-left text-left pb-5">
                                         <h2 class="animate__animated animate__fadeInDown">The New <br> Standard</h2>
@@ -115,7 +130,7 @@
                                     </div>
                                 </div>
                                 <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide03.jpg);height:800px;">
+                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide03.jpg);">
                                    <div class="container ">
                                  
                                      <div class="single-left text-left pb-5">
@@ -331,67 +346,35 @@
         {{!-- threeblog --}}
         <section style="padding:40px 0px; ">
             <div class="container">
+                 <div class="main-title2">
+                    <h1>Our
+                        <span class="text-color">Blogs</span>
+                    </h1>
+                </div>
                <div class="row">
+                   {{#each blogData}}
                     {{!-- singleblog --}}
                    <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="#">
+                       <a href="/singleblogview/{{this.id}}">
                             <div class="single-blog-bigthumb border">
                            <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="images/blog/big1.jpg" alt="">
+                               <img class="img-fluid" src="data:image/png;base64,{{this.file}}" alt="blogimg">
                            </div>
                            <div class="blog-content-bottom p-3">
-                               <h3>How to become a premium member?</h3>
-                           <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus omnis veniam quam dolorem fuga sit illo id maxime, molestiae, exercitationem tempora blanditiis labore in.</p>
+                               <h3>{{this.title}}</h3>
+                           <p class="text-dark">{{blogShort this.details}}</p>
                            <div class="blog-bottom border-top">
                                <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Admin</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> 12.12.2020</a></li>
+                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i>{{this.created_by}}</a></li>
+                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{this.created_at}}</a></li>
                                </ul>
                            </div>
                         </div>
                        </div>
                        </a>  
                    </div>
-                   {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="#">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="images/blog/big2.jpg" alt="">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>How to become a premium member?</h3>
-                           <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus omnis veniam quam dolorem fuga sit illo id maxime, molestiae, exercitationem tempora blanditiis labore in.</p>
-                           <div class="blog-bottom border-top">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Admin</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> 12.12.2020</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
-                      {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="#">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="images/blog/big1.jpg" alt="">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>How to become a premium member?</h3>
-                           <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus omnis veniam quam dolorem fuga sit illo id maxime, molestiae, exercitationem tempora blanditiis labore in.</p>
-                           <div class="blog-bottom border-top text-center">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Admin</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> 12.12.2020</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
+                   {{/each}}
+                  
              
                </div>
             </div>
@@ -401,56 +384,42 @@
         <div class="container">
               <div class="main-title2">
                     <h1>Our
-                        <span class="text-color"> Notices</span>
+                        <span class="text-color">Notices</span>
                     </h1>
                 </div>
+                
             <div class="row">
-                 <div class="col-md-6">
+                {{#each noticeData}}
+                    <div class="col-md-6">
                         <div class="event-card ">
                             <div class="b-all col-md-4 event-img-content">
-                                <div class="col-md-12 notice-date-left">
+                                {{!-- date-area --}}
+                                {{noticeDate this.created_at}}
+                                {{!-- <div class="col-md-12 notice-date-left">
                                     <h4>10<span>Sep</span></h4>
                                     <div class="notice_year pull-in">
                                         <h4>2020</h4>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="event-description-content">
-                                <h4 class="m-0 line-limit-1">Member Collecting</h4>
+                                <h4 class="m-0 line-limit-1">{{this.title}}</h4>
                                 <div class="m-t-10">
-                                    <p>lorem inpsum imposeum demum ke</p>
+                                    <p>{{makeShortString this.details}}</p>
                                 </div>
-                                <a href="https://bdalumni.com/notice-details/12" class="btn custom-sm-btn">Learn More</a>
+                                <a href="/singlenoticeview/{{this.id}}" class="btn custom-sm-btn">Learn More</a>
                             </div>
 
                         </div>
-                    </div>
-                     <div class="col-md-6">
-                        <div class="event-card">
-                            <div class="b-all col-md-4 event-img-content">
-                                <div class="col-md-12 notice-date-left">
-                                    <h4>23<span>Aug</span></h4>
-
-                                    <div class="notice_year pull-in">
-                                        <h4>2020</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="event-description-content">
-                                <h4 class="m-0 line-limit-1">Member Collecting</h4>
-                                
-                                <div class="m-t-10">
-                                    <p>lorem inpsum imposeum demum ke</p>
-                                </div>
-                                <a href="https://bdalumni.com/notice-details/9" class="btn custom-sm-btn">Learn More</a>
-                            </div>
-
-                        </div>
-                    </div>
-                    </div>
+                </div>
+                {{/each}}
+           </div>
+        
 
         </div>
       </section>
+   
+        
          {{!-- counter-area --}}
          <section>
            <div class="counter-area" style="padding: 40px 0px;">
@@ -826,6 +795,17 @@
     <script src="active.js"></script>
     <script src="formValidate.js"></script>
     <script src="home.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.main-menu-header li a').click(function(e) {
+                $('.main-menu-header li a.active').removeClass('active');
+                var $parent = $(this).siblings();
+                $parent.addClass('active');
+                e.preventDefault();
+            });
+           });
+    </script>
+ 
 
 </body>
 

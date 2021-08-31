@@ -14,50 +14,99 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                  {{!-- modal id Card--}}
-               <!-- Button trigger modal -->
+                  <!-- Button trigger modal -->
                 <!-- Modal -->
-                <div class="modal fade"id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content custom-content-card text-center">
+               <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" >
+                  <div class="modal-content custom-content-card text-center ">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">User ID Card</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
-                    <div class="modal-body custom-card py-3 shadow" id="idcardWrap">
-                      <div class="card-content-wrap text-center">
-                            <h3>Lab</h3>
-                        <span>Change together</span>
-                        <div class="idcard-img">
-                            <img src="/images/card.jpg" class="img-fluid" alt="card">
+                  
+                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                        {{!-- card-front --}}
+                        <div class="card-front m-3">
+                              {{!-- front-header --}}
+                            <div class="card-front-header d-flex justify-content-between">
+                              <div class="logo-card">
+                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                              </div>
+                              <div class="qrcode-card">
+                                <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
+                                <input type="hidden" id="qr_code_value_name" value={{userData.[0].name}}>
+                                <input type="hidden" id="qr_code_value_email" value={{userData.[0].email}}>
+                                <input type="hidden" id="qr_code_value_phone" value={{userData.[0].phone}}>
+                                <input type="hidden" id="qr_code_value_division" value={{userData.[0].division}}>
+                                {{!-- qr_code display --}}
+                                <div id="output_qr"></div>
+                                
+                                 {{!-- <img style="width: 50px;" src="/images/qr.png" alt="qr"> --}}
+                              </div>
+                            </div>
+                          
+                            {{!-- front-image-card --}}
+                            <div class="front-image-card w-50">
+                              <div class="img-shape">
+                                <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
+                              </div>
+                            </div>
+                            <div class="name_title mt-3">
+                              <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
+                              <h5>Vice President</h5>
+                              <span class="d-block">Central committee (LAB)</span>
+                              <small>Valid Till 24-07-2023</small>
+                              
+                            </div>
+                            <div class="info-card text-left mt-2">
+                            <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
+                            <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
+                            <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
+                            </div>
+                            <div class="id-card-footer">
+                              <div class="auth d-flex justify-content-between">
+                                <div class="auth-president">
+                                  <span>President</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                                <h6>Authorised By:</h6>
+                                <div class="auth-secretary">
+                                  <span>Secretary</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                              </div>
+                            </div>
                         </div>
-                        <h2>{{userData.[0].firstname}} {{userData.[0].midlename}} {{userData.[0].lastname}}</h2>
-                        <span>Member</span>
-                        <table>
-                            <tr>
-                                <td>ID <span>:</span></td>
-                                <td>0000{{userData.[0].id}}</td>
-                            </tr>
-                              <tr>
-                                <td>Blood <span>:</span></td>
-                                <td>{{userData.[0].bloodgroup}}</td>
-                            </tr>
-                              <tr>
-                                <td>Email <span>:</span></td>
-                                <td>{{userData.[0].email}}</td>
-                            </tr>
-                              <tr>
-                                <td>Phone <span>:</span></td>
-                                <td>{{userData.[0].mobile}}</td>
-                            </tr>
-                        </table>
-                      </div>
-                    </div>
+                         <div class="html2pdf__page-break"></div>
+                        {{!-- card-Back --}}
+                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                         <div class="logo-card-back mb-1 ">
+                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                         </div>
+                         <div class="heading-back text-uppercase mt-3">
+                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                          </div>
+                          <div class="contact-info-card">
+                            <ul>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].phone}}</li>
+                              <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
+                              <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
+                            </ul>
+                      
+                          
+                          </div>
+                          <div class="id-card-footer back">
+                            www.labbd.org
+                            </div>
+                        </div>
+                      
+                  </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
                     </div>
-                    </div>
+                 </div>
                 </div>
                 </div>
                {{!-- commitee Edit modal --}}
@@ -151,8 +200,8 @@
                                     
                                  {{#each data }}
                                  {{!-- single-membership --}}
-                                    <tr role="row" class="odd"><td>{{this.id}}</td><td>{{this.name}}</td><td>{{this.type}}</td><td >{{this.startdate}}</td><td>{{this.enddate}}</td><td>{{this.createdby}}</td><td>{{this.createdat}}</td>
-                                    <td>{{categoryStatus this.status}}</td><td><div class="btn-group"><a onclick="committeeEdit({{this.id}},'{{this.name}}','{{this.type}}','{{this.startdate}}','{{this.enddate}}')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit Membership Price"><i class="fa fa-edit"></i></a><a id="dlt5" href="/admin/deletecommittee/{{this.id}}" onclick="return confirm('Are you sure to delete this committee permanantly??')"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/admin/committeedeactivate/{{this.id}}" class="status-btn btn btn-danger btn-sm" title="Deactivate"><i class="fa fa-wrench" aria-hidden="true"></i></a><a href="/admin/committeeactive/{{this.id}}" class="status-btn btn btn-primary btn-sm ml-1" title="Activate"><i class="fa fa-check" aria-hidden="true"></i></a></td></tr>
+                                    <tr role="row" class="odd"><td>{{counter @index}}</td><td>{{this.name}}</td><td>{{this.type}}</td><td >{{this.startdate}}</td><td>{{this.enddate}}</td><td>{{this.createdby}}</td><td>{{this.createdat}}</td>
+                                    <td>{{categoryStatus this.status}}</td><td><div class="btn-group"><a onclick="committeeEdit({{this.id}},'{{this.name}}','{{this.type}}','{{this.startdate}}','{{this.enddate}}')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit Membership Price"><i class="fa fa-edit"></i></a><a id="dlt5" href="/admin/deletecommittee/{{this.id}}" onclick="return confirm('Are you sure to delete this committee permanantly??')"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/admin/committeedeactivate/{{this.id}}" class="status-btn btn btn-danger btn-sm" title="Deactivate"><img class="img-fluid" style="width: 15px;" src="/images/disable.png" alt=""></a><a href="/admin/committeeactive/{{this.id}}" class="status-btn btn btn-primary btn-sm ml-1" title="Activate"><i class="fa fa-check" aria-hidden="true"></i></a></td></tr>
                                    {{/each  }}     
                                    </tbody>
                                 </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="getMembershipPrice_info" role="status" aria-live="polite">Showing 1 to 5 of 7 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="getMembershipPrice_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="getMembershipPrice_previous"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="getMembershipPrice" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="getMembershipPrice_next"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
