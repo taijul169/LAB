@@ -1,0 +1,577 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+              {{!-- ID Card --}}
+            <!-- Button trigger modal -->
+                <!-- Modal -->
+               <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" >
+                  <div class="modal-content custom-content-card text-center ">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">User ID Card</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                  
+                      <div class="custom-card shadow"  id="idcardWrap">
+                        {{!-- card-front --}}
+                        <div class="card-front">
+                              {{!-- front-header --}}
+                            <div class="card-front-header d-flex justify-content-between">
+                              <div class="logo-card">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
+                              </div>
+                              <div class="qrcode-card">
+                                <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
+                                <input type="hidden" id="qr_code_value_name" value={{userData.[0].name}}>
+                                <input type="hidden" id="qr_code_value_email" value={{userData.[0].email}}>
+                                <input type="hidden" id="qr_code_value_phone" value={{userData.[0].phone}}>
+                                <input type="hidden" id="qr_code_value_division" value={{userData.[0].division}}>
+                                {{!-- qr_code display --}}
+                                <div id="output_qr"></div>
+                                
+                                 {{!-- <img style="width: 50px;" src="/images/qr.png" alt="qr"> --}}
+                              </div>
+                            </div>
+                          
+                            {{!-- front-image-card --}}
+                            <div class="front-image-card w-50">
+                              <div class="img-shape">
+                                <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
+                              </div>
+                            </div>
+                            <div class="name_title">
+                              <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
+                              <span class="d-block">Central committee (LAB)</span>
+                              <small>Valid Till 24-07-2023</small>
+                              
+                            </div>
+                            <div class="info-card text-left mt-2">
+                            <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
+                            <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
+                            <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
+                            </div>
+                            <div class="id-card-footer">
+                              <div class="auth d-flex justify-content-between">
+                                <div class="auth-president">
+                                  <span>President</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                                <h6>Authorised By:</h6>
+                                <div class="auth-secretary">
+                                  <span>Secretary</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="html2pdf__page-break"></div>
+                        {{!-- card-Back --}}
+                        <div class="card-front back mt-1  text-center position-relative" > 
+                         <div class="logo-card-back mb-1 ">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
+                         </div>
+                         <div class="heading-back text-uppercase mt-3">
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                          </div>
+                          <div class="contact-info-card">
+                            <ul>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].phone}}</li>
+                              <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
+                              <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
+                            </ul>
+                      
+                          
+                          </div>
+                          <div class="id-card-footer back">
+                            www.labbd.org
+                            </div>
+                        </div>
+                      
+                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
+                    </div>
+                 </div>
+                </div>
+               </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Edit Committee</h4>
+                    </div>
+                   
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+          
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+             <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            {{!-- ssc --}}
+                            <div class="col-sm-12">
+                                 {{#if message}}
+                                    <div class="alert {{message.type}}" role="alert">
+                                        {{message.message}}
+                                    </div>
+
+                                    {{/if}}
+                               <div class="card card-warning card-outline">
+                                <div class="card-header">
+                                    <i class="fa fa-edit"></i> Edit Committee
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" class="form-horizontal" id="add-committee-form" action="/admin/editcommittee/{{singleCommitteeData.[0].id}}">
+                                        <div class="form-group">
+                                            <label for="title1" class="control-label col-sm-2">Name <span style="color:red">*</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="name" value="{{singleCommitteeData.[0].name}}" id="title1" class="form-control" required="">
+                                            </div>
+                                            <span class="help-block error eMsg_designation_name"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="title1" class="control-label col-sm-2">Committee Type <span style="color:red">*</span></label>
+                                            <div class="col-sm-10">
+                                                  <select name="type" id="committee_type" class="form-control" required="">
+                                                        <option value="{{singleCommitteeData.[0].type}}">{{singleCommitteeData.[0].type}}</option>
+                                                        <option value="Advisor">Advisor</option>
+                                                        <option value="Executive">Executive</option>
+                                                        <option value="Sub">Sub</option>
+                                                        <option value="Event">Event</option>                                   
+                                                </select>
+                                            </div>
+                                            <span class="help-block error eMsg_parent_id"></span>
+                                        </div>
+                                        
+                                        <div class="form-group d-none" id="committee_category">
+                                            <label for="title1" class="control-label ml-3">Committee Category <span style="color:red">*</span></label>
+                                            <div class="col-sm-10">
+                                                <select name="category" class="form-control" id="category" >
+                                                        <option value="{{singleCommitteeData.[0].category}}">{{singleCommitteeData.[0].category}}</option> 
+                                                        <option value="University">University</option>
+                                                        <option value="Division">Division</option>
+                                                        <option value="District">District</option>
+                                                        <option value="Upazila">Upazila</option>                                
+                                                </select>
+                                            </div>
+                                            <span class="help-block error eMsg_parent_id"></span>
+                                        </div>
+                                        {{!-- third-row --}}
+                                        <div class="form-row p-3 area_el d-none"> 
+                                            <div class="col-md-4 mb-3 d-none" id="institution_el">
+                                                <label for="">University/College</label>
+                                                <select  name="institution" id="institution">
+                                                    <option value="{{singleCommitteeData.[0].institution}}" >{{singleCommitteeData.[0].institution}}</option>
+                                                    {{#each institutionData}}
+                                                    <option value="{{this.name}}">{{this.name}}</option>
+                                                    {{/each}}
+
+                                                </select>
+                                            </div>     
+                                            <div class="col-md-4 mb-3">
+                                                <label for="">Division/City</label>
+                                                <select onchange="getDivisionValue()" name="division" class="custom-select division" id="division" required>
+                                                    <option value="{{singleCommitteeData.[0].division}}" >{{singleCommitteeData.[0].division}}</option>
+                                                    {{#each divisiondata}}
+                                                    <option value="{{this.division}}">{{this.division}}</option>
+                                                    {{/each}}
+
+                                                </select>
+                                            </div>
+                                        {{!-- district --}}
+                                        <div class="col-md-4 mb-3" id="district_el">
+                                            <label for="">District</label>
+                                            <select name="district" onchange="getDistrictValue()"   class="custom-select district" id="district">
+                                                <option value="{{singleCommitteeData.[0].district}}">{{singleCommitteeData.[0].district}}</option>
+                                                {{!-- {{#each datadistrict }}
+                                                <option value="{{this.districtname}}">{{this.districtname}}</option>
+                                                {{/each}} --}}
+                                            </select>
+                                        </div>
+                                        {{!-- upazila --}}
+                                        <div class="col-md-4 mb-3" id="upazila_el">
+                                            <label for="">Upazila</label>
+                                                <select name="upazila"    class="custom-select upazila" id="upazila">
+                                                    <option value="{{singleCommitteeData.[0].upazila}}">{{singleCommitteeData.[0].upazila}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        {{!-- posistion --}}
+                                        {{!-- <div class="form-group">
+                                            <div class="col-sm-10">
+                                                    <label for="">Choose Position</label>
+                                                    <label class="container_checkbox w-75">President
+                                                        <input type="checkbox" class="president_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity" value={{singleCommitteeData.[0].president_num}}  required="true"type="number" class="d-none" name="president_num" id="president_num">
+                                                        
+                                                    </label>
+                                                    <label class="container_checkbox w-75">Vice President
+                                                        <input type="checkbox" class="v_president_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity" value={{singleCommitteeData.[0].vice_president_num}} required="true"type="number" class="d-none" name="vice_president_num" id="v_president_num">
+                                                    </label>
+                                                    <label class="container_checkbox w-75">General Secretary
+                                                        <input type="checkbox" class="g_secretary_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity" value={{singleCommitteeData.[0].general_secretary_num}} required="true"type="number" class="d-none" name="general_secretary_num" id="g_secretary_num">
+                                                    </label>
+                                                    <label class="container_checkbox w-75">Assistant General Secretary
+                                                        <input type="checkbox" class="a_g_secretary_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity" value={{singleCommitteeData.[0].assistant_general_secretary_num}} required="true"type="number" class="d-none" name="assistant_general_secretary_num" id="a_g_secretary_num">
+                                                    </label>
+                                            </div>
+                                        </div> --}}
+
+                                        <script>
+                                            $(".president_num").change(function() {
+                                                    if(this.checked) {
+                                                        //Do stuff
+                                                        $("#president_num").addClass("d-block")  
+                                                    }
+                                                    else{
+                                                          $("#president_num").removeClass("d-block")
+                                                    }
+                                                });
+                                                $(".v_president_num").change(function() {
+                                                    if(this.checked) {
+                                                        //Do stuff
+                                                        $("#v_president_num").addClass("d-block") 
+                                                    }
+                                                     else{
+                                                          $("#v_president_num").removeClass("d-block")
+                                                    }
+                                                });
+                                                $(".g_secretary_num").change(function() {
+                                                    if(this.checked) {
+                                                        //Do stuff
+                                                        $("#g_secretary_num").addClass("d-block")
+                                                    }
+                                                     else{
+                                                          $("#g_secretary_num").removeClass("d-block")
+                                                    }
+                                                });
+                                                $(".a_g_secretary_num").change(function() {
+                                                    if(this.checked) {
+                                                        //Do stuff
+                                                        $("#a_g_secretary_num").addClass("d-block")
+                                                    }
+                                                     else{
+                                                          $("#a_g_secretary_num").removeClass("d-block")
+                                                    }
+                                                });
+
+
+                                               //dependency adding
+                                               const committee_type =  $("#committee_type");
+                                               const committee_category =  $("#category");
+
+                                               committee_type.change(function(){
+                                                   if( committee_type.val() == 'Sub'){
+                                                        $("#committee_category").addClass("d-block")
+                                                        $("#committee_category").removeClass("d-none")
+                                                   }
+                                                   else{
+                                                       $("#committee_category").removeClass("d-block")
+                                                       $("#committee_category").addClass("d-none")
+                                                       $("#category").val('')
+                                                   }
+                                                  
+                                               })
+                                                committee_category.change(function(){
+                                                     $(".area_el").removeClass("d-none")
+                                                   if( committee_category.val() == 'University'){
+                                                        $("#district_el").addClass("d-none");
+                                                        $("#district_el").removeClass("d-block");
+                                                        $("#upazila_el").addClass("d-none");
+                                                        $("#upazila_el").removeClass("d-block");
+                                                        $("#institution_el").removeClass("d-none");
+                                                   }
+                                                   else if( committee_category.val() == 'District'){
+                                                       $("#upazila_el").addClass("d-none");
+                                                       $("#upazila_el").removeClass("d-block");
+                                                       $("#upazila").val('')
+                                                   }
+                                                  else if( committee_category.val() == 'Division'){
+                                                       $("#upazila_el").addClass("d-none");
+                                                       $("#upazila_el").removeClass("d-block");
+                                                       $("#upazila").val('')
+                                                       $("#district_el").addClass("d-none");
+                                                       $("#district_el").removeClass("d-block");
+                                                       $("#district").val('')
+                                                   }
+                                                   else{
+                                                       $("#district_el").removeClass("d-none")
+                                                       $("#district_el").addClass("d-block")
+                                                       $("#district_el").val('')
+                                                       $("#upazila_el").removeClass("d-none")
+                                                       $("#upazila_el").addClass("d-block")
+                                                       $("#upazila").val('')
+                                                       $("#institution_el").addClass("d-none");
+                                                       $("#institution").val('');
+                                                   }
+                                                  
+                                               })
+                                               
+                                        </script>
+                                        {{!-- posistion --}}
+                                        <div class="form-group">
+                                        <div class="dynamic-input">
+                                                <div class="container">
+                                                <div class="row parent" id="parent">
+                                                    {{#each designationData}}
+                                                    {{!-- single-designation --}}
+                                                    <div style="padding: 5px; border: 1px solid rgb(244, 244, 244);">
+                                                        <input type="hidden" name="desig_id" value={{this.id}}>
+                                                        <button type="button" class="custom-closebtn" onclick="deleteitem(this)">×</button><input name="position_name" value="{{this.name}}" class="form-control" placeholder="type position name">
+                                                    <input type="number" value={{this.quantity}} name="quantity" class="form-control" placeholder="quantity">
+                                                    
+                                                    <select name="method"  class="form-control">
+                                                        <option value="{{this.method}}">{{this.method}}</option>
+                                                        <option value="election">election</option>
+                                                        <option value="selection">selection</option>
+                                                        </select>
+                                                    </div>
+
+                                                    {{/each}}
+                                                </div>
+                                            </div>
+                                                    <button type="button" class="btn btn-secondary mt-2" onclick="newPosition()">Create Position</button>
+                                                </div>
+                                        </div>
+
+                                       
+                                     </div>
+                                        <script>
+                                               const newPosition =() =>{
+                                                var parent =  document.getElementById("parent");
+                                                parent.style.padding = "10px";
+                                                parent.style.border = "1px solid #f4f4f4";
+
+                                                const name =  document.createElement("input");
+                                                const quantity =  document.createElement("input");
+                                                const hiddenID =  document.createElement("input");
+                                                hiddenID.setAttribute("type","hidden")
+                                                var singleELement =  document.createElement("div");
+                                                singleELement.style.padding = "5px";
+                                                singleELement.style.border = "1px solid #f4f4f4";
+                                                quantity.setAttribute("name","quantity");
+                                                quantity.setAttribute("class","form-control");
+                                                quantity.setAttribute("placeholder","quantity");
+                                                quantity.setAttribute("type","number");
+                                                quantity.setAttribute("required","true");
+                                                name.setAttribute("name","position_name");
+                                                name.setAttribute("class","form-control");
+                                                name.setAttribute("placeholder","type position name");
+                                                name.setAttribute("required","true");
+                                                var span = document.createElement("button");
+                                                var txt = document.createTextNode("\u00D7");
+                                                span.className = "closebtn";
+                                                span.className = 'btn btn-danger'
+                                                span.setAttribute("onclick","deleteitem(this)");
+                                                span.setAttribute("type","button");
+                                                span.appendChild(txt);
+                                                span.setAttribute("class","custom-closebtn")
+                                                singleELement.appendChild(span);
+                                                const value =  document.createElement("select");
+                                                value.options[value.options.length] = new Option('election', 'election');
+                                                value.options[value.options.length] = new Option('selection', 'selection');
+                                                value.setAttribute("name", "method");
+                                                value.setAttribute("class", "form-control");
+                                                singleELement.appendChild(name)
+                                                singleELement.appendChild(quantity)
+                                                singleELement.appendChild(value)
+                                                console.log(singleELement)
+                                                parent.appendChild(singleELement)
+                                                
+                                                    // Click on a close button to hide the current list item
+                                                // var close = document.getElementsByClassName("closebtn");
+                                                // var i;
+                                                // for (i = 0; i < close.length; i++) {
+                                                //     close[i].onclick = function() {
+                                                //         window.alert("working!!")
+                                                //     var div = this.parentElement;
+                                                //     div.style.display = "none";
+                                                //     }
+                                                // }
+                                                }
+                                            
+                                                function deleteitem (obj){ 
+                                                    var currentelmtn = obj
+                                                    obj.parentElement.firstChild.nextSibling.value = null;
+                                                    console.log(obj.parentElement.firstChild)
+                                                    obj.parentElement.style.display = "none"
+                                                }
+                                        </script>
+                                        <div class="form-group">
+                                            <label for="startdate" class="control-label col-sm-2">Start Date <span style="color:red">*</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="date" name="startdate" id="start_date" value="{{singleCommitteeData.[0].startdate}}" class="form-control date-picker" required="" autocomplete="off" >
+                                            </div>
+                                            <span class="help-block error eMsg_designation_name"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="enddate" class="control-label col-sm-2">End Date <span style="color:red">*</span></label>
+                                            <div class="col-sm-10">
+                                                <input type="date" name="enddate" id="end_date" value="{{singleCommitteeData.[0].enddate}}" class="form-control date-picker" required="" autocomplete="off" >
+                                            </div>
+                                            <span class="help-block error eMsg_designation_name"></span>
+                                        </div>
+                                         {{!-- details --}}
+                                        <div class="form-group">
+                                            <label for="details" class="control-label col-sm-2">Details <span style="color:red"></span></label>
+                                            <div class="col-sm-10">
+                                                <textarea name="details" class="form-control" cols="10" rows="5">{{singleCommitteeData.[0].details}}</textarea>
+                                            </div>
+                                            <span class="help-block error eMsg_designation_name"></span>
+                                        </div>
+
+                                        <div class="form-actions text-right p-5">
+                                            <input type="submit" class="btn btn-primary" value="Update" id="add-designation-btn">
+                                        </div>
+                                    </form>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <script>
+
+                                const payment_title_el =  document.getElementById('payment_title'); 
+                                const id_el =  document.getElementById('id'); 
+                                const payment_for_el =  document.getElementById('payment_for'); 
+                                const payment_method_el =  document.getElementById('payment_method'); 
+                                const transactionid_el =  document.getElementById('transactionid'); 
+                                
+                                const senderno_el =  document.getElementById('senderno');
+                                const amount_el =  document.getElementById('amount_payment');
+                                const Payment_date =  document.getElementById('payment_date');
+
+                                const displayDataIntoModal =(id,payment_title,payment_for,amount,paymentdate,transactionid,senderno,paymentmethod)=>{
+                                    console.log(amount)
+                                    id_el.value = id;
+                                    payment_title_el.value = payment_title;
+                                    payment_for_el.value = payment_for;
+                                    payment_method_el.value = paymentmethod;
+                                    transactionid_el.value = transactionid;
+                                    senderno_el.value = senderno;
+                                    amount_el.value = amount;
+                                    Payment_date.value = paymentdate;
+                                }
+
+                              
+
+                                //onsubmit
+                              
+
+                              
+
+
+                              
+                            </script>
+                             <script>
+   
+                                        //-------dynamic upazila -----------------------------------
+                                        const hiddendata = document.getElementById("hiddendata").value;
+                                        const upazila = document.getElementById("upazila");
+                                            const district = document.getElementById('district');
+                                        
+                                        const parsedata = JSON.parse(hiddendata);
+                                        
+                                        const getDistrictValue =(e)=>{
+                                            upazila.innerHTML = '';
+                                            const districtvalue =  document.getElementById('district').value;
+                                            let test = [districtvalue]
+                                            let answer = parsedata.filter(item => (
+                                                test.includes(item.district)
+                                                )).map(item => item.upazila)
+                                        //--------------------------------------------------------------------------------
+                                    
+                                                answer.forEach(arrfunction);
+                                                
+                                                function arrfunction(array_element) {
+                                                    console.log("array_element",array_element)
+                                                
+                                                document.getElementById("upazila").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                                
+                                                }
+                                        }
+
+                                        
+                                            const getDivisionValue =(e)=>{   
+                                            district.innerHTML = '';
+                                            const divisionvalue =  document.getElementById('division').value;
+                                            let test = [divisionvalue]
+                                            let answer = parsedata.filter(item => (
+                                                test.includes(item.division)
+                                                )).map(item => item.district)
+
+                                        let answerData = answer.filter((item,i,ar)=>ar.indexOf(item) === i);
+                                        //--------------------------------------------------------------------------------
+                                    
+                                                answerData.forEach(arrfunction);
+                                                
+                                                function arrfunction(array_element) {
+                                                    console.log("array_element",array_element)
+                                                document.getElementById("district").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                                
+                                                }
+                                        }
+                                    
+
+                                        </script>
+                        </div>
+                    </div>    
+            </section>
+
+           </div>
+            </section>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}

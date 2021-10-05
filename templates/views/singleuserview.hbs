@@ -14,21 +14,102 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-              {{!-- delete modal --}}
+              {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
-                <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                        Are you sure to delete this user permanantly?
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary">Yes</button>
-                        </div>
+               <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" >
+                  <div class="modal-content custom-content-card text-center ">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">User ID Card</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
+                  
+                      <div class="custom-card shadow"  id="idcardWrap">
+                        {{!-- card-front --}}
+                        <div class="card-front">
+                              {{!-- front-header --}}
+                            <div class="card-front-header d-flex justify-content-between">
+                              <div class="logo-card">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
+                              </div>
+                              <div class="qrcode-card">
+                                <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
+                                <input type="hidden" id="qr_code_value_name" value={{userData.[0].name}}>
+                                <input type="hidden" id="qr_code_value_email" value={{userData.[0].email}}>
+                                <input type="hidden" id="qr_code_value_phone" value={{userData.[0].phone}}>
+                                <input type="hidden" id="qr_code_value_division" value={{userData.[0].division}}>
+                                {{!-- qr_code display --}}
+                                <div id="output_qr"></div>
+                                
+                                 {{!-- <img style="width: 50px;" src="/images/qr.png" alt="qr"> --}}
+                              </div>
+                            </div>
+                          
+                            {{!-- front-image-card --}}
+                            <div class="front-image-card w-50">
+                              <div class="img-shape">
+                                <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
+                              </div>
+                            </div>
+                            <div class="name_title">
+                              <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
+                              <span class="d-block">Central committee (LAB)</span>
+                              <small>Valid Till 24-07-2023</small>
+                              
+                            </div>
+                            <div class="info-card text-left mt-2">
+                            <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
+                            <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
+                            <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
+                            </div>
+                            <div class="id-card-footer">
+                              <div class="auth d-flex justify-content-between">
+                                <div class="auth-president">
+                                  <span>President</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                                <h6>Authorised By:</h6>
+                                <div class="auth-secretary">
+                                  <span>Secretary</span>
+                                  <i class="d-block">Signature</i>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="html2pdf__page-break"></div>
+                        {{!-- card-Back --}}
+                        <div class="card-front back mt-1  text-center position-relative" > 
+                         <div class="logo-card-back mb-1 ">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
+                         </div>
+                         <div class="heading-back text-uppercase mt-3">
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                          </div>
+                          <div class="contact-info-card">
+                            <ul>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].phone}}</li>
+                              <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
+                              <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
+                            </ul>
+                      
+                          
+                          </div>
+                          <div class="id-card-footer back">
+                            www.labbd.org
+                            </div>
+                        </div>
+                      
+                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
                     </div>
+                 </div>
                 </div>
+               </div>
                 <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,7 +155,7 @@
                               
                             </div>
                             <div class="info-card text-left mt-2">
-                            <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
+                            <h4><strong>ID: <span>{{fixedDigit userData.[0].id 6}}</span></strong></h4>
                             <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
                             <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
                             </div>
@@ -130,7 +211,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Blood page</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">Singleuser page</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -170,22 +251,22 @@
 
                 </style>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <!-- Profile Image -->
                         <div class="card card-warning card-outline">
                             <div class="card-body box-profile">
                             <div class="text-center">
-                               <img style="width: 200px;" src="data:image/png;base64,{{userData.[0].userphoto}}" alt="user-img" width="36"
+                               <img style="width: 100%; height:200px; border-radius:10%; padding:20px 0px;" src="data:image/png;base64,{{userData.[0].userphoto}}" alt="user-img" width="36"
                                     class="">
                             </div>
 
-                            <h3 class="profile-username text-center">{{singleuserData.[0].firstname}} {{singleuserData.[0].midlename}}</h3>
+                            <h3 class="profile-username text-center text-uppercase">{{singleuserData.[0].firstname}} {{singleuserData.[0].midlename}}</h3>
 
                             <p class="text-muted text-center">{{singleuserData.[0].membershiptype}} </p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                <b>Registration ID :</b> <a class="float-right">000000{{singleuserData.[0].id}}</a>
+                                <b>Registration ID :</b> <a class="float-right">{{fixedDigit singleuserData.[0].id 6}}</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Email :</b> <a class="float-right">{{singleuserData.[0].email}}</a>
@@ -207,13 +288,14 @@
                         <div class="card p-3">
                            <div class="btn-group">
                                {{ verify  singleuserData.[0].verify singleuserData.[0].id}}
+                               {{ block  userData.[0].adminrole singleuserData.[0].block singleuserData.[0].id}}
                                 {{!-- <a href="/users/verify/{{singleuserData.[0].id}}" class="btn btn-primary m-1">Verify</a> --}}
-                            <a href="/users/deleteuser/{{singleuserData.[0].id}}" data-bs-toggle="modal" data-bs-target="#deletemodal" class="btn btn-danger m-1"><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
+                            {{!-- <a href="/users/deleteuser/{{singleuserData.[0].id}}" data-bs-toggle="modal" data-bs-target="#deletemodal" class="btn btn-danger m-1"><i class="fa fa-times" aria-hidden="true"></i> Delete</a> --}}
                            </div>
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">
                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -225,9 +307,6 @@
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Education</button>
-                                    </li>
-                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="viewfamily-tab" data-bs-toggle="tab" data-bs-target="#viewfamily" type="button" role="tab" aria-controls="contact" aria-selected="false">View Family</button>
                                     </li>
                                      <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="viewmembership-tab" data-bs-toggle="tab" data-bs-target="#viewmembership" type="button" role="tab" aria-controls="contact" aria-selected="false">View Membership</button>
@@ -277,14 +356,14 @@
                                                                {{singleuserData.[0].gender}}
                                                             </td>
                                                             <td>
-                                                                
+                                                                Bangladesh
                                                             </td>
                                                             <td>
-                                                                
+                                                                {{singleuserData.[0].bloodgroup}}
                                                             </td>
 
                                                             <td>
-                                                                Yes                                        </td>
+                                                                Yes </td>
                                                         </tr>
 
                                                         <tr>

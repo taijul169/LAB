@@ -8,14 +8,19 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const dotenv =  require('dotenv');
 dotenv.config({path:'../config.env'});
+const url = require('url');
 // middleware
-const auth = require('../middleware/authenticate')
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey('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')
+const auth = require('../middleware/authenticate');
+const admin_auth = require('../middleware/adminauthenticate');
+const sgMail = require('@sendgrid/mail');
+
+
+//here will be sicret key
 
 // localStorage
 // var LocalStorage = require('node-localstorage').LocalStorage,
 // localStorage = new LocalStorage('./scratch');
+
 
 // const { rawListeners, schema } = require("../models/model");
 const { handlebars } = require("hbs");
@@ -24,6 +29,8 @@ const mysql =  require('mysql2');
 const { query } = require('express');
 const { json } = require('body-parser');
 const { route } = require('./api');
+const { callbackify } = require('util');
+const { Promise } = require('mongoose');
 var con = mysql.createPool({
     host:'localhost',
     user:'root',
@@ -43,65 +50,89 @@ else{
 
 //------------------------ Add institution/district Start----------------------------------------------------------
 router.get("/users/addinstitution",auth,(req,res)=>{
-    res.render('addinstitution',{userData:req.userData})
+  res.render('addinstitution')
 })
 
-
-router.post('/users/addinstitution/ssc', async(req,res)=>{
+router.post('/users/addinstitution',auth, async(req,res)=>{
     try {
-        const SQL_INSERT = "INSERT INTO ssc (  institutenamessc, institutecodessc ) VALUES (?,?)";
+        const SQL_INSERT = "INSERT INTO institution (  name, level ) VALUES (?,?)";
         const {
-            institutenamessc,
-            institutecodessc,
+            name,
+            level,
         } = req.body;
-        console.log(institutenamessc, institutenamessc)
-        con.query(SQL_INSERT,[institutenamessc, institutecodessc],(err,result)=>{
+        
+        con.query(SQL_INSERT,[name, level],(err,result)=>{
              console.log(err)
+             req.session.message={
+                type:'alert-success',
+                intro:'inserted!',
+                message:'Successfully Inserted.'
+            }
+            res.redirect('/users/addinstitution')
 
          })
     } catch (error) {
         console.log(error)
-        
+        res.redirect('/users/addinstitution')  
     }
-    req.flash('message','added successfully');
-    res.redirect('/users/addinstitution')  
-})
-router.post('/users/addinstitution/hsc', async(req,res)=>{
-    try {
-        const SQL_INSERT = "INSERT INTO hsc (  institutenamehsc, institutecodehsc ) VALUES (?,?)";
-        const {
-            institutenamehsc,
-            institutecodehsc,
-        } = req.body;
-        con.query(SQL_INSERT,[institutenamehsc, institutecodehsc],(err,result)=>{
-             console.log(err)
+   
+   
+});
+// router.post('/users/addinstitution/ssc', async(req,res)=>{
+//     try {
+//         const SQL_INSERT = "INSERT INTO ssc (  institutenamessc, institutecodessc ) VALUES (?,?)";
+//         const {
+//             institutenamessc,
+//             institutecodessc,
+//         } = req.body;
+//         console.log(institutenamessc, institutenamessc)
+//         con.query(SQL_INSERT,[institutenamessc, institutecodessc],(err,result)=>{
+//              console.log(err)
 
-         })
-    } catch (error) {
-        console.log(error)
+//          })
+//     } catch (error) {
+//         console.log(error)
         
-    }
-    req.flash('message','added successfully');
-    res.redirect('/users/addinstitution') 
-})
-router.post('/users/addinstitution/bachelor', async(req,res)=>{
-    try {
-        const SQL_INSERT = "INSERT INTO bachelor (  institutenamebachelor, institutecodebachelor ) VALUES (?,?)";
-        const {
-            institutenamebachelor,
-            institutecodebachelor,
-        } = req.body;
-        con.query(SQL_INSERT,[institutenamebachelor, institutecodebachelor],(err,result)=>{
-             console.log(err)
+//     }
+//     req.flash('message','added successfully');
+//     res.redirect('/users/addinstitution')  
+// });
+// router.post('/users/addinstitution/hsc', async(req,res)=>{
+//     try {
+//         const SQL_INSERT = "INSERT INTO hsc (  institutenamehsc, institutecodehsc ) VALUES (?,?)";
+//         const {
+//             institutenamehsc,
+//             institutecodehsc,
+//         } = req.body;
+//         con.query(SQL_INSERT,[institutenamehsc, institutecodehsc],(err,result)=>{
+//              console.log(err)
 
-         })
-    } catch (error) {
-        console.log(error)
+//          })
+//     } catch (error) {
+//         console.log(error)
         
-    }
-    req.flash('message','added successfully');
-    res.redirect('/users/addinstitution')
-})
+//     }
+//     req.flash('message','added successfully');
+//     res.redirect('/users/addinstitution') 
+// })
+// router.post('/users/addinstitution/bachelor', async(req,res)=>{
+//     try {
+//         const SQL_INSERT = "INSERT INTO bachelor (  name, institutecodebachelor ) VALUES (?,?)";
+//         const {
+//             name,
+//             institutecodebachelor,
+//         } = req.body;
+//         con.query(SQL_INSERT,[name, institutecodebachelor],(err,result)=>{
+//              console.log(err)
+
+//          })
+//     } catch (error) {
+//         console.log(error)
+        
+//     }
+//     req.flash('message','added successfully');
+//     res.redirect('/users/addinstitution')
+// })
 
 // add district/upazila
 router.post('/users/addinstitution/district', async(req,res,next)=>{
@@ -186,14 +217,20 @@ router.post('/users/addinstitution/division', async(req,res,next)=>{
 
 // view institution list  ROUTE------------------------------
 router.get("/users/institutionlist",auth,(req,res)=>{
-    const sql_ssc =  "SELECT * FROM ssc";
+    const sql_ssc =  "SELECT * from institution WHERE level = 'ssc'";
     con.query(sql_ssc,(err, sscdata)=>{
-        con.query("select * from hsc",(err,hscdata)=>{
-            con.query("select * from bachelor",(err, bachelordata)=>{
-                con.query("select * from divisioninfo",(err, divisiondata)=>{
-                    res.render("institutionlist",{userData:req.userData,sscdata,hscdata,bachelordata,divisiondata})
-                })
-               
+        con.query("select * from institution WHERE level = 'hsc'",(err,hscdata)=>{
+            con.query("select * from institution WHERE level = 'bachelor'",(err, bachelordata)=>{
+                      con.query('SELECT * FROM divisioninfo',(err,divisioninfo)=>{  
+                        let result = JSON.stringify(divisioninfo)
+                            let data = result;
+                            con.query("SELECT *  FROM divisioninfo",(err, division)=>{
+                                console.log(err)
+                                let divisiondata = division;
+                                res.render("institutionlist",{userData:req.userData,sscdata,hscdata,bachelordata,data,divisiondata})
+                            });  
+                    })
+
             })
             
         })
@@ -201,7 +238,20 @@ router.get("/users/institutionlist",auth,(req,res)=>{
     })
     
 })
+// ---------------------------------------------------update instition----------------------------------
 
+router.post('/users/updateinstitution',(req,res)=>{
+    const {id,name,level,division,district,upazila,category} = req.body;
+    con.query(`UPDATE  institution SET name=?,level=?,division=?,district=?,upazila=?,category=? WHERE id = ${id} `,[name,level,division,district,upazila,category],(err,updateInstition)=>{
+     console.log(err)
+     req.session.message={
+        type:'alert-success',
+        intro:'Updated!',
+        message:'Updated successfully.'
+    }
+    res.redirect('/users/institutionlist')
+    })
+});
 // instituiton update----------------------
 router.get("/users/editinstitute/:id/:name/:code/:degree",(req,res)=>{
     const id =  req.params.id;
@@ -217,7 +267,7 @@ router.get("/users/editinstitute/:id/:name/:code/:degree",(req,res)=>{
         sql_update = `UPDATE ${degree} SET institutenamehsc = ?,institutecodehsc = ?  WHERE id = ${id}`;
     }
     else if(degree == 'bachelor'){
-        sql_update = `UPDATE ${degree} SET institutenamebachelor = ?,institutecodebachelor = ?  WHERE id = ${id}`;
+        sql_update = `UPDATE ${degree} SET name = ?,institutecodebachelor = ?  WHERE id = ${id}`;
     }
     con.query(sql_update,[name,code],(err,updateresult)=>{
         console.log(err)
@@ -273,12 +323,29 @@ router.get("/users/editdivision/:id/:division/:district/:upazila",(req,res)=>{
 // User home route---------------------
 router.get('/admin',auth,(req,res)=>{
     let sql;
+    const sql_total_blog = 'SELECT id FROM blog';
+    const sql_total_payment = 'SELECT id FROM payment';
+    const sql_total_member = 'SELECT id FROM userinfo';
+    const sql_total_b_donor = 'SELECT bloodgroup FROM userinfo WHERE donateblood = 1';
+    const sql_total_committee = 'SELECT id FROM committee';
+
     if(req.userData[0].adminrole == 2){
         con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
              if(!err){
                 sql = `SELECT * FROM userinfo where verify = 0 AND district = '${adminData[0].adminarea}'`  
-                con.query(sql,(err,allData)=>{   
-                    res.render("admin-home",{userData:req.userData,allData})
+                con.query(sql,(err,allData)=>{  
+                    con.query(`SELECT id FROM blog WHERE district = '${adminData[0].adminarea}'`,(err,totalBlog)=>{
+                        con.query(`SELECT id FROM payment WHERE district = '${adminData[0].adminarea}'`,(err,totalPayment)=>{
+                            con.query(`SELECT id FROM userinfo WHERE district = '${adminData[0].adminarea}'`,(err,totalMember)=>{
+                                con.query(`SELECT bloodgroup FROm userinfo WHERE donateblood=1 AND district ='${adminData[0].adminarea}'`,(err,totalBlooddonor)=>{
+                                    con.query(sql_total_committee,(err,totalCommittee)=>{
+                                       
+                                        res.render("admin-home",{userData:req.userData,allData,totalBlog,totalPayment,totalMember,totalBlooddonor,totalCommittee})
+                                    })
+                                })
+                            })   
+                        }) 
+                    })  
                 })
              }
     })
@@ -286,7 +353,18 @@ router.get('/admin',auth,(req,res)=>{
     }else{
         sql = `SELECT * FROM userinfo where verify = 0`;
         con.query(sql,(err,allData)=>{   
-            res.render("admin-home",{userData:req.userData,allData})
+            con.query(sql_total_blog,(err,totalBlog)=>{
+                con.query(sql_total_payment,(err,totalPayment)=>{
+                    con.query(sql_total_member,(err,totalMember)=>{
+                        con.query(sql_total_b_donor,(err,totalBlooddonor)=>{
+                            con.query(sql_total_committee,(err,totalCommittee)=>{
+                                console.log(totalBlooddonor)
+                                res.render("admin-home",{userData:req.userData,allData,totalBlog,totalPayment,totalMember,totalBlooddonor,totalCommittee});
+                            }) 
+                        })  
+                    })
+                })
+            }) 
         })
     } 
 
@@ -306,14 +384,26 @@ router.get('/admin',auth,(req,res)=>{
 
 // --------------------------------GENERAL USER ACCESS----------------------------------------------------------------
 
+router.post('/contact',(req,res)=>{
+    const {firstname,lastname,email,phone,subject,details} = req.body;
+    const created_at = new Date().toLocaleDateString();
+    con.query('INSERT INTO contactinfo (firstname,lastname,email,phone,subject,details,created_at) VALUES (?,?,?,?,?,?,?)',[firstname,lastname,email,phone,subject,details,created_at],(err, reuslt)=>{
+        console.log(err);
+        req.session.message={
+            type:'alert-success',
+            intro:'Created!',
+            message:'Your message has been sent to authority.'
+        }
+        res.redirect("/")
+    })
+});
+
 // User home route---------------------
 router.get('/users',auth,(req,res)=>{
  const sql = "SELECT * FROM userinfo";
  con.query(sql,(err, allData)=>{
     res.render('users-home',{userData:req.userData,allData})
  }) 
-
-    
 })
 
 // FRONT END=======================================================================
@@ -325,8 +415,13 @@ router.get('/', (req,res)=>{
         if(!err){
             con.query("SELECT * FROM blog WHERE status = 1 ORDER BY ID DESC LIMIT 3 ",(err,blogData)=>{
                 if(!err){
+                    con.query("SELECT * FROM event WHERE status = 1 ORDER BY ID DESC LIMIT 2",(err,eventData)=>{
+                        if(!err){
+                            res.render('index',{noticeData,blogData,eventData}) 
+                        }
+                    })
                    
-                   res.render('index',{noticeData,blogData}) 
+                  
                 }
             })
         }
@@ -351,7 +446,14 @@ router.get('/singlenoticeview/:id', (req,res)=>{
      })
     
   });
-
+//  single-event-view
+router.get('/singleeventview/:id', (req,res)=>{
+    const id =  req.params.id;
+     con.query(`SELECT * FROM event WHERE id = ${id}`,(err,eventData)=>{
+         res.render('singleeventview',{eventData}) 
+     })
+    
+  });
 
 // -register---------------------
 router.get('/signup',(req,res)=>{
@@ -360,9 +462,9 @@ router.get('/signup',(req,res)=>{
         const sql = `SELECT * FROM divisioninfo`;
         // const sql_district = `SELECT DISTINCT districtname  FROM districtinfo`;
         const sql_division = `SELECT DISTINCT division  FROM divisioninfo`;
-        const sql_ssc = `SELECT institutenamessc  FROM ssc`;
-        const sql_hsc = `SELECT institutenamehsc  FROM hsc`;
-        const sql_bachelor = `SELECT institutenamebachelor  FROM bachelor`;
+        const sql_ssc = `SELECT  name FROM institution WHERE level = 'ssc'`;
+        const sql_hsc = `SELECT  name FROM institution WHERE level = 'hsc'`;
+        const sql_bachelor = `SELECT name  FROM institution WHERE level = 'bachelor'`;
         const sql_email = 'SELECT email From userinfo'
         con.query(sql_division,(err,result)=>{
      
@@ -528,7 +630,7 @@ router.post('/signup', (req,res)=>{
 router.get("/users/profile",auth,(req,res)=>{
     const sql_ssc = `SELECT institutenamessc  FROM ssc`;
         const sql_hsc = `SELECT institutenamehsc  FROM hsc`;
-        const sql_bachelor = `SELECT institutenamebachelor  FROM bachelor`;
+        const sql_bachelor = `SELECT name  FROM bachelor`;
                 con.query(sql_ssc,(err,result)=>{
                     let sscdata= result;
                     con.query(sql_hsc,(err,result)=>{
@@ -769,35 +871,127 @@ router.get("/admin/deletecategory/:id",(req,res)=>{
 
 
 //-------------------------------------------COMMITTEE START -------------------------------------------
+
 //  ADD COMMITEE VIEW  ROUTE------------------------------
-router.get("/admin/addcommittee", auth,(req,res)=>{
-    con.query("SELECT * FROM membership",(err,data)=>{
-        res.render("addcommittee",{userData:req.userData,data})
-    })  
+router.get("/admin/addcommittee",admin_auth, auth,(req,res)=>{
+    let sql_institution ='';
+    let sql_division = '';
+    // var sql_district;
+    // var sql_upazila;
+    if(req.adminData[0].adminrole == 2){ 
+        if(req.adminData[0].category == 'university'){
+            sql_institution = `SELECT * FROM institution WHERE name ='${req.adminData[0].university}' AND level = 'bachelor'`;
+         }
+         else if(req.adminData[0].category == 'division'){
+            sql_division = `SELECT * FROM divisioninfo WHERE division ='${req.adminData[0].division}' AND central = 0`;
+         }
+         else if(req.adminData[0].category == 'district'){
+            sql_division = `SELECT * FROM divisioninfo WHERE district ='${req.adminData[0].district}' AND central = 0`;
+         }
+         else if(req.adminData[0].category == 'upazila'){
+            sql_division = `SELECT * FROM divisioninfo WHERE upazila = '${req.adminData[0].upazila}' AND central = 0`;
+         }
+        con.query("SELECT * FROM membership",(err,data)=>{
+            console.log(err)
+            
+            con.query(sql_division,(err,divisioninfo)=>{
+               
+                console.log("sql_division",sql_division)
+                
+                    let result = JSON.stringify(divisioninfo)
+                    let data = result;
+                    con.query(`SELECT DISTINCT division FROM divisioninfo WHERE division = '${req.adminData[0].division}'`,(err, division)=>{
+                        let divisiondata = division
+                            con.query(sql_institution,(err, institutionData)=>{
+                                res.render("addcommittee",{userData:req.userData,data,divisiondata,institutionData});
+                            });
+                           
+                     
+                    });
+             
+               
+            });
+       });
+
+
+    }
+    else{
+        con.query("SELECT * FROM membership",(err,data)=>{
+       
+            con.query('SELECT * FROM divisioninfo',(err,divisioninfo)=>{
+                
+                if(!err){
+                    let result = JSON.stringify(divisioninfo)
+                    let data = result;
+                    con.query(`SELECT DISTINCT division FROM divisioninfo WHERE central = 1`,(err, division)=>{
+                        let divisiondata = division
+                        if(!err){
+                            con.query(`SELECT * FROM institution WHERE level = 'bachelor' AND category IS NULL`,(err, institutionData)=>{
+                                res.render("addcommittee",{userData:req.userData,data,divisiondata,institutionData});
+                            })
+                           
+                        }
+                    })
+                }
+               
+            })
+       
+       
+        
+       })
+    }
+    
+
+
+   
 })
 //  ADD COMMITEE VIEW  ROUTE------------------------------
 router.post("/admin/addcommittee", auth,(req,res)=>{
-    const {name,type,startdate,enddate} = req.body;
+    
+    const {name,type,category,institution,division,district,upazila,startdate,enddate,position_name,quantity,method,details} = req.body;
+    con.query(`select id from committee ORDER BY id DESC LIMIT 1`,(err,idResult)=>{
+        console.log("id",idResult[0].id)
+        const committee_id = idResult[0].id + 1;
+        for(var i = 0;i<position_name.length;i++){
+            con.query('INSERT INTO committee_designation(committee_id,name,quantity,method)VALUES(?,?,?,?)',[committee_id,position_name[i],quantity[i],method[i]],(err, result)=>{
+                console.log("designation err:",err)
+            })
+        }
+    })
+ 
     console.log(req.body)
+    console.log(position_name,quantity,method)
      // createdDate---------------
      const createdat = new Date().toLocaleDateString()
-    con.query(`INSERT into committee(name,type,startdate,enddate,createdby,createdat) VALUES(?,?,?,?,?,?)`,[name,type,startdate,enddate,req.userData[0].firstname,createdat],(err,insertedData)=>{
+    con.query(`INSERT into committee(name,type,category,institution,division,district,upazila,startdate,enddate,createdby,createdat,details,usertoken) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)`,[name,type,category,institution,division,district,upazila,startdate,enddate,req.userData[0].firstname,createdat,details,req.userData[0].jwtoken],(err,insertedData)=>{
 
-        req.session.message={
-            type:'alert-success',
-            intro:'Created!',
-            message:'Committee Created!!.'
+        console.log(err)
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'Created!',
+                message:'Committee Created!!.'
+            }
+            res.redirect('/admin/addcommittee')
         }
-        res.redirect('/admin/addcommittee')
+       
     })
    
 })
 
 // COMMITEE LIST VIEW  ROUTE------------------------------
-router.get("/admin/committeelist", auth,(req,res)=>{
+router.get("/admin/committeelist",admin_auth, auth,(req,res)=>{
+   if(req.adminData[0].adminrole == 2){
+       con.query(`SELECT * FROM committee WHERE usertoken = '${req.userData[0].jwtoken}'`,(err, data)=>{
+        res.render("committeelist",{userData:req.userData,data})
+       })
+   }
+   else{
     con.query("SELECT * FROM committee",(err,data)=>{
         res.render("committeelist",{userData:req.userData,data})
-    })  
+    }) 
+   }
+    
 })
 
 //COMMITTEE ACTIVATION
@@ -839,18 +1033,434 @@ router.get("/admin/deletecommittee/:id",(req,res)=>{
     con.query(`DELETE FROM committee  WHERE id = ${id}`,(err,updateresult)=>{
         console.log(updateresult)
       if(!err){
-        req.session.message={
-            type:'alert-success',
-            intro:'Delted!',
-            message:'committee Deleted!!.'
-        }
-        res.redirect("/admin/committeelist")
+          con.query(`DELETE FROM committee_designation WHERE id = ${id}`,(err, result)=>{
+            req.session.message={
+                type:'alert-success',
+                intro:'Delted!',
+                message:'committee Deleted!!.'
+            }
+            res.redirect("/admin/committeelist")
+          })
       }
     })
     
 })
-//-------------------------------------------COMMITTEE END -------------------------------------------
 
+// GET COMMITTELIST FROM GENERAL USER END
+router.get("/users/committeelist-user",auth, async(req,res)=>{
+    let expectedData = [];
+   con.query(`SELECT * FROM committee WHERE (category = 'Division' AND division = '${req.userData[0].division}' AND status = 1) OR(category = 'University' AND institution = '${req.userData[0].institutebachelor}' AND status = 1)OR (category = 'district' AND  division = '${req.userData[0].division}' AND district = '${req.userData[0].district}' AND status = 1) OR(category = 'upazila' AND division = '${req.userData[0].division}' AND district = '${req.userData[0].district}' AND upazila = '${req.userData[0].upazila}' AND status = 1)`,(err,allCommitteeData)=>{
+
+    
+    for( var a=0;a<allCommitteeData.length;a++){
+        con.query(`SELECT * FROM committee_designation WHERE committee_id = ${allCommitteeData[a].id} AND method = 'election'`,(err, desigantionData)=>{
+            expectedData.push(desigantionData);
+           
+            })   
+                    
+      }
+     
+     if(allCommitteeData.length < 1){
+        res.render("committeelist-user",{userData:req.userData,allCommitteeData,Msg:'No Committee is available right now!!'})
+    }
+    con.query(`SELECT * FROM nominationinfo WHERE userid = ${req.userData[0].id}`,async(err,userExist)=>{
+        if(userExist.length > 0){ 
+            let i;
+            for(i=0;i<allCommitteeData.length;i++){
+                allCommitteeData[i].data = true ;
+            }
+           
+          await  res.render("committeelist-user",{userData:req.userData,allCommitteeData,expectedData})
+        }else{
+            let i;
+            for(i=0;i<allCommitteeData.length;i++){
+                allCommitteeData[i].data = false;
+            }
+          await  res.render("committeelist-user",{userData:req.userData,allCommitteeData,expectedData})
+        }
+    }) 
+      
+    })    
+   
+});
+
+// get-nomination-form
+router.get('/users/getnomination/:id',auth,(req,res)=>{
+    const committee_id =  req.params.id;
+    con.query(`SELECT * FROM committee_designation WHERE committee_id = ${committee_id}`,(err, desigantionData)=>{
+        con.query(`SELECT * FROM committee WHERE id = ${committee_id}`,(err,committeeData)=>{
+            res.render('get-nomination',{userData:req.userData,desigantionData,committeeData})
+        })
+        
+    })
+    
+})
+// GET SINGLE COMMMITEE  TO EDIT  
+router.get("/admin/editcommittee/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    con.query(`SELECT * FROM committee WHERE id = ${id}`,(err,singleCommitteeData)=>{
+        con.query('SELECT * FROM divisioninfo',(err,divisioninfo)=>{
+                
+            if(!err){
+               let result = JSON.stringify(divisioninfo)
+                let data = result;
+                con.query("SELECT DISTINCT division FROM divisioninfo",(err, division)=>{
+                    let divisiondata = division
+                    if(!err){
+                        con.query("SELECT * FROM institution WHERE level ='bachelor'",(err, institutionData)=>{
+                            con.query(`SELECT * FROM committee_designation WHERE committee_id = ${id}`,(err, designationData)=>{
+                                res.render("editcommittee",{userData:req.userData,data,divisiondata,institutionData,singleCommitteeData,designationData});
+                            })
+                           
+                        })
+                       
+                    }
+                })
+            }
+           
+        })
+    })
+    
+});
+//  ADD COMMITEE VIEW  ROUTE------------------------------
+router.post("/admin/editcommittee/:id", auth,(req,res)=>{
+    var position_name_arr = [];
+    var position_quantity_arr = [];
+    var position_method_arr = [];
+    var data_arr = [];
+    const id =  req.params.id;
+    const {name,type,category,institution,division,district,upazila,startdate,enddate,position_name,quantity,method,desig_id,details} = req.body;
+    console.log("desigdata:",desig_id)
+    con.query(`SELECT id FROM committee_designation WHERE committee_id = ${id}`,(err, idData)=>{
+        console.log("length:",idData.length)
+        if(idData.length>0){
+            idData.map((data,index)=>{
+                console.log(index)
+                con.query(`UPDATE committee_designation SET name = ?,quantity=?,method=? WHERE committee_id = ${id} AND id = ${data.id}`,[position_name[index],quantity[index],method[index]],(err, result)=>{    
+                });
+                console.log("Database id:",data)
+                console.log("bodydata:",desig_id)
+               if(data.id !== desig_id[index]){
+                   
+                   // DELETE CODE WILL BE
+                   console.log("missig data array:",data_arr)
+                   console.log("Dosent match!!")
+                   const nf_id =  data.id;
+                   
+                   data_arr.push(nf_id)
+                   console.log("desig_id",desig_id[index])
+             
+              
+               }
+            })
+            
+
+            if(position_name.length>idData.length){
+                console.log("working")
+                var indexval = idData.length;
+                for(var j = 0;j<(position_name.length - idData.length);j++ ){
+                    con.query(`INSERT INTO committee_designation  (committee_id,name,quantity,method)VALUES(?,?,?,?)`,[id,position_name[indexval],quantity[indexval],method[indexval]],(err, result)=>{
+                    })
+                    indexval++;
+                }
+                
+            }
+        }
+        else if(idData.length<1){
+           
+            if(position_name){
+                position_name_arr.push(position_name);
+                position_quantity_arr.push(quantity);
+                position_method_arr.push(method);
+                for(var j = 0;j<position_name_arr.length;j++ ){
+                    console.log("body data from front:",position_name_arr[j])
+                    con.query(`INSERT INTO committee_designation  (committee_id,name,quantity,method)VALUES(?,?,?,?)`,[id,position_name_arr[j],position_quantity_arr[j],position_method_arr[j]],(err, result)=>{
+                    });
+                }
+            }
+           
+        }
+       
+     });
+   
+  
+    con.query(`UPDATE committee SET name =?,type =?,category =?,institution =?,division =?,district =?,upazila =?,startdate =?,enddate =?,details=? WHERE id =  ${id}`,[name,type,category,institution,division,district,upazila,startdate,enddate,details],(err,updateData)=>{
+
+        console.log(err)
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'Updated!',
+                message:'Committee Updated!!.'
+            }
+            res.redirect(`/admin/editcommittee/${id}`)
+        }
+       
+    })
+   
+})
+//  // get result page/sinlgeview of committee after publishing result 
+router.get("/users/singlecommitteeview/:id",auth,(req,res)=>{
+    const com_id = req.params.id;
+    con.query(`SELECT * FROM committee WHERE id = ${com_id}`,(err,committee_info)=>{
+        con.query(`SELECT  userid FROM nominationinfo WHERE   designation = 'President' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT 1`,(err,presidentData)=>{
+            if(presidentData.length >0){
+                con.query(`SELECT firstname,mobile,userphoto FROM userinfo WHERE id = ${presidentData[0].userid}`,(err, presidentInfo)=>{
+                    con.query(`SELECT userid FROM nominationinfo WHERE designation = 'General Secretary' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT 1`,(err,secretaryData)=>{
+                        con.query(`SELECT firstname,mobile,userphoto FROM userinfo WHERE id =${secretaryData[0].userid}`,(err,secretaryInfo)=>{
+                            console.log(err)
+                            con.query(`SELECT userid,name FROM nominationinfo WHERE designation = 'Vice President' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT ${committee_info[0].vice_president_num}`,(err,vicepresidentData)=>{
+                                con.query(`SELECT name,userid FROM nominationinfo WHERE designation = 'Assistant General Secretary' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT ${committee_info[0].assistant_general_secretary_num}`,(err,agsData)=>{
+                                    res.render("singlecommitteeview",{userData:req.userData,presidentInfo,secretaryInfo,vicepresidentData,agsData,committee_info})
+                                });
+                            });
+                        });     
+                    });
+                });
+            }
+            else{
+                res.render("singlecommitteeview",{userData:req.userData,committee_info})
+            }
+           
+        });
+    }); 
+ 
+    
+});
+// single-comview-admin
+router.get('/admin/singlecomviewadmin/:id',auth,(req,res)=>{
+    const id =  req.params.id;
+    con.query(`SELECT * FROM committee WHERE id = ${id}`,(err, committeeData)=>{
+        con.query(`SELECT * FROM committee_designation WHERE committee_id =${id} AND method = 'election'`,(err, designationData)=>{
+            con.query(`SELECT * FROM committee_designation WHERE committee_id =${id} AND method = 'selection'`,(err,selectiveData)=>{
+                res.render('singlecomviewadmin',{userData:req.userData,committeeData,designationData,id,selectiveData})
+            })
+            
+        })
+    })
+    // con.query(`SELECT * FROM committee com,committee_designation cd WHERE  com.id = cd.committee_id and com.id = ${id}`,(err, result)=>{
+    //     console.log(result)
+    // })
+    
+})
+//-------------------------------------------COMMITTEE END -------------------------------------------
+//  ADD NOMINATION  ROUTE------------------------------
+router.post("/users/addnomination", auth,(req,res)=>{
+    const {name,userid,type,area,designation,committee_id,details} = req.body;
+
+      // single-image-prcessed-------------------
+       var attachment_nomi = "";
+    //   const fileOne = req.files.nomination_attachment;
+      const filename = (req.files != null) ? req.files.nomination_attachment : null;
+      if(filename){
+          var newfileOne = filename.data;
+          attachment_nomi = newfileOne.toString('base64');
+      }
+     // createdDate---------------
+     const createdat = new Date().toLocaleDateString()
+    con.query(`INSERT into nominationinfo(userid,name,committee_type,area,designation,committee_id,nomination_attachment,details) VALUES(?,?,?,?,?,?,?,?)`,[userid,name,type,area,designation,committee_id,attachment_nomi,details],(err,insertedData)=>{
+        console.log(err)
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'Created!',
+                message:'You have been nominated.'
+            }
+            res.redirect('/users/committeelist-user')
+        }
+       
+    })
+   
+});
+router.get('/admin/deletenomination/:id/:com_id',(req,res)=>{
+    const id =  req.params.id;
+    const com_id =  req.params.com_id;
+    con.query(`UPDATE nominationinfo SET  delete_status = 1 WHERE id =${id}`,(err,deleteresult)=>{
+        req.session.message={
+            type:'alert-danger',
+            intro:'Created!',
+            message:'User has been deleted from nomination list'
+        }
+        res.redirect(`/admin/nominationlist/${com_id}`)
+    })
+});
+// GET Nomination list 
+router.get("/admin/nominationlist/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    var userData_arr = []
+    con.query(`SELECT * FROM nominationinfo WHERE committee_id = ${id} AND delete_status = 0 AND selective IS NULL`,(err, allNominationData)=>{
+        con.query(`SELECT name FROM committee_designation WHERE committee_id = ${id}`,(err, designationData)=>{
+            res.render("nominationlist",{userData:req.userData,allNominationData,id,designationData});
+        });
+        
+    });
+    
+});
+// GET Nomination delete history 
+router.get("/admin/nominationhistorylist/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    var userData_arr = []
+    con.query(`SELECT * FROM nominationinfo WHERE committee_id = ${id} AND delete_status = 1`,(err, allNominationData)=>{
+        con.query(`SELECT name FROM committee_designation WHERE committee_id = ${id}`,(err, designationData)=>{
+            res.render("nominationlist",{userData:req.userData,allNominationData,id,designationData});
+        });
+        
+    });
+    
+});
+
+router.get('/admin/movetonomination/:id/:com_id',(req,res)=>{
+    const id =  req.params.id;
+    const com_id =  req.params.com_id;
+    con.query(`UPDATE nominationinfo SET  delete_status = 0 WHERE id =${id}`,(err,deleteresult)=>{
+        req.session.message={
+            type:'alert-danger',
+            intro:'Created!',
+            message:'User has been moved to nomination list'
+        }
+        res.redirect(`/admin/nominationlist/${com_id}`)
+    })
+});
+// GET Customresult page 
+router.get("/admin/customresult/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    con.query(`SELECT * FROM nominationinfo WHERE committee_id = ${id}`,(err, allNominationData)=>{
+        res.render("customresult",{userData:req.userData,allNominationData,id})
+    })
+
+});
+// POST Customresult page 
+router.post("/admin/customresult/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    const {vote}  =req.body;
+    console.log(vote)
+    con.query(`SELECT * FROM nominationinfo WHERE committee_id = ${id}`,(err, allNominationData)=>{
+        for(var i=0;i<allNominationData.length;i++){   
+            con.query(`UPDATE nominationinfo SET vote = ${vote[i]} WHERE id=${allNominationData[i].id}`,(err,result)=>{
+                console.log(vote[i])
+                console.log(result)
+            })
+        }
+        res.redirect(`/admin/customresult/${id}`)
+    })
+
+});
+// GET voting page 
+router.get("/users/voting/:id",auth,(req,res)=>{
+    const id =  req.params.id;
+    var userData_arr = []
+    con.query(`SELECT * FROM nominationinfo WHERE committee_id = ${id} AND delete_status = 0 AND selective IS NULL`,(err, allNominationData)=>{
+        con.query(`SELECT * FROM committee_designation WHERE committee_id = ${id}`,(err, designationData)=>{
+            con.query(`SELECT * FROM vote_info WHERE committee_id =${id} AND userid = ${req.userData[0].id}`,(err,voteData)=>{
+                con.query(`SELECT enddate FROM committee WHERE id = ${id}`,(err,end_date)=>{
+
+                    const desiData = designationData;
+               const degiprocessData = JSON.stringify(desiData)
+               const ProcdData = voteData;
+                const processDataVote = JSON.stringify(ProcdData)
+                console.log(processDataVote)
+                //   
+                res.render("voting",{userData:req.userData,allNominationData,id,designationData,processDataVote,degiprocessData,end_date});
+
+                })
+               
+             
+               
+            })
+           
+        });
+        
+    });
+});
+// voting status-activating 
+router.get("/admin/activevotingstatus/:id",auth,(req,res)=>{
+    const com_id = req.params.id;
+    con.query(`UPDATE committee SET voting_status = 1 WHERE id = ${com_id}`,(err,result)=>{
+        console.log(err)
+        res.redirect('/admin/committeelist')
+
+    })
+});
+// voting status-deactivating 
+router.get("/admin/deactivevotingstatus/:id",auth,(req,res)=>{
+    const com_id = req.params.id;
+    con.query(`UPDATE committee SET voting_status = 0 WHERE id = ${com_id}`,(err,result)=>{
+        console.log(err)
+        res.redirect('/admin/committeelist')
+
+    })
+});
+// voting result publish 
+router.get("/admin/publishresult/:id",auth,(req,res)=>{
+    const com_id = req.params.id;
+    con.query(`UPDATE committee SET result_status = 1 , voting_status = 0 WHERE id = ${com_id}`,(err,result)=>{
+        con.query(`SELECT * FROM committee WHERE id = ${com_id}`,(err,committee_info)=>{
+            con.query(`SELECT  userid FROM nominationinfo WHERE   designation = 'President' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT 1`,(err,presidentData)=>{
+                if(presidentData.length >0){
+                    con.query(`SELECT firstname,mobile,userphoto FROM userinfo WHERE id = ${presidentData[0].userid}`,(err, presidentInfo)=>{
+                        for(var i = 0;i<presidentData.length;i++){
+                            con.query(`UPDATE userinfo SET committee_designation = 'President' WHERE id = ${presidentData[i].userid}`,(err,result)=>{    
+                            })
+                        }
+                        con.query(`SELECT userid FROM nominationinfo WHERE designation = 'General Secretary' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT 1`,(err,secretaryData)=>{
+                            con.query(`SELECT firstname,mobile,userphoto FROM userinfo WHERE id =${secretaryData[0].userid}`,(err,secretaryInfo)=>{
+                                for(var i = 0;i<secretaryData.length;i++){
+                                    con.query(`UPDATE userinfo SET committee_designation = 'General Secretary' WHERE id = ${secretaryData[i].userid}`,(err,result)=>{    
+                                    })
+                                }
+                                console.log(err)
+                                con.query(`SELECT userid,name FROM nominationinfo WHERE designation = 'Vice President' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT ${committee_info[0].vice_president_num}`,(err,vicepresidentData)=>{
+                                    for(var i = 0;i<vicepresidentData.length;i++){
+                                        con.query(`UPDATE userinfo SET committee_designation = 'Vice President' WHERE id = ${vicepresidentData[i].userid}`,(err,result)=>{    
+                                        })
+                                    }
+                                    con.query(`SELECT name,userid FROM nominationinfo WHERE designation = 'Assistant General Secretary' AND committee_id = ${com_id} ORDER BY vote DESC LIMIT ${committee_info[0].assistant_general_secretary_num}`,(err,agsData)=>{
+                                        for(var i = 0;i<agsData.length;i++){
+                                            con.query(`UPDATE userinfo SET committee_designation = 'A.G.Secretary' WHERE id = ${agsData[i].userid}`,(err,result)=>{    
+                                            })
+                                        }
+                                        res.redirect(`/admin/nominationlist/${com_id}`)
+                                    });
+                                });
+                            });     
+                        });
+                    });
+                }
+                else{
+                    res.redirect(`/admin/nominationlist/${com_id}`)
+                }
+               
+            });
+        }); 
+
+    })
+});
+
+// GET voting page 
+router.post("/users/voting/:id",auth,(req,res)=>{
+    const committee_id = req.params.id;
+      let num_vote;
+     const {candidate_id,designation} = req.body;
+    con.query(`INSERT INTO vote_info (committee_id,userid,candidate_id,designation)VALUES(?,?,?,?)`,[committee_id,req.userData[0].id,candidate_id,designation],(err,result)=>{
+        con.query(`SELECT * FROM nominationinfo WHERE userid=${candidate_id}`,(err, voteResult)=>{
+            num_vote=voteResult[0].vote
+            num_vote = ++num_vote;
+            con.query(`UPDATE nominationinfo SET vote=? WHERE userid =${candidate_id}`,[num_vote],(err,voteUpdate)=>{
+            }) 
+        })
+       res.redirect(`/users/voting/${committee_id}`)
+    });  
+ });
+ 
+//selective result
+router.post('/admin/selectiveresult',auth,(req,res)=>{
+    const { com_id,designation,userid} = req.body;
+    const status = 1;
+    con.query(`INSERT INTO nominationinfo (userid,designation,committee_id,selective)VALUES(?,?,?,?)`,[userid,designation,com_id,status],(err,result)=>{
+        console.log(err)
+    })
+
+})
 
 // ================================PAYMENT===============================
 
@@ -859,7 +1469,7 @@ router.get("/users/newpayment",auth,(req,res)=>{
     const sql = 'SELECT * FROM membership';
     con.query(sql,(err,data)=>{
         if(!err){
-            con.query('SELECT DISTINCT paymentfor FROM payment',(err,result)=>{
+            con.query('SELECT DISTINCT category FROM membership',(err,result)=>{
               if(!err){
                 const category = data;
                 const allData = JSON.stringify(category)
@@ -934,15 +1544,91 @@ router.get("/users/deletemypayment/:id",auth,(req,res)=>{
 
 // ================================USER MENAGEMENT/VERIFIED USER/UNVERIFIED USER/BLOCK USER===============================
 // Verified User  ROUTE------------------------------
+router.post('/admin/filterdata',auth,(req,res)=>{
+    const {district,mobile,id} = req.body;
+    let sql;
+  if(req.query.page == 'newuserlist'){
+    if(district != '' && mobile != ''  && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND district = '${district}'  AND mobile = '${mobile}' AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile != '' && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND  mobile = '${mobile}' AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile == '' && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile != '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND  mobile = '${mobile}' `;
+    }
+    else if(district != '' &&  mobile != '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND  district = '${district}' AND mobile = ${mobile}`;
+    }
+    else if(district != '' &&  mobile == '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 0 AND  district = '${district}'`;
+    }
+}
+else{
+    if(district != '' && mobile != ''  && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND district = '${district}'  AND mobile = '${mobile}' AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile != '' && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND  mobile = '${mobile}' AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile == '' && id != ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND id = ${id}`;
+    }
+    else if(district == '' &&  mobile != '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND  mobile = '${mobile}' `;
+    }
+    else if(district != '' &&  mobile != '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND  district = '${district}' AND mobile = ${mobile}`;
+    }
+    else if(district != '' &&  mobile == '' && id == ''){
+        sql = `SELECT * FROM userinfo WHERE verify = 1 AND  district = '${district}'`;
+    }
+}
+   
+    con.query(sql,(err,verifieduserData)=>{
+        console.log(err)
+        if(!err){
+            let StringData = JSON.stringify(verifieduserData);
+            res.render(`verifieduser`,{userData:req.userData,verifieduserData,StringData})
+        }
+    })
+});
+
+router.get('/admin/filterdata',(req,res)=>{
+    var url_parts = url.parse(req.url);
+    console.log(url_parts.pathname);
+    res.redirect(url_parts.pathname);
+    // if(url_parts.pathname == '/admin/filterdata'){
+    //    res.render("verifieduser")
+    // }
+    // else{
+    //     res.redirect(url_parts.pathname);
+    // }
+    
+
+})
 router.get("/admin/verifieduser",auth,(req,res)=>{
+
     let sql;
     if(req.userData[0].adminrole == 2){
-        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{
-           
+        con.query(`SELECT *  FROM admininfo WHERE email = '${req.userData[0].email}'`,(err,adminData)=>{ 
+            console.log(err);
              if(!err){
                 sql = `SELECT * FROM userinfo where verify = 1 AND district = '${adminData[0].adminarea}'`  
                 con.query(sql,(err,verifieduserData)=>{   
-                    res.render("verifieduser",{userData:req.userData,verifieduserData})
+                    let StringData = JSON.stringify(verifieduserData);
+                    if(!err){
+                        con.query('SELECT DISTINCT district FROM divisioninfo',(err, divisionInfo)=>{
+                            console.log(err)
+                           if(!err){
+                            res.render("verifieduser",{userData:req.userData,verifieduserData,StringData,divisionInfo})
+                           }
+                        })
+                    }
+                    
                 })
              }
             
@@ -950,14 +1636,25 @@ router.get("/admin/verifieduser",auth,(req,res)=>{
        
     }else{
         sql = `SELECT * FROM userinfo where verify = 1`;
-        con.query(sql,(err,verifieduserData)=>{   
-            res.render("verifieduser",{userData:req.userData,verifieduserData})
+        con.query(sql,(err,verifieduserData)=>{
+            let StringData = JSON.stringify(verifieduserData);
+            if(!err){
+                con.query('SELECT DISTINCT district FROM divisioninfo',(err, divisionInfo)=>{
+                   if(!err){
+                    res.render("verifieduser",{userData:req.userData,verifieduserData,StringData,divisionInfo});
+                   }
+                })
+            }
+            // res.render("verifieduser",{userData:req.userData,verifieduserData,StringData})
         })
     }
     
    
     
 });
+// verified filter
+// router.post()
+
 // Unverified/New  User  ROUTE------------------------------
 router.get("/admin/newuserlist",auth,(req,res)=>{
     let sql ;
@@ -967,7 +1664,8 @@ router.get("/admin/newuserlist",auth,(req,res)=>{
              if(!err){
                 sql = `SELECT * FROM userinfo where verify = 0 AND district = '${adminData[0].adminarea}'`  
                 con.query(sql,(err,verifieduserData)=>{   
-                    res.render("verifieduser",{userData:req.userData,verifieduserData})
+                    let StringData = JSON.stringify(verifieduserData);
+                    res.render("verifieduser",{userData:req.userData,verifieduserData,StringData})
                 })
              }
             
@@ -976,7 +1674,8 @@ router.get("/admin/newuserlist",auth,(req,res)=>{
     }else{
         sql = `SELECT * FROM userinfo where verify = 0`;
         con.query(sql,(err,verifieduserData)=>{   
-            res.render("verifieduser",{userData:req.userData,verifieduserData})
+            let StringData = JSON.stringify(verifieduserData);
+            res.render("verifieduser",{userData:req.userData,verifieduserData,StringData})
         })
     }
 })
@@ -990,7 +1689,7 @@ router.get("/admin/blockuserlist",auth,(req,res)=>{
              if(!err){
                 sql = `SELECT * FROM userinfo where block = 1 AND district = '${adminData[0].adminarea}'`  
                 con.query(sql,(err,verifieduserData)=>{   
-                    res.render("blocklist",{userData:req.userData,verifieduserData})
+                    res.render("blocklist",{userData:req.userData,verifieduserData});
                 })
              }
             
@@ -1005,20 +1704,42 @@ router.get("/admin/blockuserlist",auth,(req,res)=>{
 });
 
 //Block user post method
-router.post("/admin/blockuser/:id",auth,(req,res)=>{
+router.get("/admin/blockuser/:id",auth,(req,res)=>{
     const id = req.params.id;
     con.query(`UPDATE userinfo SET block = 1 WHERE id = ${id}`,(err,result)=>{
         if(!err){
-            return true;
+            res.redirect(req.get('referer'));
         }
     })
 });
-
+//UnBlock user post method
+router.get("/admin/unblockuser/:id",auth,(req,res)=>{
+    const id = req.params.id;
+    con.query(`UPDATE userinfo SET block = 0 WHERE id = ${id}`,(err,result)=>{
+        if(!err){
+            res.redirect(req.get('referer'));
+        }
+    })
+});
 // admin idcard payment list  ROUTE------------------------------
 router.get("/admin/idcardpayment",auth,(req,res)=>{
     const sql = `SELECT * FROM payment where paymentfor = 'Id Card'`;
     con.query(sql,(err,idcardpaymentData)=>{   
         res.render("idcardpayment",{userData:req.userData,idcardpaymentData})
+    })
+});
+// admin idcard payment list  ROUTE------------------------------
+router.get("/admin/membershippayment",auth,(req,res)=>{
+    const sql = `SELECT * FROM payment where paymentfor = 'membership'`;
+    con.query(sql,(err,membershippaymentData)=>{   
+        res.render("membershippayment",{userData:req.userData,membershippaymentData})
+    })
+});
+// admin idcard payment list  ROUTE------------------------------
+router.get("/admin/eventpayment",auth,(req,res)=>{
+    const sql = `SELECT * FROM payment where paymentfor = 'Event'`;
+    con.query(sql,(err,eventpaymentData)=>{   
+        res.render("eventpayment",{userData:req.userData,eventpaymentData})
     })
 });
 // update  idcard payment list  ROUTE------------------------------
@@ -1058,25 +1779,30 @@ router.post('/signin', async(req,res)=>{
                   token = result[0].jwtoken;
 
                 // const passMatch = await bcrypt.compare(password, result[0].password); 
-                if(passMatch == true && result[0].verifyemail == 1){
+                if(passMatch == true && result[0].verifyemail == 1 ){
                     if(result[0].verify == 1){
-                        res.cookie("jwtoken",token,{
-                            expires:new Date(Date.now()+259000000),
-                            httpOnly:true
-                        });
-                        req.session.message={
-                            type:'alert-success',
-                            intro:'logedin!',
-                            message:'Successfully Login.'
-                        }
-    
-                        if(result[0].admin === 1){
-                            res.redirect('/admin')
+                        if(result[0].block == 1){
+                            res.render('signin',{errorMsg :`You are temporary blocked!!\n Please contact with admin.`})
                         }
                         else{
-                            res.redirect('/users')
-                        } 
+                            res.cookie("jwtoken",token,{
+                                expires:new Date(Date.now()+259000000),
+                                httpOnly:true
+                            });
+                            req.session.message={
+                                type:'alert-success',
+                                intro:'logedin!',
+                                message:'Welcome to Dashboard.'
+                            }
+        
+                            if(result[0].admin === 1){
+                                res.redirect('/admin')
+                            }
+                            else{
+                                res.redirect('/users')
+                            } 
 
+                        }
                     }
                     else{
                         res.render('signin',{errorMsg :`You are not yet verified by the authority!!\n Please contact with admin.`})
@@ -1241,7 +1967,18 @@ router.get('/users/deleteuser/:id',(req,res)=>{
 router.get('/admin/create-admin',auth,(req,res)=>{
     
     if(req.userData[0].adminrole == 1){
-        res.render("create-admin",{userData:req.userData})
+        con.query('SELECT * FROM divisioninfo',(err,divisioninfo)=>{  
+            let result = JSON.stringify(divisioninfo)
+                let data = result;
+                con.query("SELECT DISTINCT division FROM divisioninfo",(err, division)=>{
+                    console.log(err)
+                    let divisiondata = division;
+                    con.query(`SELECT * FROM institution WHERE level =  'bachelor'`,(err ,institutionlist)=>{
+                        res.render("create-admin",{userData:req.userData,data,divisiondata,institutionlist})
+                    })
+                    
+                });  
+        })
     }
     else{
         res.status(500).send("Entry Restricted!! Please contact with Super admin.")
@@ -1250,7 +1987,7 @@ router.get('/admin/create-admin',auth,(req,res)=>{
 
 // CREATE ADMIN POST METHOD-----------------------------------
  router.post('/admin/create-admin',auth,(req,res)=>{ 
-    const {email,adminrole,adminarea,password} = req.body;
+    const {email,adminrole,adminarea,password,category,division,district,upazila,university} = req.body;
     const sql_all_email = `SELECT email,id FROM userinfo WHERE email = '${email}' AND verify = 1`;
     con.query(sql_all_email,(err,validuser)=>{
        if(validuser.length >0){
@@ -1267,22 +2004,26 @@ router.get('/admin/create-admin',auth,(req,res)=>{
                 res.redirect("/admin/create-admin")
             }
             else{
-                const sql = "INSERT INTO admininfo (email,adminrole,adminarea,userid) VALUES (?,?,?,?)";
+                const sql = "INSERT INTO admininfo (email,adminrole,adminarea,userid,category,division,district,upazila,university,jwtoken) VALUES (?,?,?,?,?,?,?,?,?,?)";
                 if(password == req.userData[0].confirmpassword){
-                    con.query(sql,[email,adminrole,adminarea,validuser[0].id],(err,result)=>{
-                        con.query(`UPDATE userinfo SET admin = 1, adminrole = '${adminrole}' WHERE email = '${email}'`,(err,updateresult)=>{
-        
-                            if(result){
-                                req.session.message={
-                                    type:'alert-success',
-                                    intro:'success',
-                                    message:'Admin created Successfully.'
+                    con.query(`SELECT jwtoken FROM userinfo WHERE email='${email}'`,(err ,jwtokenData)=>{
+                        con.query(sql,[email,adminrole,adminarea,validuser[0].id,category,division,district,upazila,university,jwtokenData[0].jwtoken],(err,result)=>{
+                            console.log(err)
+                            con.query(`UPDATE userinfo SET admin = 1, adminrole = '${adminrole}' WHERE email = '${email}'`,(err,updateresult)=>{
+            
+                                if(result){
+                                    req.session.message={
+                                        type:'alert-success',
+                                        intro:'success',
+                                        message:'Admin created Successfully.'
+                                    }
+                                    res.redirect("/admin/create-admin")
                                 }
-                                res.redirect("/admin/create-admin")
-                            }
+                            })
+                            console.log("Admin created Successfully!!")
                         })
-                        console.log("Admin created Successfully!!")
                     })
+                   
                    
                 }
                 else{
@@ -1375,6 +2116,36 @@ router.get('/admin/deleteadmin/:id/:email',auth,(req,res)=>{
     });
  });
 
+
+//  TEAM SECTION
+router.get("/admin/team",auth,(req,res)=>{
+    try {
+          con.query('SELECT person_id FROM team',(err, teamData)=>{
+            for(let i = 0; i<teamData.length;i++){ 
+             con.query(`SELECT id,firstname,lastname,mobile,email,committee_designation FROM userinfo WHERE id = ${teamData[i].person_id}`,(err,teamList)=>{ 
+                  teamData[i].name = teamList[0].firstname;
+                  teamData[i].email = teamList[0].email;
+                  teamData[i].mobile = teamList[0].mobile;
+                 });
+              }  
+            res.render("addteam",{userData:req.userData,teamData});
+           });
+          
+           
+           
+    } catch (error) {
+        console.log(error)
+    }
+    
+         
+});
+//  TEAM SECTION
+router.post("/admin/team", auth,(req,res)=>{
+    const {personid} = req.body;
+    con.query('INSERT INTO team (person_id) VALUES (?)',[personid],(err,result)=>{
+       res.redirect('/admin/team') 
+    });
+  });
  // ==============================================NOTICE CRUD START================================================
  // notice list-----------------------------------
 router.get('/admin/noticelist',auth,(req,res)=>{
@@ -1499,7 +2270,29 @@ router.get("/admin/noticeactive/:id",(req,res)=>{
         res.redirect('/admin/noticelist')
     })
 });
+ // Contact message list-----------------------------------
+ router.get('/admin/contactlist',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        con.query('SELECT * FROM contactinfo',(err,contactList)=>{
+            console.log(err)
+            console.log(contactList)
+            if(!err){
+                res.render("contactlist",{userData:req.userData,contactList})
+            }
+        }) 
+    }
+    else{
+        res.send("Entry Restricted!!")
+    }
 
+ })
+ router.get('/admin/singlecontact/:id',auth,(req,res)=>{
+     const id =  req.params.id;
+     con.query(`SELECT * FROM contactinfo WHERE id = ${id}`,(err, result)=>{
+        res.render('singlecontact',{userData:req.userData,result});
+     });
+
+ })
 // ==============================================BLOG CRUD START================================================
  // blog list-----------------------------------
  router.get('/admin/bloglist',auth,(req,res)=>{
@@ -1510,19 +2303,20 @@ router.get("/admin/noticeactive/:id",(req,res)=>{
             }
         }) 
     }
+
     else{
-        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+        con.query(`SELECT * FROM blog WHERE jwtoken  = '${req.userData[0].jwtoken}'`,(err,noticeList)=>{    
+            if(!err){
+                res.render("bloglist",{userData:req.userData,noticeList})
+            }
+        }) 
     }
  })
 
 //  get creatnotice page
  router.get('/admin/createblog',auth,(req,res)=>{
-    if(req.userData[0].adminrole == 1){
         res.render("createblog",{userData:req.userData})
-    }
-    else{
-        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
-    }
+
  });
 
 
@@ -1624,6 +2418,176 @@ router.get("/admin/blogactive/:id",(req,res)=>{
     })
 });
 
+
+// ==============================================EVENT CRUD START================================================
+ // blog list-----------------------------------
+ router.get('/admin/eventlist',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        con.query('SELECT * FROM event',(err,noticeList)=>{    
+            if(!err){
+                res.render("eventlist",{userData:req.userData,noticeList})
+            }
+        }) 
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ })
+
+//  get creatnotice page
+ router.get('/admin/createevent',auth,(req,res)=>{
+    if(req.userData[0].adminrole == 1){
+        res.render("createevent",{userData:req.userData})
+    }
+    else{
+        res.status(500).send("Entry Restricted!! Please contact with Super admin.")
+    }
+ });
+
+
+ //create notice POST METHOD-----------------------------------
+ router.post('/admin/createevent',auth,(req,res)=>{ 
+    let {title,details,start_date,end_date,start_time,end_time,file} = req.body;
+    var processed_file = '';
+    if(req.files){ 
+        var documentFile = req.files.file;
+        var newdocumentFile = documentFile.data;
+        processed_file = newdocumentFile.toString('base64');
+    }
+    function onTimeChange(time) {
+        var timeSplit = time.split(':'),
+          hours,
+          minutes,
+          meridian;
+        hours = timeSplit[0];
+        minutes = timeSplit[1];
+        if (hours > 12) {
+          meridian = 'PM';
+          hours -= 12;
+        } else if (hours < 12) {
+          meridian = 'AM';
+          if (hours == 0) {
+            hours = 12;
+          }
+        } else {
+          meridian = 'PM';
+        }
+        return start_time =  hours + ':' + minutes + ' ' + meridian;
+      }
+      function onTimeChangeEnd(time) {
+        var timeSplit = time.split(':'),
+          hours,
+          minutes,
+          meridian;
+        hours = timeSplit[0];
+        minutes = timeSplit[1];
+        if (hours > 12) {
+          meridian = 'PM';
+          hours -= 12;
+        } else if (hours < 12) {
+          meridian = 'AM';
+          if (hours == 0) {
+            hours = 12;
+          }
+        } else {
+          meridian = 'PM';
+        }
+        return end_time =  hours + ':' + minutes + ' ' + meridian;
+      }
+    var created_by = `${req.userData[0].firstname} ${req.userData[0].lastname}`;
+     // createdDate---------------
+     const created_at = new Date().toLocaleDateString();
+     const views = null;
+    const sql = 'INSERT INTO event (title,details,file,start_date,end_date,start_time,end_time,created_by)VALUES(?,?,?,?,?,?,?,?)';
+    onTimeChange(start_time)
+    onTimeChangeEnd(end_time)
+    con.query(sql,[title,details,processed_file,start_date,end_date,start_time,end_time,created_by],(err, result)=>{ 
+        console.log(err);
+        if(!err){
+            req.session.message={
+                type:'alert-success',
+                intro:'created!',
+                message:'Event Created Successfully.'
+            }
+            res.redirect("/admin/createevent")
+        }
+    })
+
+ });
+
+ // instituiton update----------------------
+router.get("/admin/editevent/:id/:title/:details/:start_date/:end_date/:start_time/:end_time",(req,res)=>{
+    const id =  req.params.id;
+    const title =  req.params.title;
+    const details =  req.params.details;
+    const start_date =  req.params.start_date;
+    const end_date =  req.params.end_date;
+    const start_time =  req.params.start_time;
+    const end_time =  req.params.end_time;
+    let sql_update =`UPDATE event SET title=?,details=?,start_date=?,end_date=?,start_time=?,end_time=? WHERE id = ${id}`;
+    
+    con.query(sql_update,[title,details,start_date,end_date,start_time,end_time],(err, updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Updated!',
+            message:'Updated successfully.'
+        }
+        res.redirect('/admin/eventlist')
+    })
+})
+// event delete----------------------
+router.get("/admin/deleteevent/:id",(req,res)=>{
+    const id =  req.params.id;
+    
+    let sql_delete =  `DELETE  FROM event WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'Deleted!',
+            message:'Deleted successfully.'
+        }
+        res.redirect('/admin/eventlist')
+    })
+});
+  
+
+// event deactive----------------------
+router.get("/admin/eventdeactivate/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE event SET status = 0  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-danger',
+            intro:'Deactivated!',
+            message:'Deactivated successfully.'
+        }
+        res.redirect('/admin/eventlist')
+    })
+});
+// event active----------------------
+router.get("/admin/eventactive/:id",(req,res)=>{
+    const id =  req.params.id;
+    let sql_delete =  `UPDATE event SET status = 1  WHERE id = ${id}`;
+
+    con.query(sql_delete,(err,updateresult)=>{
+        console.log(err)
+        console.log(updateresult)
+        req.session.message={
+            type:'alert-success',
+            intro:'activated!',
+            message:'activated successfully.'
+        }
+        res.redirect('/admin/eventlist')
+    })
+});
 // router.get('/users/sendemail',(req,res)=>{
 //     const msg = {
 //         to:'taijul.islam169@gmail.com',

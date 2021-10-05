@@ -14,7 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                  <!-- Button trigger modal -->
+              {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -24,13 +25,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -51,9 +52,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -79,13 +80,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -108,7 +109,7 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
                {{!-- commitee Edit modal --}}
                <!-- Button trigger modal -->
                 <!-- Modal -->
@@ -187,21 +188,20 @@
                             <div class="alert alert-success" role="alert">
                                 {{message.message}}
                             </div>
-
                         {{/if}}
                         <div class="card card-warning card-outline shadow">
                             <div class="card-body">
                                <div id="getMembershipPrice_wrapper" class=" table-responsive dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="getMembershipPrice_length"><label>Show <select name="getMembershipPrice_length" aria-controls="getMembershipPrice" class="custom-select custom-select-sm form-control form-control-sm"><option value="5">5</option><option value="10">10</option><option value="25">50</option><option value="50">100</option><option value="100">All</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="getMembershipPrice_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm border" placeholder="" aria-controls="getMembershipPrice"></label></div></div></div><div class="row"><div class="col-sm-12">
                                 <table class="table table-hover color-table success-table dataTable no-footer" id="getMembershipPrice" role="grid" aria-describedby="getMembershipPrice_info" style="width: 1586px;">
                                     <thead id="customtable">
-                                       <tr><th>#SL</th><th>Name</th><th>Type</th><th>Start Date</th><th>End Date</th> <th>createdby</th><th>created_at</th><th>Status</th><th class="text-center" style="width: 180px;">action</th></tr>
+                                       <tr><th>#SL</th><th>Name</th><th>Type</th><th>Voting Status</th><th>End Date</th> <th>createdby</th><th>created_at</th><th>Status</th><th class="text-center" style="width: 240px;">action</th></tr>
                                     </thead>
                                     <tbody>
                                     
                                  {{#each data }}
                                  {{!-- single-membership --}}
-                                    <tr role="row" class="odd"><td>{{counter @index}}</td><td>{{this.name}}</td><td>{{this.type}}</td><td >{{this.startdate}}</td><td>{{this.enddate}}</td><td>{{this.createdby}}</td><td>{{this.createdat}}</td>
-                                    <td>{{categoryStatus this.status}}</td><td><div class="btn-group"><a onclick="committeeEdit({{this.id}},'{{this.name}}','{{this.type}}','{{this.startdate}}','{{this.enddate}}')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit Membership Price"><i class="fa fa-edit"></i></a><a id="dlt5" href="/admin/deletecommittee/{{this.id}}" onclick="return confirm('Are you sure to delete this committee permanantly??')"  class="btn btn-danger btn-sm" title="Delete Event Price"><i class="fa fa-trash"></i></a></div> <a href="/admin/committeedeactivate/{{this.id}}" class="status-btn btn btn-danger btn-sm" title="Deactivate"><img class="img-fluid" style="width: 15px;" src="/images/disable.png" alt=""></a><a href="/admin/committeeactive/{{this.id}}" class="status-btn btn btn-primary btn-sm ml-1" title="Activate"><i class="fa fa-check" aria-hidden="true"></i></a></td></tr>
+                                    <tr role="row" class="odd"><td>{{counter @index}}</td><td>{{this.name}}</td><td>{{this.type}}</td><td >{{ categoryStatus this.voting_status}}</td><td>{{this.enddate}}</td><td>{{this.createdby}}</td><td>{{this.createdat}}</td>
+                                    <td>{{categoryStatus this.status}}</td><td><div class="btn-group"><a href="/admin/editcommittee/{{this.id}}" style="cursor: pointer;"  class=" mr-1 btn-warning btn-sm btn-edit" title="Edit Committee"><i class="fa fa-edit"></i></a><a href="/admin/singlecomviewadmin/{{this.id}}" style="cursor: pointer;"  class=" mr-1 btn-success btn-sm btn-edit" title="View Committee"><i class="fa fa-eye"></i></i></a><a id="dlt5" href="/admin/deletecommittee/{{this.id}}" onclick="return confirm('Are you sure to delete this committee permanantly?')"  class="btn btn-danger btn-sm" title="Delete Committe"><i class="fa fa-trash"></i></a><a id="dlt5" href="/admin/nominationlist/{{this.id}}"   class="btn btn-secondary btn-sm ml-1" title="Nomination list"><i class="fa fa-users" aria-hidden="true"></i></a></div>{{activeDeactive this.status this.id}} {{voteActiveDeactive this.voting_status this.id}}</td></tr>
                                    {{/each  }}     
                                    </tbody>
                                 </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="getMembershipPrice_info" role="status" aria-live="polite">Showing 1 to 5 of 7 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="getMembershipPrice_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="getMembershipPrice_previous"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="getMembershipPrice" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="getMembershipPrice_next"><a href="#" aria-controls="getMembershipPrice" data-dt-idx="3" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>

@@ -14,7 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                 <!-- Button trigger modal -->
+                {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -24,13 +25,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -51,9 +52,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -79,13 +80,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -108,7 +109,7 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -191,6 +192,24 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        {{!-- pagination --}}
+                                        <nav aria-label="Page navigation example">
+                                          <ul class="pagination">
+                                            <li class="page-item">
+                                              <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                              </a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                              <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </nav>
                                         
 
                                     </div>

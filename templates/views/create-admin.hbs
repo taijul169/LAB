@@ -52,13 +52,16 @@
                                 {{/if}}
                             <div class="card  " >
                                 <div class="card-body ">
+                                     <input type="hidden" value="{{data}}" id="hiddendata">
+                                    {{!-- <input type="hidden" value="{{datadistrict}}" id="datadistrict"> --}}
+                                    <input type="hidden" value="{{dataDivison}}" id="datadistrict">
                                     <form class="form-horizontal form-material" action="/admin/create-admin" method="POST">
                                         <div class="form-group mb-4">
                                             <label class="col-md-12 p-0">Full Name</label>
                                             <div class="col-md-12 border-bottom p-0">
                                                 <input type="text" placeholder="Johnathan Doe"
                                                     class="form-control p-0 border-0" name="firstName">
-                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="example-email" class="col-md-12 p-0">Email Address</label>
@@ -78,6 +81,45 @@
                                                 </select>
                                             </div>
                                         </div>
+                                         <div class="form-group" id="createad_div" style="display: none;">
+                                                <label for="validationCustom01" class="form-label">Select Category</label>
+                                                    <select name="category" id="category">
+                                                        <option value="">Choose One</option>
+                                                        <option value="division">Division</option>
+                                                        <option value="district">District</option>
+                                                        <option value="upazila">upazila</option>
+                                                        <option value="university">university</option>
+                                                    </select>
+                                            </div>
+                                             <div class="form-group box-div d-none">
+                                                <label for="">Division</label>
+                                                <select onchange="getDivisionValue()" name="division" id="division_ins">
+                                                    <option value="">Select division</option>
+                                                    {{#each divisiondata}}
+                                                            <option value="{{this.division}}">{{this.division}}</option>
+                                                    {{/each}}   
+                                                </select>
+                                            </div>
+                                                <div class="form-group box-dis d-none">
+                                                <label for="">District</label>
+                                                <select name="district" onchange="getDistrictValue()"   class="custom-select district" id="district_ins">
+                                               </select>
+                                            </div>
+                                             <div class="form-group box-upa d-none">
+                                                <label for="">Upazila</label>
+                                                <select name="upazila"    class="custom-select upazila" id="upazila_ins">
+                                                </select>
+                                            </div>
+                                            <div class="form-group box-uni d-none">
+                                                <label for="">University</label>
+                                                 <select name="university"    class="custom-select university" id="university_ins">
+                                                     <option value="">Choose University</option>
+                                                     {{#each institutionlist}}
+                                                       <option value="{{this.name}}">{{this.name}}</option>
+                                                     {{/each}}
+                                                </select>
+                                              </div>
+                                       
                                         <div class="form-group mb-4" id="area_div">
                                             <label for="area" class="col-md-12 p-0">Admin Area</label>
                                             <div class="col-md-12 border-bottom p-0">
@@ -98,13 +140,16 @@
                                                 const adminrole =  document.getElementById("adminrole");
                                                 const area_div =  document.getElementById("area_div");
                                                 const adminarea =  document.getElementById("adminarea");
+                                                const createad_div =  document.getElementById("createad_div");
                                             
                                                 const adminAreaDisplay = () => {
                                                     if(adminrole.value == 2){
+                                                        createad_div.style.display = "block"
                                                         area_div.style.display="block" 
                                                         adminarea.setAttribute("required", "true")  
                                                     }
                                                     else{
+                                                        createad_div.style.display = "none"
                                                         area_div.style.display="none";
                                                         adminarea.removeAttribute("required");
                                                         adminarea.value = null;
@@ -114,6 +159,113 @@
                                                    
                                                     window.alert("working!")
                                                 }
+                                            </script>
+                                              <script>
+                  
+                                                    //dependency adding
+                                                    const category =  $("#category");
+                                                    const committee_category =  $("#category");
+
+                                                    category.change(function(){
+                                                        if( category.val() == 'division'){
+                                                            $(".box-div").removeClass("d-none");
+                                                            $(".box-div").addClass("d-block");
+                                                            $(".box-dis").addClass("d-none");
+                                                            $(".box-dis").removeClass("d-block");
+                                                            $(".box-upa").addClass("d-none");
+                                                            $(".box-upa").removeClass("d-block");
+                                                            $(".box-uni").addClass("d-none");
+                                                            $(".box-uni").removeClass("d-block");
+                                                        }
+                                                        else if(category.val() == 'district'){
+                                                            $(".box-div").removeClass("d-none");
+                                                            $(".box-div").addClass("d-block");
+                                                            $(".box-dis").addClass("d-block")
+                                                            $(".box-dis").removeClass("d-none")
+                                                            $(".box-upa").addClass("d-none");
+                                                            $(".box-upa").removeClass("d-block");
+                                                            $(".box-uni").addClass("d-none");
+                                                            $(".box-uni").removeClass("d-block");
+                                                        }
+                                                        else if(category.val() == 'upazila'){ 
+                                                            $(".box-div").removeClass("d-none")
+                                                            $(".box-div").addClass("d-block")
+                                                            $(".box-dis").addClass("d-block")
+                                                            $(".box-dis").removeClass("d-none")
+                                                            $(".box-upa").addClass("d-block");
+                                                            $(".box-upa").removeClass("d-none");
+                                                            $(".box-uni").addClass("d-none");
+                                                            $(".box-uni").removeClass("d-block");
+                                                        }
+                                                         else if(category.val() == 'university'){ 
+                                                            $(".box-div").removeClass("d-block")
+                                                            $(".box-div").addClass("d-none")
+                                                            $(".box-dis").addClass("d-none")
+                                                            $(".box-dis").removeClass("d-block")
+                                                            $(".box-upa").addClass("d-none");
+                                                            $(".box-upa").removeClass("d-block");
+                                                            $(".box-uni").addClass("d-block");
+                                                            $(".box-uni").removeClass("d-none");
+                                                        }
+                                                        else{
+                                                            category.val() == '';
+                                                            $(".box-div").removeClass("d-block")
+                                                            $(".box-dis").removeClass("d-block")
+                                                            $(".box-upa").removeClass('d-block')
+                                                            $(".box-uni").removeClass('d-block')
+                                                        }
+                                                        
+                                                    })
+                                            </script>
+                                            <script>
+                            
+                                                        //-------dynamic upazila -----------------------------------
+                                                        const hiddendata = document.getElementById("hiddendata").value;
+                                                        const upazila = document.getElementById("upazila_ins");
+                                                        const district = document.getElementById('district_ins');
+                                                        const parsedata = JSON.parse(hiddendata);
+                                                        
+                                                        const getDistrictValue =(e)=>{
+                                                            upazila.innerHTML = '';
+                                                            const districtvalue =  document.getElementById('district_ins').value;
+                                                            let test = [districtvalue]
+                                                            let answer = parsedata.filter(item => (
+                                                                test.includes(item.district)
+                                                                )).map(item => item.upazila)
+                                                        //--------------------------------------------------------------------------------
+                                                    
+                                                                answer.forEach(arrfunction);
+                                                                
+                                                                function arrfunction(array_element) {
+                                                                    console.log("array_element",array_element)
+                                                                
+                                                                document.getElementById("upazila_ins").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                                                
+                                                                }
+                                                        }
+
+                                                        
+                                                            const getDivisionValue =(e)=>{   
+                                                            district.innerHTML = '';
+                                                            const divisionvalue =  document.getElementById('division_ins').value;
+                                                            let test = [divisionvalue]
+                                                            let answer = parsedata.filter(item => (
+                                                                test.includes(item.division)
+                                                                )).map(item => item.district)
+
+                                                        let answerData = answer.filter((item,i,ar)=>ar.indexOf(item) === i);
+                                                        //--------------------------------------------------------------------------------
+                                                    
+                                                                answerData.forEach(arrfunction);
+                                                                
+                                                                function arrfunction(array_element) {
+                                                                    console.log("array_element",array_element)
+                                                                document.getElementById("district_ins").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                                                
+                                                                }
+                                                        }
+                                                    
+
                                             </script>
                                        
                                         <div class="form-group mb-4">

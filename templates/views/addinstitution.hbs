@@ -17,8 +17,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-          {{!--ID CARD MODAL --}}
-               <!-- Button trigger modal -->
+             {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -28,13 +28,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -55,9 +55,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -83,13 +83,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -112,7 +112,7 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -152,19 +152,22 @@
                 <!-- ============================================================== -->
               <h2 class="heading">Add Institution</h2>
               <div class="card mb-2">
-                <div class="card-header">
-                  SSC
-                </div>
+                
                 <div class="card-body">
-                  <form class="row" action="/users/addinstitution/ssc" method="post">
+                  <form class="row" action="/users/addinstitution" method="post">
                       <div class="col-md-4">
                         <label for="validationCustom01" class="form-label">Institute Name</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutenamessc" required>
+                        <input  type="text" class="form-control" id="validationCustom01" name="name" required>
                        
                       </div>
-                      <div class="col-md-4">
-                        <label for="validationCustom01" class="form-label">Institute Code</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutecodessc" required>
+                       <div class="col-md-4">
+                        <label for="validationCustom01" class="form-label">Level</label>
+                        <select name="level" id="level" required>
+                          <option value="">Choose Level</option>
+                          <option value="ssc">SSC</option>
+                          <option value="hsc">HSC</option>
+                          <option value="bachelor">Bachelor</option>
+                        </select>
                        
                       </div>
                         <div class="col-4 d-flex align-items-center justify-content-center">
@@ -173,53 +176,6 @@
                   </form>
                 </div>
               </div>
-                <div class="card mb-2">
-                <div class="card-header">
-                  HSC
-                </div>
-                <div class="card-body">
-                  <form class="row" action="/users/addinstitution/hsc" method="post">
-                      <div class="col-md-4">
-                        <label for="validationCustom01" class="form-label">Institute Name</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutenamehsc" required>
-                       
-                      </div>
-                      <div class="col-md-4">
-                        <label for="validationCustom01" class="form-label">Institute Code</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutecodehsc" required>
-                       
-                      </div>
-                    
-                        <div class="col-4 d-flex align-items-center justify-content-center">
-                          <button class="btn btn-primary" type="submit">Add Institute</button>
-                        </div>
-                  </form>
-                </div>
-              </div>
-                <div class="card mb-2">
-                <div class="card-header">
-                  Bachelor
-                </div>
-                <div class="card-body">
-                  <form class="row" action="/users/addinstitution/bachelor" method="post">
-                      <div class="col-md-4">
-                        <label for="validationCustom01" class="form-label">Institute Name</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutenamebachelor" required>
-                       
-                      </div>
-                      <div class="col-md-4">
-                        <label for="validationCustom01" class="form-label">Institute Code</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="institutecodebachelor" required>
-                       
-                      </div>
-                    
-                          <div class="col-4 d-flex align-items-center justify-content-center">
-                          <button class="btn btn-primary" type="submit">Add Institute</button>
-                        </div>
-                  </form>
-                </div>
-              </div>
-               
              
               {{!-- Add Division --}}
               <h2 class="heading mt-5">Add District/Upazila</h2>

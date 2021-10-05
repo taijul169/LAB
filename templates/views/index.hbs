@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/plugin/css/default.css">
     <link rel="stylesheet" href="assets/plugin/css/nivo-slider.css">
      <!-- font-awesome    -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
      <!-- lightbox-gallery -->
      <link rel="stylesheet" href="assets/plugin/css/simple-lightbox.min.css">
      <!-- flat-icon -->
@@ -105,6 +105,7 @@
                </div>
             </div>
         </header>
+        {{!-- hero-section --}}
         <section>
           <div class="home-slider-area">
                 <div class="">
@@ -272,6 +273,7 @@
                </div>
            </div>
          </section>
+         {{!-- activity --}}
         <section style="padding-top: 40px;">
             <div class="container">
                    <div class="main-title2">
@@ -343,44 +345,9 @@
                 </div>
             </div>
         </section>
-        {{!-- threeblog --}}
-        <section style="padding:40px 0px; ">
-            <div class="container">
-                 <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color">Blogs</span>
-                    </h1>
-                </div>
-               <div class="row">
-                   {{#each blogData}}
-                    {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="/singleblogview/{{this.id}}">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="data:image/png;base64,{{this.file}}" alt="blogimg">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>{{this.title}}</h3>
-                           <p class="text-dark">{{blogShort this.details}}</p>
-                           <div class="blog-bottom border-top">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i>{{this.created_by}}</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{this.created_at}}</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
-                   {{/each}}
-                  
-             
-               </div>
-            </div>
-        </section>
-      {{!-- notice-section-start   --}}
-       <section class="events" id="event" style="padding: 50px 0;">
+       
+        {{!-- notice-section-start   --}}
+        <section class="events" id="event" style="padding: 50px 0;">
         <div class="container">
               <div class="main-title2">
                     <h1>Our
@@ -417,9 +384,79 @@
         
 
         </div>
-      </section>
-   
+        </section>
         
+        {{!-- event-section --}}
+        <section class="events py-5" id="event">
+            <div class="container">
+                <div class="main-title2">
+                    <h1>Our
+                        <span class="text-color">Events</span>
+                    </h1>
+                   </div>
+                <div class="row"> 
+                    {{#each eventData}}
+                    {{!-- single-event --}}
+                    <div class="col-md-6">
+                            <div class="event-card">
+                                <div class="event-img-content">
+                                    <img src="data:image/png;base64,{{this.file}}" class="img-responsive" alt="img">
+                                </div>
+                                <div class="event-description-content">
+                                    <h4 class="m-0 mb-2 line-limit-1">{{this.title}}</h4>
+                                    <small><i class="fa fa-calendar"></i> {{this.start_date}} To <i class="fa fa-calendar"></i> {{this.end_date}}</small>
+                                    <small><i class="fa fa-clock-o"></i> {{this.start_time}} To <i class="fa fa-clock-o"></i> {{this.end_time}}</small>
+                                    <div class="m-t-10">
+                                        <p>{{makeshorterWithNum this.details 50}}
+                                    </p></div>
+                                    <a class="btn custom-sm-btn" href="/singleeventview/{{this.id}}">Learn More</a>
+                                </div>
+
+                            </div>
+                    </div>
+                    {{/each}}
+                  
+                </div>
+
+            </div>
+        </section>
+         {{!-- threeblog --}}
+        <section style="padding:40px 0px; ">
+            <div class="container">
+                 <div class="main-title2">
+                    <h1>Our
+                        <span class="text-color">Blogs</span>
+                    </h1>
+                </div>
+               <div class="row">
+                   
+                   {{#each blogData}}
+                    {{!-- singleblog --}}
+                   <div class="col-md-4 col-lg-4 col-xl-4">
+                       <a href="/singleblogview/{{this.id}}">
+                            <div class="single-blog-bigthumb border">
+                           <div class="bigthump-blog media-links">
+                               <img class="img-fluid" src="data:image/png;base64,{{this.file}}" alt="blogimg">
+                           </div>
+                           <div class="blog-content-bottom p-3">
+                               <h3>{{this.title}}</h3>
+                           <p class="text-dark">{{blogShort this.details}}</p>
+                           <div class="blog-bottom border-top">
+                               <ul class="d-flex justify-content-between p-3">
+                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i>{{this.created_by}}</a></li>
+                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{this.created_at}}</a></li>
+                               </ul>
+                           </div>
+                        </div>
+                       </div>
+                       </a>  
+                   </div>
+                   {{/each}}
+                  
+             
+               </div>
+            </div>
+        </section>
          {{!-- counter-area --}}
          <section>
            <div class="counter-area" style="padding: 40px 0px;">
@@ -571,8 +608,71 @@
                 </div>
             </div>
         </section>
+          {{!-- team-section --}}
+       <section class="our-webcoderskull padding-lg">
+         <div class="container">
+             <div class="main-title2">
+                    <h1>Our
+                        <span class="text-color">Team</span>
+                    </h1>
+             </div>
+            <ul class="row">
+            <li class="col-12 col-md-6 col-lg-3">
+                <div class="cnt-block equal-hight" style="height: 349px;">
+                    <figure><img src="http://www.webcoderskull.com/img/team4.png" class="img-responsive" alt=""></figure>
+                    <h3><a href="http://www.webcoderskull.com/">Web coder skull</a></h3>
+                    <p>Freelance Web Developer</p>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    </ul>
+                    <ul class="follow-us clearfix">
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="col-12 col-md-6 col-lg-3">
+                <div class="cnt-block equal-hight" style="height: 349px;">
+                    <figure><img src="http://www.webcoderskull.com/img/team1.png" class="img-responsive" alt=""></figure>
+                    <h3><a href="#">Kappua </a></h3>
+                    <p>Freelance Web Developer</p>
+                    <ul class="follow-us clearfix">
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="col-12 col-md-6 col-lg-3">
+                <div class="cnt-block equal-hight" style="height: 349px;">
+                    <figure><img src="http://www.webcoderskull.com/img/team4.png" class="img-responsive" alt=""></figure>
+                    <h3><a href="http://www.webcoderskull.com/">Manish </a></h3>
+                    <p>Freelance Web Developer</p>
+                    <ul class="follow-us clearfix">
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="col-12 col-md-6 col-lg-3">
+                <div class="cnt-block equal-hight" style="height: 349px;">
+                    <figure><img src="http://www.webcoderskull.com/img/team2.png" class="img-responsive" alt=""></figure>
+                    <h3><a href="http://www.webcoderskull.com/">Atul </a></h3>
+                    <p>Freelance Web Developer</p>
+                    <ul class="follow-us clearfix">
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </section>
 
-         <!-- contact-us -->
+    <!-- contact-us -->
     <section>
       <div class="contact-us-area ptb-50">
         <div class="container">
@@ -585,13 +685,19 @@
                     </div>
                 </div>
                 <!-- form -->
-               <form action="" class="contact-form-wrap">
+               <form action="/contact" class="contact-form-wrap" method="POST">
                 <div class="col-md-12 col-lg-12 col-xl-12">
+                        {{#if message}}
+                            <div class="alert alert-success" role="alert">
+                                {{message.message}}
+                            </div>
+                        {{/if}}
                     <div class="row">
                            
                      <div class="col-md-8 col-lg-8 col-xl-8 col-sm-12 col-12">
                          <div class="row">
                              <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2">
+                              
                                   <!-- error-success-msg -->
                                <div class="msg-box-wrapper">
                                 <span class="msg-box"></span>
@@ -600,36 +706,36 @@
                              <!-- first-name -->
                              <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
                                  <div class="form-group">
-                                     <input type="text" placeholder="First Name" id="f_name">
+                                     <input type="text" required name="firstname" placeholder="First Name" id="f_name">
                                  </div>
                              </div>
                               <!-- last-name -->
                              <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
                                  <div class="form-group">
-                                     <input type="text" placeholder="Last Name" id="l_name">
+                                     <input type="text"  name="lastname" placeholder="Last Name" id="l_name">
                                  </div>
                              </div>
                              <!-- Email -->
                              <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
                                  <div class="form-group">
-                                     <input type="email" placeholder="Email" id="u_email">
+                                     <input type="email" name="email" placeholder="Email" id="u_email">
                                  </div>
                              </div>
                               <!-- Phone -->
                              <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
                                  <div class="form-group">
-                                     <input type="text" placeholder="Phone" id="u_phone">
+                                     <input type="text"  required name="phone" placeholder="Phone" id="u_phone">
                                  </div>
                              </div>
                                <!-- Select Service -->
                                <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
                                    <div class="form-group">
-                                       <select name="" id="service">
-                                           <option value="-Select Service">-Select Service</option>
-                                           <option value="Digital Marketing">Digital Marketing</option>
-                                           <option value="SEO">SEO</option>
-                                           <option value="Web Development">Web Development</option>
-                                           <option value="Android">Android</option>
+                                       <select id="service" required name="subject">
+                                           <option value="">-Select Service</option>
+                                           <option value="Membership">Membership</option>
+                                           <option value="Registration">Registration</option>
+                                           <option value="ID Card">ID Card</option>
+                                           <option value="Payment">Payment</option>
                                        </select>
                                    </div>
                                </div>
@@ -642,7 +748,7 @@
                               <!-- Message -->
                              <div class="col-md-12 col-lg-12 col-xl-12 col-12 col-sm-12">
                                  <div class="form-group">
-                                     <textarea name="" id="u_message" cols="5" rows="3" placeholder="Message"></textarea>
+                                     <textarea name="details" id="u_message" cols="5" rows="3" placeholder="Message"></textarea>
                                  </div>
                              </div>
                                <!-- submit button -->
@@ -676,6 +782,7 @@
       
       </div>
     </section>
+  
     <!-- footer-section -->
     <footer>
       <div class="footer-section">
@@ -795,16 +902,7 @@
     <script src="active.js"></script>
     <script src="formValidate.js"></script>
     <script src="home.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.main-menu-header li a').click(function(e) {
-                $('.main-menu-header li a.active').removeClass('active');
-                var $parent = $(this).siblings();
-                $parent.addClass('active');
-                e.preventDefault();
-            });
-           });
-    </script>
+
  
 
 </body>

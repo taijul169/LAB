@@ -14,7 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                <!-- Button trigger modal -->
+                {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -24,13 +25,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -51,9 +52,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -79,13 +80,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -108,14 +109,14 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">Verified User</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14" id="page_title"></h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -143,21 +144,138 @@
                     <div class="container-fluid">
                         <div class="row">
                             {{!-- ssc --}}
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
                                  {{#if message}}
                                     <div class="alert {{message.type}}" role="alert">
                                         {{message.message}}
                                     </div>
-
                                     {{/if}}
+                                   
                                 <div class="card card-warning card-outline">
                                     <div class="card-header">
                                         All Verified User
                                     </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-striped dt-responsive nowrap" id="active_blog" width="100%">
-                                                <thead>
+                                    <div class="custom-card-filter py-3 bg-cover">
+                                    <div class="row">
+                                      <div class="col-md-12 p-0">
+                                         <form method="POST" id="filter_form">
+                                          <div class="card">
+                                              <div class="card-header">
+                                                  <a type="button" class="btn btn-tool btn-link" data-bs-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false" aria-controls="filterCollapse">
+                                                      <h3 class="card-title">
+                                                          Filter <i class="fas fa-arrow-circle-down"></i>
+                                                      </h3>
+                                                  </a>
+                                                
+                                              </div>
+                                              <div class="card-body collapse" id="filterCollapse">
+                                                  <div class="row" autocomplete="off">
+                                                      <div class="form-group col-md-4" >
+                                                          <label class="col-sm-12 col-form-label" id="reg_no">District</label>
+                                                          <div class="col-sm-12">
+                                                              <select class="" name="district" id="district" tabindex="-1" aria-hidden="true">
+                                                                <option value="">Select Option</option>
+                                                                {{#each divisionInfo}}
+                                                                    <option value={{this.district}}>{{this.district}}</option>
+                                                                {{/each }}
+                                                                
+                                                              </select>
+                                                      
+                                                     </div>
+                                                      </div>
+                                                      {{!-- <div class="form-group col-md-3">
+                                                          <label class="col-sm-12 col-form-label" for="designation">Upazila</label>
+                                                          <div class="col-sm-12">
+                                                              <select class="" name="upazila" id="degree" tabindex="-1" aria-hidden="true">
+                                                                <option value="">Select Option</option>
+                                                                <option value="Muladi">Muladi</option>
+                                                                <option value="y">y</option>
+                                                                <option value="Khulna">Khulna</option>
+                                                                <option value="Sylhet">Sylhet</option>
+                                                                <option value="Rajshahi">Rajshahi</option>
+                                                                <option value="Rangpur">Rangpur</option>
+                                                                <option value="Mymonshing">Mymonshing</option>
+                                                              </select>
+                                                          </div>
+                                                      </div> --}}
+                                                   
+                                                    
+                                                      <div class="form-group col-md-4">
+                                                          <label for="phone" class="col-sm-12 col-form-label">Mobile No.</label>
+                                                          <div class="col-sm-12">
+                                                              <input type="text" id="mobile" autocomplete="off" class="form-control" name="mobile" value="" placeholder="Mobile No">
+                                                          </div>
+                                                      </div>
+
+                                                      {{!-- <div class="form-group col-md-3">
+                                                          <label for="email" class="col-sm-12 col-form-label">Email</label>
+                                                          <div class="col-sm-12">
+                                                              <input type="text" id="email" autocomplete="off" class="form-control" name="email" value="" placeholder="Email">
+                                                          </div>
+                                                      </div> --}}
+                                                      {{!-- <div class="form-group col-md-3">
+                                                          <label class="col-sm-12 col-form-label" for="year">Blood Group</label>
+                                                          <div class="col-sm-12">
+                                                              <select name="bloodgroup"  class="form-control"  tabindex="-1" aria-hidden="true">
+                                                                  <option value="" >Select...</option>
+                                                                  <option value="A+">
+                                                                      A+
+                                                                  </option>
+                                                                  <option value="A-">
+                                                                      A-
+                                                                  </option>
+                                                                  <option value="B+">
+                                                                      B+
+                                                                  </option>
+                                                                  <option value="B-">
+                                                                      B-
+                                                                  </option>
+                                                                  <option value="O+">
+                                                                      O+
+                                                                  </option>
+                                                                  <option value="O-">
+                                                                      O-
+                                                                  </option>
+                                                                  <option value="AB+">
+                                                                      AB+
+                                                                  </option>
+                                                                  <option value="AB-">
+                                                                      AB-
+                                                                  </option>
+                                                              </select>
+                                                          </div>
+                                                      </div> --}}
+                                                      <div class="form-group col-md-4">
+                                                          <label class="col-sm-12 col-form-label">Registration No.</label>
+                                                          <div class="col-sm-12">
+                                                              <input type="text" for="reg_no" autocomplete="off" id="reg_no" class="form-control" name="id" value="" placeholder="Registration No">
+                                                          </div>
+                                                      </div>
+
+                                                      <fieldset class="form-group col-md-12">
+                                                          <div class="col-sm-3">
+                                                              <button id="search" onsubmit="validatefilter()" type="submit" class="btn btn-primary btn-rounded">Search</button>
+                                                              
+                                                          </div>
+                                                      </fieldset>
+                                                  </div>
+
+                                              </div>
+                                              <!-- /.card-body -->
+                                              <!-- /.card-footer-->
+                                          </div> 
+                                         </form>   
+                                      </div>
+                                    </div>
+                                    </div>
+                                    {{!-- hidden-data --}}
+                                    <input type="hidden" id="allData" value="{{StringData}}">
+                                    <input class="form-control w-25 my-2 ml-2"  type="text" id="quick_search" placeholder="Enter the keyword to quick search">
+                                    <div class="card-body">  
+                                     <div class="table-responsive">       
+                                       <div>
+                                         <table class="table table-hover table-striped dt-responsive nowrap" id="active_blog" width="100%">
+                                            <thead>
                                                 <tr>
                                                     <th>#SL</th>
                                                     <th>User</th>
@@ -167,32 +285,16 @@
                                                     <th>From</th>
                                                     <th>Action</th>
                                                 </tr>
-                                                </thead>
-                                                <tbody>
-                                                {{#each verifieduserData}}
-                                                    {{!-- single-donor --}}
-                                                <tr>
-                                                    <td>{{counter @index}}</td>
-                                                    <td> <img style="width: 30px; height:30px; border-radius:50%" src="data:image/png;base64,{{this.userphoto}}" alt=""></td>
-                                                    <td>{{this.firstname}}</td>
-                                                    <td>{{this.upazila}},{{this.district}}</td>
-                                                    
-                                                    <td> {{this.profession}}  </td>
-                                                    <td>{{this.createdate}}</td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <a  href="/users/singleuserview/{{this.id}}" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
-                                                            <a href="#" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                {{/each}}                      
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        
+                                              </thead>
+                                              <tbody id="data-container">
 
-                                    </div>
+                                              </tbody>
+                                         </table>
+                                       </div>        
+                                        </div>
+                                     <div class="custom-pagination-wrap w-100 d-flex justify-content-center" id="pagination-container">
+                            
+                                     </div>
                                 </div>
                             </div>
 
@@ -219,19 +321,113 @@
                                     amount_el.value = amount;
                                     Payment_date.value = paymentdate;
                                 }
-
-                              
-
                                 //onsubmit
-                              
+
+                               //pagination
+                              const allData =   document.getElementById('allData').value;
+                              const userData = JSON.parse(allData) 
+                              console.log("pagination Data",userData);
+
+
+                               $('#pagination-container').pagination({
+                                      dataSource: userData,
+                                      pageSize: 10,
+                                      callback: function(userData, pagination) {
+                                          // template method of yourself
+                                          var html = template(userData);
+                                          $('#data-container').html(html);
+                                      }
+                               
+                                
+                                });
+
+                                function template(data){
+                                  console.log("inside function:",data)
+                                   var html = '';
+                                      $.each(data, function(index, item){
+                                          html += `<tr>
+                                                    <td>${index+1}</td>
+                                                    <td> <img style="width: 30px; height:30px; border-radius:50%" src="data:image/png;base64,${item.userphoto}" alt=""></td>
+                                                    <td>${item.firstname}</td>
+                                                    <td>${item.upazila},${item.district}</td>
+                                                    
+                                                    <td>${item.profession}</td>
+                                                    <td>${item.createdate}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a  href="/users/singleuserview/${item.id}" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
+                                                            <a href="#" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>`;
+                                      });
+                                      
+                                      return html;
+
+                                }
+
+                                //select 2 activation --
+                                $('.degree').select2();
+                                $('.institution').select2();
+                                $('.group').select2();
+                                $('.graduationyear').select2();
+                                $('.bloodgroup').select2();
+
+
+                                
+                            </script>
+
+                            {{!-- filter-table data --}}
+                            <script>
+                                $(document).ready(function(){
+ 
+                                // quick search
+                                $("#quick_search").on("keyup", function() {
+                                    var value = $(this).val().toLowerCase();
+                                    $("#data-container tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                    });
+                                });
+                                  //page title
+                                 let str = window.location.pathname;
+                                  const myArr = str.split("/");
+                                  console.log(myArr) 
+                                 $('#page_title').text(myArr[2]) 
+                                 
+                                });
+
+                                //set form-action
+                                $("#filter_form").submit(function(e){
+                                    var district =  $("#district");
+                                    var mobile =  $("#mobile");
+                                    var reg_no =  $("#reg_no");
+                                  if((district.val() == '') && (mobile.val() == '') && (reg_no.val() =='')){
+                                      window.alert("Minimum one field required to filter!!")
+                                      return false;
+                                  }
+                                  else{
+                                  let str = window.location.pathname;
+                                  const myArr = str.split("/");
+                                  console.log(myArr)
+                                  $("#filter_form").attr("action", `/admin/filterdata?page=${myArr[2]}`);
+                                  }
+                                 
+                                });
+
+                                
+                                                             
+                               
                             </script>
                             
+                       
                         </div>
                     </div>    
             </section>
 
            </div>
             </section>
+            
+           
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->

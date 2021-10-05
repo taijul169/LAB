@@ -14,7 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                <!-- Button trigger modal -->
+               {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -23,11 +24,10 @@
                         <h5 class="modal-title" id="exampleModalLabel">User ID Card</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
-                   
-                     {{!-- card view --}}
-                    <div class="custom-card shadow"  id="idcardWrap">
+                  
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front ">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
@@ -47,15 +47,14 @@
                             </div>
                           
                             {{!-- front-image-card --}}
-                            <div class="front-image-card">
-                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 80px;" alt="proimg">
-                              {{!-- <div class="img-shape">
-                               
-                              </div> --}}
+                            <div class="front-image-card w-50">
+                              <div class="img-shape">
+                                <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
+                              </div>
                             </div>
                             <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -63,7 +62,7 @@
                             <div class="info-card text-left mt-2">
                             <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
                             <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
-                            <p>Mob: <span>+88{{userData.[0].mobile}}</span></p>
+                            <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
                             </div>
                             <div class="id-card-footer">
                               <div class="auth d-flex justify-content-between">
@@ -81,17 +80,17 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back text-center mt-1 position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 45px;" src="/images/logo.png" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
                             <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size:5px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
-                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].mobile}}</li>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].phone}}</li>
                               <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
                               <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
                             </ul>
@@ -103,16 +102,14 @@
                             </div>
                         </div>
                       
-                    </div>
-                   
-                   
+                  </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" onclick="pdfGenarator()" class="btn btn-primary">Download</button>
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -295,286 +292,96 @@
                                     </div>
                                     <!-- /.col -->
                                 </div>
-                                <!-- /.row -->
-                                <div class="col-md-12 p-0">
-                                    <div class="card collapsed-card">
-                                        <div class="card-header">
-                                            <a type="button" class="btn btn-tool btn-link" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                <h3 class="card-title">
-                                                    Filter <i class="fas fa-arrow-circle-down"></i>
-                                                </h3>
-                                            </a>
-                                        <div class="card-tools">
-                                          <a target="_blank" href="https://bdalumni.com/admin/payment-list/export?" style="float:right" id="download" class="text-right"><i class="fa fa-download"></i></a>
+                               
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-warning card-outline">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped dt-responsive nowrap" id="active_blog" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>#SL</th>
+                                                    <th>Blood Group</th>
+                                                    <th>Name</th>
+                                                    <th>Registration No</th>
+                                                    <th>Phone</th>
+                                                    <th>Profession</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{#each rawdata}}
+                                                    {{!-- single-donor --}}
+
+                                                <tr>
+                                                    <td>{{this.id}}</td>
+                                                    <td>{{this.bloodgroup}}</td>
+                                                    <td>{{this.firstname}}</td>
+                                                    <td>000000{{this.id}}</td>
+                                                    <td>{{this.mobile}}</td>
+                                                    <td>{{this.profession}}</td>
+
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="/users/singledonorview/{{this.id}}" role="button" class="btn btn-readmore btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                            
+                                                        </div>
+                                                        
+                                                    </td>
+
+                                                </tr>
+                                                {{/each}}                      
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        </div>
-                                        <div class="card-body">
-                                        <form action="" class="form-horizontal" method="GET">
-                                            <input type="hidden" name="_token" value="odqV6ZdU2H1wEHd8X7TkuSwqtr5OeFrd75FUCWGy">            <div class="row" autocomplete="off">
-                                                            <div class="form-group col-md-2">
-                                                <label class="col-sm-12 col-form-label" id="reg_no" for="degree">Degree</label>
-                                                <div class="col-sm-12">
-                                                    <select class="select2" name="degree" id="degree">
-                                                            <option value="">Select</option>
-                                                            <option value="SSC">SSC</option>
-                                                            <option value="HSC">HSC</option>
-                                                            <option value="Bachelor">Bachelor</option>
-                                                            <option value="Masters">Masters</option>
-                                                            <option value="PHD">PHD</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <label class="col-sm-12 col-form-label" for="institute_id">Institute</label>
-                                                <div class="col-sm-12">
-                                                    
-                                                    <input type="text" class="form-control" id="type_id" autocomplete="off" placeholder="Select Option">
-                                                    <input type="hidden" class="form-control" name="institute">
-                                                    <ul id="searchResult"></ul>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <label class="col-sm-12 col-form-label" for="faculty">Group/Faculty</label>
-                                                <div class="col-sm-12">
-                                                    <select class="select2" name="faculty" id="faculty">
-                                                        <option value="">Select Option</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                             <div class="form-group col-md-2">
-                                                    <label class="col-sm-12 col-form-label" for="year">Graduation Year</label>
-                                                    <div class="col-sm-12">
-                                                        <select class="select2" name="year" id="year">
-                                                            <option value="">Select</option>
-                                                            <option value="33">1971</option>
-                                                            <option value="34">1972</option>
-                                                            <option value="35">1973</option>
-                                                            <option value="36">1974</option>
-                                                            <option value="37">1975</option>
-                                                            <option value="38">1976</option>
-                                                            <option value="39">1977</option>
-                                                            <option value="40">1978</option>
-                                                            <option value="41">1979</option>
-                                                            <option value="42">1980</option>
-                                                            <option value="43">1981</option>
-                                                            <option value="44">1982</option>
-                                                            <option value="45">1983</option>
-                                                            <option value="46">1984</option>
-                                                            <option value="47">1985</option>
-                                                            <option value="48">1986</option>
-                                                            <option value="49">1987</option>
-                                                            <option value="50">1988</option>
-                                                            <option value="51">1989</option>
-                                                            <option value="52">1990</option>
-                                                            <option value="53">1991</option>
-                                                            <option value="54">1992</option>
-                                                            <option value="55">1993</option>
-                                                            <option value="56">1994</option>
-                                                            <option value="57">1995</option>
-                                                            <option value="58">1996</option>
-                                                            <option value="59">1997</option>
-                                                            <option value="60">1998</option>
-                                                            <option value="62">1999</option>
-                                                            <option value="63">2000</option>
-                                                            <option value="64">2001</option>
-                                                            <option value="65">2002</option>
-                                                            <option value="66">2003</option>
-                                                            <option value="67">2004</option>
-                                                            <option value="68">2005</option>
-                                                            <option value="69">2006</option>
-                                                            <option value="70">2007</option>
-                                                            <option value="71">2008</option>
-                                                            <option value="72">2009</option>
-                                                            <option value="73">2010</option>
-                                                            <option value="74">2011</option>
-                                                            <option value="75">2012</option>
-                                                            <option value="76">2013</option>
-                                                            <option value="77">2014</option>
-                                                            <option value="78">2015</option>
-                                                            <option value="79">2016</option>
-                                                            <option value="80">2017</option>
-                                                            <option value="81">2018</option>
-                                                            <option value="82">2019</option>
-                                                            <option value="83">2020</option>
-                                                    </select>
-                    </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="phone" class="col-sm-12 col-form-label">Mobile No.</label>
-                    <div class="col-sm-12">
-                        <input type="text" id="phone" autocomplete="off" class="form-control" name="phone" value="" placeholder="Mobile No">
-                    </div>
-                </div>
+                                        
 
-                <div class="form-group col-md-2">
-                    <label for="email" class="col-sm-12 col-form-label">Email</label>
-                    <div class="col-sm-12">
-                        <input type="text" id="email" autocomplete="off" class="form-control" name="email" value="" placeholder="Email">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-2">
-                    <label for="profession" class="col-sm-12 col-form-label">Profession</label>
-                    <div class="col-sm-12">
-                        <select class="select2" name="profession" id="profession">
-                            <option value="">Select</option>
-                            <option value="Student">Student</option>
-                            <option value="Housewife">Housewife</option>
-                            <option value="Government service">Government service</option>
-                            <option value="Private service">Private service</option>
-                            <option value="Business">Business</option>
-                            <option value="Workers">Workers</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Doctor">Doctor</option>
-                            <option value="Engineer">Engineer</option>
-                            <option value="Lawyer">Lawyer</option>
-                            <option value="Army/Navy/Air">Army/Navy/Air</option>
-                            <option value="Others">Others</option>
-                        </select> 
-                    </div>
-                </div> 
-                <div class="form-group col-md-2">
-                    <label class="col-sm-12 col-form-label" for="blood_group">Blood Group</label>
-                    <div class="col-sm-12">
-                        <select name="blood_group" id="blood_group" class="form-control select2">
-                            <option value="">Select...</option>
-                            <option value="A+">
-                                A+
-                            </option>
-                            <option value="A-">
-                                A-
-                            </option>
-                            <option value="B+">
-                                B+
-                            </option>
-                            <option value="B-">
-                                B-
-                            </option>
-                            <option value="O+">
-                                O+
-                            </option>
-                            <option value="O-">
-                                O-
-                            </option>
-                            <option value="AB+">
-                                AB+
-                            </option>
-                            <option value="AB-">
-                                AB-
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="col-sm-12 col-form-label" id="reg_no">Registration No.</label>
-                    <div class="col-sm-12">
-                        <input type="text" for="reg_no" autocomplete="off" class="form-control" name="reg_no" value="" placeholder="Registration No">
-                    </div>
-                </div>
-
-                <fieldset class="form-group col-md-12">
-                    <div class="col-sm-3">
-                        <button id="search" class="btn btn-primary btn-rounded">Search</button>
-                        <a href="https://bdalumni.com/admin/donors" id="clear" class="btn btn-inverse btn-default btn-rounded">Clear</a>
-                    </div>
-                </fieldset>
-
-            </div>
-          </form>
-        </div>
-        <!-- /.card-body -->
-        <!-- /.card-footer-->
-    </div> 
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card card-warning card-outline">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped dt-responsive nowrap" id="active_blog" width="100%">
-                        <thead>
-                        <tr>
-                            <th>#SL</th>
-                            <th>Blood Group</th>
-                            <th>Name</th>
-                            <th>Registration No</th>
-                            <th>Phone</th>
-                            <th>Profession</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                          {{#each rawdata}}
-                            {{!-- single-donor --}}
-
-                          <tr>
-                            <td>{{this.id}}</td>
-                            <td>{{this.bloodgroup}}</td>
-                            <td>{{this.firstname}}</td>
-                            <td>000000{{this.id}}</td>
-                            <td>{{this.mobile}}</td>
-                            <td>{{this.profession}}</td>
-
-                            <td>
-                                <div class="btn-group">
-                                    <a href="/users/singledonorview/{{this.id}}" role="button" class="btn btn-readmore btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                    
+                                    </div>
                                 </div>
-                                
-                            </td>
+                            </div>
+                        </div>
 
-                        </tr>
-                        {{/each}}                      
-                        </tbody>
-                    </table>
-                </div>
-                
+                        <script>
+                            //-------dynamic upazila -----------------------------------
+                            const hiddendata = document.getElementById("bloodhidden").value;
+                            const A_positive = document.getElementById("A_positive");
+                            const B_positive = document.getElementById("B_positive");
+                            const O_positive = document.getElementById("O_positive");
+                            const AB_positive = document.getElementById("AB_positive");
+                            const A_negative = document.getElementById("A_negative");
+                            const B_negative = document.getElementById("B_negative");
+                            const AB_negative = document.getElementById("AB_negative");
+                            const O_negative = document.getElementById("O_negative");
 
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-       //-------dynamic upazila -----------------------------------
-       const hiddendata = document.getElementById("bloodhidden").value;
-       const A_positive = document.getElementById("A_positive");
-       const B_positive = document.getElementById("B_positive");
-       const O_positive = document.getElementById("O_positive");
-       const AB_positive = document.getElementById("AB_positive");
-       const A_negative = document.getElementById("A_negative");
-       const B_negative = document.getElementById("B_negative");
-       const AB_negative = document.getElementById("AB_negative");
-       const O_negative = document.getElementById("O_negative");
-
-       const parsedata = JSON.parse(hiddendata);
-       //A+
-        let answer_one = (parsedata.filter(order => (order.bloodgroup === "A+")))
-        A_positive.innerText = answer_one.length;
-        //B+
-         let answer_two = (parsedata.filter(order => (order.bloodgroup === "B+")))
-        B_positive.innerText = answer_two .length;
-          //B+
-         let answer_three = (parsedata.filter(order => (order.bloodgroup === "O+")))
-        O_positive.innerText = answer_three.length;
-          //B+
-         let answer_four = (parsedata.filter(order => (order.bloodgroup === "AB+")))
-        AB_positive.innerText = answer_four.length;
-          //B+
-         let answer_five = (parsedata.filter(order => (order.bloodgroup === "A-")))
-        A_negative.innerText = answer_five.length;
-          //B+
-         let answer_six = (parsedata.filter(order => (order.bloodgroup === "B-")))
-        B_negative.innerText = answer_six.length;
-          //B+
-         let answer_seven = (parsedata.filter(order => (order.bloodgroup === "AB-")))
-        AB_positive.innerText = answer_seven.length;
-          //B+
-         let answer_eight = (parsedata.filter(order => (order.bloodgroup === "O-")))
-        O_negative.innerText = answer_eight.length;
-</script>
-</div>
-</section>
+                            const parsedata = JSON.parse(hiddendata);
+                            //A+
+                                let answer_one = (parsedata.filter(order => (order.bloodgroup === "A+")))
+                                A_positive.innerText = answer_one.length;
+                                //B+
+                                let answer_two = (parsedata.filter(order => (order.bloodgroup === "B+")))
+                                B_positive.innerText = answer_two .length;
+                                //B+
+                                let answer_three = (parsedata.filter(order => (order.bloodgroup === "O+")))
+                                O_positive.innerText = answer_three.length;
+                                //B+
+                                let answer_four = (parsedata.filter(order => (order.bloodgroup === "AB+")))
+                                AB_positive.innerText = answer_four.length;
+                                //B+
+                                let answer_five = (parsedata.filter(order => (order.bloodgroup === "A-")))
+                                A_negative.innerText = answer_five.length;
+                                //B+
+                                let answer_six = (parsedata.filter(order => (order.bloodgroup === "B-")))
+                                B_negative.innerText = answer_six.length;
+                                //B+
+                                let answer_seven = (parsedata.filter(order => (order.bloodgroup === "AB-")))
+                                AB_positive.innerText = answer_seven.length;
+                                //B+
+                                let answer_eight = (parsedata.filter(order => (order.bloodgroup === "O-")))
+                                O_negative.innerText = answer_eight.length;
+                        </script>
+                       </div>
+                   </section>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->

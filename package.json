@@ -27,6 +27,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "node-localstorage": "^2.1.6",
+    "url": "^0.11.0",
     "validator": "^13.5.2"
   }
 }

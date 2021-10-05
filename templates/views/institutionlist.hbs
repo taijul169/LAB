@@ -14,7 +14,12 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                 <!-- Button trigger modal -->
+
+              <input type="hidden" value="{{data}}" id="hiddendata">
+            {{!-- <input type="hidden" value="{{datadistrict}}" id="datadistrict"> --}}
+            <input type="hidden" value="{{dataDivison}}" id="datadistrict">
+               {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -24,13 +29,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -51,9 +56,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -79,13 +84,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -108,7 +113,7 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -179,7 +184,7 @@
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form id="editistitution">
+                    <form  method="POST" action="/users/updateinstitution">
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel" ><input class="form-control text-uppercase w-100" type="text" id="degree" readonly name="degree"></h5>
@@ -195,10 +200,46 @@
                                <label for="">Name</label>
                                <input type="text" name="name" class="form-control " id="name">
                            </div>
-                           <div class="form-group">
-                               <label for="">Code</label>
-                               <input type="text" name="code" class="form-control " id="code">
+                            <div class="form-group">
+                               <label for="validationCustom01" class="form-label">Level</label>
+                                  <select name="level" id="level" required>
+                                  
+                                    <option value="ssc">SSC</option>
+                                    <option value="hsc">HSC</option>
+                                    <option value="bachelor">Bachelor</option>
+                                </select>
                            </div>
+                            <div class="form-group">
+                               <label for="validationCustom01" class="form-label">Select Category</label>
+                                  <select name="category" id="category">
+                                    <option value="">Choose One</option>
+                                    <option value="division">Division</option>
+                                    <option value="district">District</option>
+                                    <option value="upazila">upazila</option>
+                                </select>
+                           </div>
+                            <div class="form-group box-div d-none">
+                               <label for="">Division</label>
+                               <select onchange="getDivisionValue()" name="division" id="division_ins">
+                                    <option value="">Select division</option>
+                                   {{#each divisiondata}}
+                                         <option value="{{this.division}}">{{this.division}}</option>
+                                   {{/each}}
+                                  
+                               </select>
+                              
+                           </div>
+                            <div class="form-group box-dis d-none">
+                               <label for="">District</label>
+                               <select name="district" onchange="getDistrictValue()"   class="custom-select district" id="district_ins">
+                                </select>
+                           </div>
+                            <div class="form-group box-upa d-none">
+                               <label for="">Upazila</label>
+                               <select name="upazila"    class="custom-select upazila" id="upazila_ins">
+                              </select>
+                           </div>
+                            
                       
                     </div>
                     <div class="modal-footer">
@@ -209,6 +250,97 @@
                   </form> 
                 </div>
                 </div>
+
+                <script>
+                  
+                        //dependency adding
+                        const category =  $("#category");
+                        const committee_category =  $("#category");
+
+                        category.change(function(){
+                            if( category.val() == 'division'){
+                                $(".box-div").removeClass("d-none");
+                                $(".box-div").addClass("d-block");
+                                $(".box-dis").addClass("d-none");
+                                $(".box-dis").removeClass("d-block");
+                                $(".box-upa").addClass("d-none");
+                                $(".box-upa").removeClass("d-block");
+                            }
+                            else if(category.val() == 'district'){
+                                $(".box-div").removeClass("d-none");
+                                $(".box-div").addClass("d-block");
+                                $(".box-dis").addClass("d-block")
+                                $(".box-dis").removeClass("d-none")
+                                $(".box-upa").addClass("d-none");
+                                $(".box-upa").removeClass("d-block");
+                            }
+                            else if(category.val() == 'upazila'){ 
+                                $(".box-div").removeClass("d-none")
+                                $(".box-div").addClass("d-block")
+                                $(".box-dis").addClass("d-block")
+                                $(".box-dis").removeClass("d-none")
+                                $(".box-upa").addClass("d-block");
+                                $(".box-upa").removeClass("d-none");
+                            }
+                            else{
+                                category.val() == '';
+                                $(".box-div").removeClass("d-block")
+                                $(".box-dis").removeClass("d-block")
+                                $(".box-upa").removeClass('d-block')
+                            }
+                            
+                        })
+                </script>
+                  <script>
+   
+                            //-------dynamic upazila -----------------------------------
+                            const hiddendata = document.getElementById("hiddendata").value;
+                            const upazila = document.getElementById("upazila_ins");
+                            const district = document.getElementById('district_ins');
+                            const parsedata = JSON.parse(hiddendata);
+                            
+                            const getDistrictValue =(e)=>{
+                                upazila.innerHTML = '';
+                                const districtvalue =  document.getElementById('district_ins').value;
+                                let test = [districtvalue]
+                                let answer = parsedata.filter(item => (
+                                    test.includes(item.district)
+                                    )).map(item => item.upazila)
+                            //--------------------------------------------------------------------------------
+                        
+                                    answer.forEach(arrfunction);
+                                    
+                                    function arrfunction(array_element) {
+                                        console.log("array_element",array_element)
+                                    
+                                    document.getElementById("upazila_ins").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                    
+                                    }
+                            }
+
+                            
+                                const getDivisionValue =(e)=>{   
+                                district.innerHTML = '';
+                                const divisionvalue =  document.getElementById('division_ins').value;
+                                let test = [divisionvalue]
+                                let answer = parsedata.filter(item => (
+                                    test.includes(item.division)
+                                    )).map(item => item.district)
+
+                            let answerData = answer.filter((item,i,ar)=>ar.indexOf(item) === i);
+                            //--------------------------------------------------------------------------------
+                        
+                                    answerData.forEach(arrfunction);
+                                    
+                                    function arrfunction(array_element) {
+                                        console.log("array_element",array_element)
+                                    document.getElementById("district_ins").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                    
+                                    }
+                            }
+                        
+
+                </script>
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
@@ -221,7 +353,6 @@
                                     <div class="alert {{message.type}}" role="alert">
                                         {{message.message}}
                                     </div>
-
                                     {{/if}}
                                 <div class="card card-warning card-outline">
                                     <div class="card-header">
@@ -234,7 +365,7 @@
                                                 <tr>
                                                     <th>#SL</th>
                                                     <th>Name</th>
-                                                    <th>Code</th>
+                                                    <th>Level</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -243,11 +374,11 @@
                                                     {{!-- single-donor --}}
                                                 <tr>
                                                     <td>{{this.id}}</td>
-                                                    <td>{{this.institutenamessc}}</td>
-                                                    <td>{{this.institutecodessc}}</td>
+                                                    <td>{{this.name}}</td>
+                                                    <td>{{this.level}}</td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.institutenamessc}}',{{this.institutecodessc}},'ssc')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
+                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.name}}','{{this.level}}','{{this.division}}','{{this.district}}','{{this.upazila}}','{{this.category}}','SSC')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
                                                             <a href="/users/deleteinstitution/{{this.id}}/ssc" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>
@@ -266,29 +397,26 @@
 
                                 const name_el =  document.getElementById('name'); 
                                 const id_el =  document.getElementById('id'); 
-                                const code_el =  document.getElementById('code'); 
-                                const degree_el =  document.getElementById('degree'); 
+                                const level_el =  document.getElementById('level'); 
+                                const division_ins_el =  document.getElementById('division_ins'); 
+                                const district_ins_el =  document.getElementById('district_ins');
+                                const upazila_ins_el =  document.getElementById('upazila_ins');
+                                const degree_ins_el =  document.getElementById('degree'); 
+                                const category_ins_el =  document.getElementById('category'); 
 
-                                const displayDataIntoModal =(id,name,code,degree)=>{
+                                const displayDataIntoModal =(id,name,level,division,district,upazila,degree,category)=>{
                                     id_el.value = id;
                                     name_el.value = name;
-                                    code_el.value = code;
-                                    degree_el.value = degree
+                                    level_el.value = level;
+                                    division_ins_el.value = division;
+                                    district_ins_el.value = district;
+                                    upazila_ins_el.value = upazila;
+                                    degree_ins_el.value = degree;
+                                    category_ins_el.value = category;
+
                                 }
 
                               
-
-                                //onsubmit
-                                const editistitution = document.getElementById("editistitution");
-                                editistitution.addEventListener("submit",(e)=>{
-                                    e.preventDefault();
-                                    const id =  document.getElementById("id").value;
-                                    const name =  document.getElementById("name").value;
-                                    const code =  document.getElementById("code").value;
-                                    const degree =  document.getElementById("degree").value;
-                                    window.location.href = `/users/editinstitute/${id}/${name}/${code}/${degree}`;
-                                    
-                                })
                             </script>
                             {{!-- hsc --}}
                             <div class="col-sm-12">
@@ -303,7 +431,7 @@
                                                 <tr>
                                                     <th>#SL</th>
                                                     <th>Name</th>
-                                                    <th>Code</th>
+                                                    <th>Level</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -312,11 +440,11 @@
                                                     {{!-- single-donor --}}
                                                 <tr>
                                                     <td>{{this.id}}</td>
-                                                    <td>{{this.institutenamehsc}}</td>
-                                                    <td>{{this.institutecodehsc}}</td>
+                                                    <td>{{this.name}}</td>
+                                                    <td>{{this.level}}</td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.institutenamehsc}}',{{this.institutecodehsc}},'hsc')" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
+                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.name}}','{{this.level}}','{{this.division}}','{{this.district}}','{{this.upazila}}','HSC')" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
                                                             <a href="/users/deleteinstitution/{{this.id}}/hsc" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>
@@ -343,7 +471,7 @@
                                                 <tr>
                                                     <th>#SL</th>
                                                     <th>Name</th>
-                                                    <th>Code</th>
+                                                    <th>Level</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -352,11 +480,11 @@
                                                     {{!-- single-donor --}}
                                                 <tr>
                                                     <td>{{this.id}}</td>
-                                                    <td>{{this.institutenamebachelor}}</td>
-                                                    <td>{{this.institutecodebachelor}}</td>
+                                                    <td>{{this.name}}</td>
+                                                    <td>{{this.level}}</td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.institutenamebachelor}}',{{this.institutecodebachelor}},'bachelor')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
+                                                            <a onclick="displayDataIntoModal({{this.id}},'{{this.name}}','{{this.level}}','{{this.division}}','{{this.district}}','{{this.upazila}}','Bachelor')" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Edit</a>
                                                             <a href="/users/deleteinstitution/{{this.id}}/bachelor" role="button" class="btn btn-readmore btn-danger ml-1 btn-sm"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>
@@ -444,7 +572,7 @@
                     </div>    
             </section>
 
-</div>
+           </div>
             </section>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->

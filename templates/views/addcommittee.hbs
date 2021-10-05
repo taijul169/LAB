@@ -14,7 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                 <!-- Button trigger modal -->
+              {{!-- ID Card --}}
+            <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -24,13 +25,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                   
-                      <div class="custom-card py-3 shadow"  id="idcardWrap">
+                      <div class="custom-card shadow"  id="idcardWrap">
                         {{!-- card-front --}}
-                        <div class="card-front m-3">
+                        <div class="card-front">
                               {{!-- front-header --}}
                             <div class="card-front-header d-flex justify-content-between">
                               <div class="logo-card">
-                                <img style="width: 50px;" src="/images/logo.jpg" alt="logo">
+                                <img style="width: 35px;" src="/images/logo.png" alt="logo">
                               </div>
                               <div class="qrcode-card">
                                 <input type="hidden" id="qr_code_value_id" value={{userData.[0].id}}>
@@ -51,9 +52,9 @@
                                 <img src="data:image/png;base64,{{userData.[0].userphoto}}" style="width: 120px;" alt="proimg">
                               </div>
                             </div>
-                            <div class="name_title mt-3">
+                            <div class="name_title">
                               <h4>{{userData.[0].firstname}}  {{userData.[0].lastname}}</h4>
-                              <h5>Vice President</h5>
+                              <h5>{{designation userData.[0].committee_designation}}</h5>
                               <span class="d-block">Central committee (LAB)</span>
                               <small>Valid Till 24-07-2023</small>
                               
@@ -79,13 +80,13 @@
                         </div>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
-                        <div class="card-front back mt-4 m-3 text-center position-relative" > 
+                        <div class="card-front back mt-1  text-center position-relative" > 
                          <div class="logo-card-back mb-1 ">
-                              <img style="width: 70px;" src="/images/logo.jpg" alt="logo">
+                              <img style="width: 70px;" src="/images/logo.png" alt="logo">
                          </div>
                          <div class="heading-back text-uppercase mt-3">
-                            <h4 style="font-size: 12px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
-                            <span style="font-size: 10px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px;font-size:8px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
+                            <h4 style="font-size: 8px; color:black; line-height:0%" class="font-weight-bold">Law association of bangladesh</h4>
+                            <span style="font-size: 6px; letter-spacing:1px;color:rgb(31, 31, 31);font-wight:500px; margin-top:-2px;display:block">Fight for right i fight for justice</span>
                           </div>
                           <div class="contact-info-card">
                             <ul>
@@ -108,7 +109,7 @@
                     </div>
                  </div>
                 </div>
-                </div>
+               </div>
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -140,14 +141,17 @@
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form id="editistitution">
+                 <form id="editistitution">
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel" ><input class="form-control text-uppercase w-100" type="text" id="degree" readonly name="degree"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
-                      
+                             {{!-- hiddendata --}}
+                            <input type="hidden" value="{{data}}" id="hiddendata">
+                            {{!-- <input type="hidden" value="{{datadistrict}}" id="datadistrict"> --}}
+                            <input type="hidden" value="{{dataDivison}}" id="datadistrict">
                            <div class="form-group">
                                <label for="">ID</label>
                                <input type="text" name="id" class="form-control" readonly id="id">
@@ -211,61 +215,266 @@
                                     <form method="post" class="form-horizontal" id="add-committee-form" action="/admin/addcommittee">
                                         <div class="form-group">
                                             <label for="title1" class="control-label col-sm-2">Name <span style="color:red">*</span></label>
-                                            <div class="col-sm-10">
-                                                <input type="text" name="name" id="title1" class="form-control" required="">
+                                            <div class="col-sm-12">
+                                                <input type="text" name="name" id="title1" class="form-control" required="" placeholder="Central Committee(2021-22)">
                                             </div>
                                             <span class="help-block error eMsg_designation_name"></span>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="title1" class="control-label col-sm-2">Committee Type <span style="color:red">*</span></label>
-                                            <div class="col-sm-10">
-                                                <select name="type" id="committee_type" class="form-control" required="">
-                                                    <option value="4">Advisor</option>
-                                                        <option value="2">Executive</option>
-                                                        <option value="3">Sub</option>
-                                                        <option value="1">Event</option>
-                                                                                        
+                                            <div class="col-sm-12">
+                                                  <select name="type" id="committee_type" class="form-control" required="">
+                                                        <option value="Choose One">Choose One</option>
+                                                        <option value="Advisor">Advisor</option>
+                                                        <option value="Executive">Executive</option>
+                                                        <option value="Sub">Sub</option>
+                                                        <option value="Event">Event</option>                                   
                                                 </select>
                                             </div>
                                             <span class="help-block error eMsg_parent_id"></span>
                                         </div>
-
-                                        <div class="form-group event-form-group d-none">
-                                            <label class="control-label col-sm-2">Event <span style="color:red">*</span></label>
-                                            <div class="col-sm-10">
-                                                <select name="event_id" id="comittee_type" class="form-control">
-                                                    <option value=""></option>
-                                                    <option value="12">SKYPE</option>
-                                                    <option value="11">testing#40</option>
-                                                    <option value="10">testing#13</option>
-                                                    <option value="9">testing#13</option>
-                                                    <option value="8">Birthday of rabindranath</option>
-                                                    <option value="7">Seminar on healthy food and safety</option>
-                                                    <option value="6">Get-Together Party Batch 1950-1990</option>
-                                                    <option value="5">Get Together 2025</option>
-                                                    <option value="4">Get Together 2020</option>
-                                                    <option value="3">Get Together 2022</option>
-                                            </select>
+                                        
+                                        <div class="form-group d-none" id="committee_category">
+                                            <label for="title1" class="control-label ml-3">Committee Category <span style="color:red">*</span></label>
+                                            <div class="col-sm-12">
+                                                <select name="category" class="form-control" id="category" >
+                                                        <option value="">Choose One</option> 
+                                                        <option value="University">University</option>
+                                                        <option value="Division">Division</option>
+                                                        <option value="District">District</option>
+                                                        <option value="Upazila">Upazila</option>                                
+                                                </select>
                                             </div>
                                             <span class="help-block error eMsg_parent_id"></span>
                                         </div>
+                                        {{!-- third-row --}}
+                                        <div class="form-row p-3 area_el d-none"> 
+                                            <div class="col-md-4 mb-3 d-none" id="institution_el">
+                                                <label for="">University/College</label>
+                                                <select  name="institution" id="institution">
+                                                    <option value="" >Choose One</option>
+                                                    {{#each institutionData}}
+                                                    <option value="{{this.name}}">{{this.name}}</option>
+                                                    {{/each}}
+
+                                                </select>
+                                            </div>     
+                                            <div class="col-md-4 mb-3">
+                                                <label for="">Division/City</label>
+                                                <select onchange="getDivisionValue()" name="division" class="custom-select division" id="division" required>
+                                                    <option >Choose One</option>
+                                                    {{#each divisiondata}}
+                                                    <option value="{{this.division}}">{{this.division}}</option>
+                                                    {{/each}}
+
+                                                </select>
+                                            </div>
+                                        {{!-- district --}}
+                                        <div class="col-md-4 mb-3" id="district_el">
+                                            <label for="">District</label>
+                                            <select name="district" onchange="getDistrictValue()"   class="custom-select district" id="district">
+                                                
+                                                {{!-- {{#each datadistrict }}
+                                                <option value="{{this.districtname}}">{{this.districtname}}</option>
+                                                {{/each}} --}}
+                                            </select>
+                                        </div>
+                                        {{!-- upazila --}}
+                                        <div class="col-md-4 mb-3" id="upazila_el">
+                                            <label for="">Upazila</label>
+                                                <select name="upazila"    class="custom-select upazila" id="upazila">
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        {{!-- posistion --}}
+                                        {{!-- <div class="form-group">
+                                            <div class="col-sm-10">
+                                                    <label for="">Choose Position</label>
+                                                    <label class="container_checkbox w-75">President
+                                                        <input type="checkbox" class="president_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity"  required="true"type="number" class="d-none" name="president_num" id="president_num">
+                                                        
+                                                    </label>
+                                                    <label class="container_checkbox w-75">Vice President
+                                                        <input type="checkbox" class="v_president_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity"  required="true"type="number" class="d-none" name="vice_president_num" id="v_president_num">
+                                                    </label>
+                                                    <label class="container_checkbox w-75">General Secretary
+                                                        <input type="checkbox" class="g_secretary_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity"  required="true"type="number" class="d-none" name="general_secretary_num" id="g_secretary_num">
+                                                    </label>
+                                                    <label class="container_checkbox w-75">Assistant General Secretary
+                                                        <input type="checkbox" class="a_g_secretary_num">
+                                                        <span class="checkmark"></span>
+                                                        <input placeholder="quantity"  required="true"type="number" class="d-none" name="assistant_general_secretary_num" id="a_g_secretary_num">
+                                                    </label>
+                                            </div>
+                                        </div> --}}
+                                         
+                                        <script>
+                                           
+                                               //dependency adding
+                                               const committee_type =  $("#committee_type");
+                                               const committee_category =  $("#category");
+                                               committee_type.change(function(){
+                                                   if( committee_type.val() == 'Sub'){
+                                                        $("#committee_category").addClass("d-block")
+                                                        $("#committee_category").removeClass("d-none")
+                                                   }
+                                                   else{
+                                                       $("#committee_category").removeClass("d-block")
+                                                       $("#committee_category").addClass("d-none")
+                                                       $("#category").val('')
+                                                   }
+                                                  
+                                               })
+                                                committee_category.change(function(){
+                                                     $(".area_el").removeClass("d-none")
+                                                   if( committee_category.val() == 'University'){
+                                                        $("#district_el").addClass("d-none");
+                                                        $("#district_el").removeClass("d-block");
+                                                        $("#upazila_el").addClass("d-none");
+                                                        $("#upazila_el").removeClass("d-block");
+                                                        $("#institution_el").removeClass("d-none");
+                                                   }
+                                                   else if( committee_category.val() == 'District'){
+                                                       $("#upazila_el").addClass("d-none");
+                                                       $("#upazila_el").removeClass("d-block");
+                                                       $("#upazila").val('')
+                                                   }
+                                                  else if( committee_category.val() == 'Division'){
+                                                       $("#upazila_el").addClass("d-none");
+                                                       $("#upazila_el").removeClass("d-block");
+                                                       $("#upazila").val('')
+                                                       $("#district_el").addClass("d-none");
+                                                       $("#district_el").removeClass("d-block");
+                                                       $("#district").val('')
+                                                   }
+                                                   else{
+                                                       $("#district_el").removeClass("d-none")
+                                                       $("#district_el").addClass("d-block")
+                                                       $("#district_el").val('')
+                                                       $("#upazila_el").removeClass("d-none")
+                                                       $("#upazila_el").addClass("d-block")
+                                                       $("#upazila").val('')
+                                                       $("#institution_el").addClass("d-none");
+                                                       $("#institution").val('');
+                                                   }
+                                                  
+                                               });
+                                               
+                                        </script>
+                                        
+                                       
+                                        
                                         <div class="form-group">
                                             <label for="startdate" class="control-label col-sm-2">Start Date <span style="color:red">*</span></label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <input type="date" name="startdate" id="start_date" class="form-control date-picker" required="" autocomplete="off" >
                                             </div>
                                             <span class="help-block error eMsg_designation_name"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="enddate" class="control-label col-sm-2">End Date <span style="color:red">*</span></label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <input type="date" name="enddate" id="end_date" class="form-control date-picker" required="" autocomplete="off" >
                                             </div>
                                             <span class="help-block error eMsg_designation_name"></span>
                                         </div>
+                                        <div class="form-group p-3 col-md-12">
+                                            <label for="">Details</label>
+                                            <textarea class="form-control" name="details" name="details" id="" cols="5" rows="5"></textarea>
+                                        </div>
+                                         {{!-- posistion --}}
+                                        <div class="form-group">
+                                           <div class="dynamic-input">
+                                                <div class="container-x">
+                                                    <div class="row parent" id="parent">
+                                                        <div style="padding: 5px; border: 1px solid rgb(244, 244, 244);">
+                                                        <input required type="hidden" name="desig_id" value="127">
+                                                        <button type="button" class="custom-closebtn" onclick="deleteitem(this)">×</button><input name="position_name" value="" class="form-control" placeholder="type position name">
+                                                    <input required type="number" value="" name="quantity" class="form-control" placeholder="quantity">
+                                                    
+                                                    <select required name="method" class="form-control">
+                                                       
+                                                        <option value="election">election</option>
+                                                        <option value="selection">selection</option>
+                                                        </select>
+                                                    </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-secondary mt-2" onclick="newPosition()">Add New Designation</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                               const newPosition =() =>{
+                                                var parent =  document.getElementById("parent");
+                                                parent.style.padding = "10px";
+                                                parent.style.border = "1px solid #f4f4f4";
 
-                                        <div class="form-actions">
+                                                const name =  document.createElement("input");
+                                                const quantity =  document.createElement("input");
+                                                var singleELement =  document.createElement("div");
+                                                singleELement.style.padding = "5px";
+                                                singleELement.style.border = "1px solid #f4f4f4";
+                                                quantity.setAttribute("name","quantity");
+                                                quantity.setAttribute("class","form-control");
+                                                quantity.setAttribute("placeholder","quantity");
+                                                quantity.setAttribute("type","number");
+                                                quantity.setAttribute("required","true");
+                                                name.setAttribute("name","position_name");
+                                                name.setAttribute("class","form-control");
+                                                name.setAttribute("placeholder","type position name");
+                                                name.setAttribute("required","true");
+                                                var span = document.createElement("button");
+                                                    var txt = document.createTextNode("\u00D7");
+                                                    span.className = "closebtn";
+                                                    span.className = 'btn btn-danger'
+                                                    span.setAttribute("onclick","deleteitem(this)");
+                                                    span.setAttribute("type","button");
+                                                    span.appendChild(txt);
+                                                    span.setAttribute("class","custom-closebtn")
+                                                    singleELement.appendChild(span);
+                                                const value =  document.createElement("select");
+                                                value.setAttribute("required","true");
+                                                value.options[value.options.length] = new Option('election', 'election');
+                                                value.options[value.options.length] = new Option('selection', 'selection');
+                                                value.setAttribute("name", "method");
+                                                value.setAttribute("class", "form-control");
+                                                singleELement.appendChild(name)
+                                                singleELement.appendChild(quantity)
+                                                singleELement.appendChild(value)
+                                                console.log(singleELement)
+                                                parent.appendChild(singleELement)
+                                                
+                                                    // Click on a close button to hide the current list item
+                                                // var close = document.getElementsByClassName("closebtn");
+                                                // var i;
+                                                // for (i = 0; i < close.length; i++) {
+                                                //     close[i].onclick = function() {
+                                                //         window.alert("working!!")
+                                                //     var div = this.parentElement;
+                                                //     div.style.display = "none";
+                                                //     }
+                                                // }
+                                                }
+                                            
+                                                function deleteitem (obj){ 
+                                                    var currentelmtn = obj
+                                                    console.log(obj.parentElement)
+                                                    obj.parentElement.style.display = "none";
+                                                    name.setAttribute("required","false");
+                                                    quantity.setAttribute("required","false");
+                                                    value.setAttribute("required","false");
+                                                }
+                                        </script>
+                                        <div class="form-actions w-100 text-right">
                                             <button type="submit" class="btn btn-primary" id="add-designation-btn">Create</button>
                                         </div>
                                     </form>
@@ -300,10 +509,63 @@
 
                               
 
-                                //onsubmit
-                              
+                             //onsubmit        
                             </script>
-                            
+                             <script>
+   
+                                        //-------dynamic upazila -----------------------------------
+                                        const hiddendata = document.getElementById("hiddendata").value;
+                                        const upazila = document.getElementById("upazila");
+                                            const district = document.getElementById('district');
+                                        
+                                        const parsedata = JSON.parse(hiddendata);
+                                        
+                                        const getDistrictValue =(e)=>{
+                                            upazila.innerHTML = '';
+                                            const districtvalue =  document.getElementById('district').value;
+                                            let test = [districtvalue]
+                                            let answer = parsedata.filter(item => (
+                                                test.includes(item.district)
+                                                )).map(item => item.upazila)
+                                        //--------------------------------------------------------------------------------
+                                    
+                                                answer.forEach(arrfunction);
+                                                
+                                                function arrfunction(array_element) {
+                                                    console.log("array_element",array_element)
+                                                
+                                                document.getElementById("upazila").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+
+                                                
+                                                }
+                                                document.getElementById("upazila").prepend(`<option value="">Choose One</option>`)
+                                        }
+
+                                        
+                                            const getDivisionValue =(e)=>{   
+                                            district.innerHTML = '';
+                                            const divisionvalue =  document.getElementById('division').value;
+                                            let test = [divisionvalue]
+                                            let answer = parsedata.filter(item => (
+                                                test.includes(item.division)
+                                                )).map(item => item.district)
+
+                                        let answerData = answer.filter((item,i,ar)=>ar.indexOf(item) === i);
+                                        //--------------------------------------------------------------------------------
+                                                answerData.forEach(arrfunction);
+                                                function arrfunction(array_element) {
+                                                console.log("array_element",array_element)
+                                                document.getElementById("district").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+                                                 
+                                                }
+                                               
+                                                $('#district').prepend($('<option>Choose One</option>')); 
+                                        }
+
+                                      
+                                    
+
+                            </script>
                         </div>
                     </div>    
             </section>

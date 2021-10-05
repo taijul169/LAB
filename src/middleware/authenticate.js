@@ -18,15 +18,13 @@ else{
 
 const auth = async (req, res, next) =>{
     console.log('i am inside authenticate')
-    
     try {
         console.log("auth is working");
         const token = req.cookies.jwtoken;
         const sql = `SELECT * FROM userinfo WHERE jwtoken = '${token}'`;
         con.query(sql,(err,result)=>{
             console.log("this is mysql error part:",err)
-            if(result.length>0){
-                
+            if(result.length>0){  
               req.userData =  result;
             }
             else{
