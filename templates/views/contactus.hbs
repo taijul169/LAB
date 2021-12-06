@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+        <!-- Castro fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+     <!-- owl-carousel -->
+    <link rel="stylesheet" href="assets/plugin/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="assets/plugin/css/owl.theme.default.min.css" />
+    <!-- animate-css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- nivo-slider -->
+    <link rel="stylesheet" href="assets/plugin/css/default.css">
+    <link rel="stylesheet" href="assets/plugin/css/nivo-slider.css">
+     <!-- font-awesome    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+     <!-- lightbox-gallery -->
+     <link rel="stylesheet" href="assets/plugin/css/simple-lightbox.min.css">
+     <!-- flat-icon -->
+     <link rel="stylesheet" href="assets/font/flaticon.css">
+    <!-- progressbar -->
+    <link rel="stylesheet" href="assets/plugin/css/jquery.rprogessbar.min.css">
+    {{!-- select 2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+     <!-- main-style -->
+     {{!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> --}}
+   
+    
+     {{!-- carousel --}}
+
+     <link rel="stylesheet" href="plugins/css/owl.carousel.min.css">
+     <link rel="stylesheet" href="plugins/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
+    <!-- <link rel="stylesheet" href="responsive.css"> -->
+    <title>law association of Bangladesh</title>
+</head>
+
+<body>
+  
+{{!-- modal-wrapper-end --}}
+    <div class="home-wrapper">
+      <div class="containe">
+           <div class="home-wrapper-inner bg-white">
+        <header>
+            <div>
+                {{!-- header-top --}}
+                <div class="header-top" style="padding: 8px 16px;">
+                <div class="container-fluid" style="width: 90%;">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-6 col-sm-6 col-xl-6">
+                            <div class="header-top-left">
+                                <a href="#"><i class="far fa-comment-alt mr-1"></i>Feedback</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-4 col-sm-4 col-xl-4 offset-md-2 offset-lg-2 offset-sm-2 offset-xl-2 d-flex align-items-end w-100 ">
+                            <div class="header-top-right w-100 d-flex justify-content-between">
+                                <a href="/signup" class="text-right"><i class="fas fa-comment-dollar"></i></i>Join with us</a>
+                                <a href="#" class="text-right"><i class="far fa-question-circle"></i>Have any Question?</a>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                 {{!-- main-menu --}}
+               <div class="container-fluid position-relative"style="width: 90%;" >
+                <div class="main-menu p-4">
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2 col-2">
+                            <div class="header-bottom-right h-100">
+                             <h4>LAB</h4>     
+                        </div> 
+                       </div>
+                        <div class="col-lg-10 col-xl-10 col-md-10 col-10">
+                        <nav class="text-right ">
+                            <div class="res-menu-box" id="menucontroler">
+                                <i id="open" class="fa fa-bars active" aria-hidden="true"></i>
+                                <i id="close" class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                          <ul class="main-menu-header" id="main-menu-header">
+                            <li><a class="active" href="/">Home</a></li>
+                            <li><a href="allevent">Events</a></li>
+                            <li><a href="/allblog">Blog</a></li>
+                            <li><a href="/allnotice">Notice</a></li>
+                            <li><a href="#">Committee</a></li>
+                            <li><a href="#">Faq</a></li>
+                            <li><a href="#">Videos</a></li>
+                            <li><a href="/contactus">Contact</a></li>
+                            <li><a href="/signup">Signup</a></li>
+                            <li><a href="/signin">Login</a></li>
+                         </ul>
+                        </nav>
+                        <script>
+                          const nav =   document.getElementById("main-menu-header");
+                          const open =   document.getElementById("open");
+                          const close =   document.getElementById("close");
+                          const closecontroler =   document.getElementById("menucontroler");
+                          menucontroler.addEventListener("click",()=>{
+                              nav.classList.toggle("active");
+                              open.classList.toggle("active");
+                              close.classList.toggle("active");
+                          })
+                        </script>
+                      </div>
+                    </div>
+                     
+                </div>
+               </div>
+            </div>
+        </header>
+  
+    <section>
+      <div class="contact-us-area ptb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xl-6 offset-md-3 offset-lg-3 offset-xl-3">
+                <!-- section-title -->
+                    <div class="section-title text-center py-5">
+                        <h5>Describe your demand</h5>
+                        <h2>And Get in touch with<b> LAB</b></h2>
+                    </div>
+                </div>
+                <!-- form -->
+               <form action="/contact" class="contact-form-wrap" method="POST">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                        {{#if message}}
+                            <div class="alert alert-success" role="alert">
+                                {{message.message}}
+                            </div>
+                        {{/if}}
+                    <div class="row">
+                           
+                     <div class="col-md-8 col-lg-8 col-xl-8 col-sm-12 col-12">
+                         <div class="row">
+                             <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2">
+                              
+                                  <!-- error-success-msg -->
+                               <div class="msg-box-wrapper">
+                                <span class="msg-box"></span>
+                               </div>
+                             </div>
+                             <!-- first-name -->
+                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <input type="text" required name="firstname" placeholder="First Name" id="f_name">
+                                 </div>
+                             </div>
+                              <!-- last-name -->
+                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <input type="text"  name="lastname" placeholder="Last Name" id="l_name">
+                                 </div>
+                             </div>
+                             <!-- Email -->
+                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <input type="email" name="email" placeholder="Email" id="u_email">
+                                 </div>
+                             </div>
+                              <!-- Phone -->
+                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <input type="text"  required name="phone" placeholder="Phone" id="u_phone">
+                                 </div>
+                             </div>
+                               <!-- Select Service -->
+                               <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                   <div class="form-group">
+                                       <select id="service" required name="subject">
+                                           <option value="">-Select Service</option>
+                                           <option value="Membership">Membership</option>
+                                           <option value="Registration">Registration</option>
+                                           <option value="ID Card">ID Card</option>
+                                           <option value="Payment">Payment</option>
+                                       </select>
+                                   </div>
+                               </div>
+                                 <!-- Subject -->
+                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <input type="text" placeholder="Subject" id="subject">
+                                 </div>
+                             </div>
+                              <!-- Message -->
+                             <div class="col-md-12 col-lg-12 col-xl-12 col-12 col-sm-12">
+                                 <div class="form-group">
+                                     <textarea name="details" id="u_message" cols="5" rows="3" placeholder="Message"></textarea>
+                                 </div>
+                             </div>
+                               <!-- submit button -->
+                               <div class="col-md-6 col-lg-6 col-xl-6 col-6 col-sm-6">
+                                   <div class="form-group">
+                                       <button type="submit" class="submit-message" id="submit">Send Message</button>
+                                   </div>
+                               </div>
+                                <!-- loader -->
+                                <div class="col-md-6 col-lg-6 col-xl-6 col-6 col-sm-6">
+                                    <div class="form-group">
+                                      <div class="loader-box">
+                                        <img src="assets/images/login/Spinner-1s-200px.gif" alt="spinner.gif">
+                                      </div>
+                                    </div>
+                                </div>
+                         </div>
+                     </div>
+                        <!-- google-map -->
+                        <div class="col-md-4 col-lg-4 col-xl-4 col-12 col-sm-12">
+                         <div class="map-wrapper">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3608.7365531999494!2d55.29768101501043!3d25.245796783873608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s3%2C%202%2C%20B%2C%20King%20of%20Dubai%20Commercial%20-!5e0!3m2!1sen!2sbd!4v1610190021835!5m2!1sen!2sbd" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                         </div>
+                     </div>
+                    </div>
+                 </div>
+               </form>
+            </div>
+        </div>
+      
+      </div>
+    </section>
+
+    <!-- footer-section -->
+    <footer>
+      <div class="footer-section">
+          <div class="container">
+              <div class="row">
+                  <!-- single-footer-widget -->
+                  <div class="col-md-5 col-lg-5 col-xl-5 col-12 col-sm-12">
+                      <div class="single-widget">
+                        <div class="logo">
+                            <img src="assets/images/logo/logo.png" alt="logo.png">
+                        </div>
+                        <p>Get in touch with smart technology and get your Expected service from Technolt</p>
+                        <div class="social-link">
+                            <ul>
+                                <li><a href="https://www.facebook.com/polockgrp/"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                      </div>
+                  </div>
+                    <!-- single-footer-widget -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
+                    <div class="single-widget">
+                       <h5>Our Concern</h5>
+                        <div class="quick-link-footer">
+                            <ul>
+                                <li><a href="http://www.ngitbd.com/">NGIT</a></li>
+                                <li><a href="http://1touchbd.com/">1touch</a></li>
+                                <li><a href="https://www.facebook.com/PolockInteriorDesign">Polock Interior</a></li>
+                                <li><a href="dryexpre.com.bd">Dry Express</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                        <!-- single-footer-widget -->
+                  <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
+                    <div class="single-widget">
+                        <h5>Services</h5>
+                        <div class="quick-link-footer">
+                            <ul>
+                                <li><a href="#">Interior</a></li>
+                                <li><a href="#">Bank Management System</a></li>
+                                <li><a href="#">Home & Commercial Automation </a></li>
+                                <li><a href="#">Dry Express</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- single-footer-widget -->
+                <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
+                    <div class="single-widget">
+                        <h5>Our Address</h5>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-house"></i>
+                            </div>  
+                             <div class="add-info">
+                                3, 2, B, King of Dubai Commercial - (Bur Dubai Mankhool )
+                             </div>
+                         </div>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-mail"></i>
+                            </div>  
+                             <div class="add-info">
+                                info@polockgroup.com
+                             </div>
+                         </div>
+                         <div class="single-box">
+                            <div class="footer-icon">
+                                <i class="flaticon-call"></i>
+                            </div>  
+                             <div class="add-info">
+                                +971 54 746 2503
+                             </div>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-xl-12 copyright-bottom">
+                   <div class="row">
+                       <div class="col-md-7 col-xl-7 col-lg-7 col-12 col-sm-12">
+                           <p class="text-center">Copyright ©2020 All rights reserved | technolt is made by  <a href="#">1-touch</a></p>
+                       </div>
+                       <div class="col-md-5 col-xl-5 col-lg-5 col-12 col-sm-12">
+                         <ul class="footer-link-bottom">
+                             <li><a href="#">Terms of Service</a></li>
+                             <li><a href="#">Privacy Policy</a></li>
+                             <li><a href="#">Support</a></li>
+                         </ul>
+                      </div>
+                   </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </footer>
+      </div>
+      </div>
+     
+    </div>
+   
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="plugins/js/owl.carousel.min.js"></script>
+    <script src="plugins/js/step.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/pages/frontend/home.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="formValidate.js"></script>
+    <script src="home.js"></script>
+    <script>
+        $('.division').select2();
+        $('.yearssc').select2();
+        $('.yearhsc').select2();
+        $('.yearbachelor').select2();
+        $('.yearmasters').select2();
+        $('.yearphd').select2();
+        $('.district').select2();
+        $('.upazila').select2();
+        $('.institutionssc').select2();
+        $('.year_hsc').select2();
+        $('.institutessc').select2();
+        $('.institutehsc').select2();
+        $('.institutebachelor').select2();
+        $('.institutemasters').select2();
+        $('.institutephd').select2();
+        $('.subjectbachelor').select2();
+        $('.subjectmasters').select2();
+        $('.subjectphd').select2();
+    </script>
+    <script>
+   
+       //-------dynamic upazila -----------------------------------
+       const hiddendata = document.getElementById("hiddendata").value;
+       const upazila = document.getElementById("upazila");
+
+       const parsedata = JSON.parse(hiddendata);
+       console.log(parsedata)
+       const getDistrictValue =(e)=>{
+           upazila.innerHTML = '';
+          const districtvalue =  document.getElementById('district').value;
+          let test = [districtvalue]
+           //let test = [
+          //  "Barishal",
+           // ];
+       let answer = parsedata.filter(item => (
+        test.includes(item.districtname)
+        )).map(item => item.upazila)
+       //--------------------------------------------------------------------------------
+ 
+            answer.forEach(arrfunction);
+            
+            function arrfunction(array_element) {
+                console.log("array_element",array_element)
+            
+            document.getElementById("upazila").innerHTML += `<option value="${array_element}">${array_element}</option>`;
+            
+            }
+       }
+   
+
+    </script>
+
+</body>
+
+</html>

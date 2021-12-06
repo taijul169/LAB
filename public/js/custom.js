@@ -1,5 +1,12 @@
 $(function() {
-    "use strict";
+   
+    // $('.main-menu-header li a').click(function(){
+    //     window.alert("working")
+    //     $('.main-menu-header  li a').removeClass("active");
+    //     $(this).addClass("active");
+    // });
+     
+   
     $(".preloader").fadeOut();
 
 

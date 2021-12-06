@@ -1,40 +1,56 @@
 const mysql =  require('mysql2');
-const { query } = require('express');
-const dotenv =  require('dotenv');
-dotenv.config({path:'../config.env'});
-var con = mysql.createPool({
-    host:'localhost',
-    user:'root',
-    password:'rootpassword',
-    database:'educationinfo'
+const db = mysql.createPool({
+  host:"localhost",
+  user:"theraint_admin",
+  password:"x${E123]qUfA",
+  database:"theraint_main"
 })
-if(con){
-    console.log("connection successfull with mysql db. in auth")
+if(db){
+  console.log("connection successfull with mysql db.")
 }
 else{
-    throw console.error();
+  throw console.error();
 }
 
 
-const auth = async (req, res, next) =>{
-    console.log('i am inside authenticate')
-    try {
-        console.log("auth is working");
-        const token = req.cookies.jwtoken;
-        const sql = `SELECT * FROM userinfo WHERE jwtoken = '${token}'`;
-        con.query(sql,(err,result)=>{
-            console.log("this is mysql error part:",err)
-            if(result.length>0){  
-              req.userData =  result;
-            }
-            else{
-                res.redirect('/signin')
-            }
-           next()
-          })   
-    } catch (error) {
-        res.status(401).render("login")
-    }
-}
+const Authenticate = async(req,res, next)=>{
+ 
+  try{
+    const token = req.cookies.mysqltoken;
+    const sql = `SELECT * FROM user WHERE token = '${token}'`;
+    db.query(sql,(err,result)=>{
+      const sql_presentdata =   `SELECT * FROM presentaddress WHERE perPhoneOne = ${result[0].perPhoneOne}`;
+      const sql_permanantdata =   `SELECT * FROM permanantaddress WHERE perPhoneOne = ${result[0].perPhoneOne}`;
+      const sql_nomineedata =   `SELECT * FROM nomineeone WHERE perPhoneOne = ${result[0].perPhoneOne}`;
+      const sql_nomineetwodata =   `SELECT * FROM nomineetwo WHERE perPhoneOne = ${result[0].perPhoneOne}`;
+      db.query(sql_presentdata,(err,presentdata)=>{
+        db.query(sql_permanantdata,(err,permanantAdd)=>{
+          db.query(sql_nomineedata,(err,nomineeData)=>{
+            db.query(sql_nomineetwodata,(err,nomineetwoData)=>{
+                const allData = [result,presentdata,permanantAdd,nomineeData,nomineetwoData];
+                const tokenVerify = (result[0].token === token);
+                if(tokenVerify === true){
+          
+                  // console.log("auth data:",result)
+                  req.data = allData;
+                  next()
+                }
 
-module.exports =  auth;
+            })
+            
+          })
+        })
+        
+       
+      })
+     
+     
+    })
+   
+  }
+  catch (error) {
+      res.status(401).send('Unauthorized:No token Provided!')
+     console.log(error); 
+  }
+}
+module.exports = Authenticate;

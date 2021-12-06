@@ -1,15 +1,106 @@
 
 :root {
-	--themeColor:#EF004F;
+	
+	--themeColor:#024649;
     --transition: all 0.3s ease-in-out;
     --boxShadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
     --link-text-size: 0.813rem;
     --link-color: #334141;
 }
+header{
+	background-color:  var(--themeColor) !important;
+}
 ul{
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+a.nav-link {
+    color: #FFF;
+    border: 1px solid #fff;
+    padding: 10px 1;
+    margin: 7px;
+    border-radius: 4px;
+	
+}
+h2.text-center.heading-crowd {
+    background: var(--themeColor);
+    padding: 16px;
+	color: #FFFFFF;
+}
+form.common-form.p-3 {
+    border: 3px solid var(--themeColor);
+}
+.cmn-btn{
+	background-color: var(--themeColor);
+    padding: 10px 35px;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	transition: 0.3s all ease-in-out;
+}
+.primary-button {
+	color: #FFF;
+	background: var(--themeColor);
+	padding: 8px 20px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-top: 10px;
+	display: inline-block;
+	position: relative;
+	transition: all 0.3s ease-in;
+	font-size: 15px;
+}
+.primary-button::before {
+	position: absolute;
+	content: "";
+	width: 18%;
+	height: 75%;
+	left: -6px;
+	top: -6px;
+	border-top: 1px solid var(--themeColor);
+	border-left: 1px solid var(--themeColor);
+	transition: all 0.3s ease-in;
+}
+.primary-button::after {
+	position: absolute;
+	content: "";
+	width: 18%;
+	height: 75%;
+	right: -6px;
+	bottom: -6px;
+	border-bottom: 1px solid var(--themeColor);
+	border-right: 1px solid var(--themeColor);
+	transition: all 0.3s ease-in;
+}
+.primary-button:hover:after,.primary-button:hover::before{
+	width: 95%;
+	height: 95%;
+}
+.primary-button:hover{
+	color: #FFF;
+	background-color: #222222;
+}
+.form-wrapper h2 {
+	display: block;
+	background-color: var(--themeColor);
+	padding: 20px;
+	color: #FFF;
+}
+.mandetory{
+	position: relative;
+}
+.mandetory::before {
+	position: absolute;
+	content: '*';
+	color: #e23737;
+	top: 0px;
+	right: -12px;
+	font-size: 24px;
+}
+.cmn-btn:hover{
+	color: var(--themeColor);
+	border: 1px solid black;
+	background-color: transparent;
 }
 .add-product-wrapper label {
 	display: block;
@@ -119,9 +210,7 @@ li.cart-quantity {
 }
 
 
-#navbarSupportedContent {
-	background-color: var(--themeColor);
-}
+
 /* ================================================
 login-page-start
 =============================================== */

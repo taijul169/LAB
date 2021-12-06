@@ -1,910 +1,864 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-        <!-- Castro fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-     <!-- owl-carousel -->
-    <link rel="stylesheet" href="assets/plugin/css/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="assets/plugin/css/owl.theme.default.min.css" />
-    <!-- animate-css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <!-- nivo-slider -->
-    <link rel="stylesheet" href="assets/plugin/css/default.css">
-    <link rel="stylesheet" href="assets/plugin/css/nivo-slider.css">
-     <!-- font-awesome    -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-     <!-- lightbox-gallery -->
-     <link rel="stylesheet" href="assets/plugin/css/simple-lightbox.min.css">
-     <!-- flat-icon -->
-     <link rel="stylesheet" href="assets/font/flaticon.css">
-    <!-- progressbar -->
-    <link rel="stylesheet" href="assets/plugin/css/jquery.rprogessbar.min.css">
-     <!-- main-style -->
-     {{!-- carousel --}}
-     <link rel="stylesheet" href="plugins/css/owl.carousel.min.css">
-     <link rel="stylesheet" href="plugins/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
-    <!-- <link rel="stylesheet" href="responsive.css"> -->
-    <title>Laundry Express</title>
-</head>
-<body>
-  
-{{!-- modal-wrapper-end --}}
-    <div class="home-wrapper">
-      <div class="containe">
-           <div class="home-wrapper-inner bg-white">
-        <header>
-            <div>
-                {{!-- header-top --}}
-                <div class="header-top" style="padding: 8px 16px;">
-                <div class="container-fluid" style="width: 90%;">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-6 col-6 col-sm-6 col-xl-6">
-                            <div class="header-top-left">
-                                <a href="#"><i class="far fa-comment-alt mr-1"></i>Feedback</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4 col-4 col-sm-4 col-xl-4 offset-md-2 offset-lg-2 offset-sm-2 offset-xl-2 d-flex align-items-end w-100 ">
-                            <div class="header-top-right w-100 d-flex justify-content-between">
-                                <a href="#" class="text-right"><i class="fas fa-comment-dollar"></i></i>Join with us</a>
-                                <a href="#" class="text-right"><i class="far fa-question-circle"></i>Have any Question?</a>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                {{!-- main-menu --}}
-               <div class="container-fluid position-relative"style="width: 90%;" >
-                <div class="main-menu p-4">
-                    <div class="row">
-                        <div class="col-md-2 col-lg-2 col-2">
-                            <div class="header-bottom-right h-100">
-                             <h4>LAB</h4>     
-                        </div> 
-                       </div>
-                        <div class="col-lg-10 col-xl-10 col-md-10 col-10">
-                        <nav class="text-right ">
-                            <div class="res-menu-box" id="menucontroler">
-                                <i id="open" class="fa fa-bars active" aria-hidden="true"></i>
-                                <i id="close" class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                          <ul class="main-menu-header" id="main-menu-header">
-                            <li><a class="active" href="/">Home</a></li>
-                            <li><a href="#">Events</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Notice</a></li>
-                            <li><a href="#">Committee</a></li>
-                            <li><a href="#">Faq</a></li>
-                            <li><a href="#">Videos</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="/signup">Signup</a></li>
-                            <li><a href="/signin">Login</a></li>
-                         </ul>
-                        </nav>
-                        <script>
-                          const nav =   document.getElementById("main-menu-header");
-                          const open =   document.getElementById("open");
-                          const close =   document.getElementById("close");
-                          const closecontroler =   document.getElementById("menucontroler");
-                          menucontroler.addEventListener("click",()=>{
-                              nav.classList.toggle("active");
-                              open.classList.toggle("active");
-                              close.classList.toggle("active");
-                          })
-                        </script>
-                      </div>
-                    </div>
-                     
-                </div>
-               </div>
-            </div>
-        </header>
-        {{!-- hero-section --}}
-        <section>
-          <div class="home-slider-area">
-                <div class="">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12 col-12">
-                            <div class="home-slider-wrapper heroSlide owl-carousel owl-theme">
-                                <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide01.jpg); ">
-                                <div class="container">
-                                    <div class="single-left text-left pb-5">
-                                        <h2 class="animate__animated animate__fadeInDown">Commited to  <br> Excellence <br></h2>
-                                        <a href="#" class="animate__animated animate__backInUp ">Join with us</a>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide02.jpg);">
-                                   <div class="container ">
-                                         <div class="single-left text-left pb-5">
-                                        <h2 class="animate__animated animate__fadeInDown">The New <br> Standard</h2>
-                                        <a href="#" class="animate__animated animate__fadeInDown ">Join with us</a>
-                                    </div>
-                                    </div>
-                                </div>
-                                <!-- single-slide -->
-                                <div class="single-home-slide d-flex align-items-center" style="background: url(images/home-slider/slide03.jpg);">
-                                   <div class="container ">
-                                 
-                                     <div class="single-left text-left pb-5">
-                                        <h2 class="animate__animated animate__fadeInDown">United We  Stand</h2>
-                                        <h2 class="animate__animated animate__fadeInDown">Devided We  Fall</h2>
-                                        <a href="#" class="animate__animated animate__fadeInDown ">Join with us</a>
-                                    </div>
-                                   </div> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-          </div>
-         </section>
-
-         {{!-- threebox-section --}}
-         <section>
-             <div class="container-fluid" style="width: 90%;">
-                 <div class="row">
-                 <div class="col-md-4 col-lg-4 col-xl-4 col-12">
-                     <div class="single-box-wrap d-flex justify-content-between align-items-center">
-                         <div class="box-left">
-                             <h4>our <strong>story</strong></h4>
-                             <a href="#">about us</a>
-                         </div>
-                         <div class="box-right">
-                            <img  class="img-fluid" src="images/threebox/story_bg.jpg" alt="storybg"> 
-                         </div>
-                     </div>
-                 </div>
-                  <div class="col-md-4 col-lg-4 col-xl-4 col-12">
-                     <div class="single-box-wrap d-flex justify-content-between align-items-center">
-                         <div class="box-left">
-                             <h4>our <strong>goals</strong></h4>
-                             <a href="#">Know more</a>
-                         </div>
-                         <div class="box-right">
-                            <img class="img-fluid" src="images/threebox/goals_bg.jpg" alt="storybg"> 
-                         </div>
-                     </div>
-                 </div>
-                  <div class="col-md-4 col-lg-4 col-xl-4 col-12">
-                     <div class="single-box-wrap d-flex justify-content-between align-items-center">
-                         <div class="box-left">
-                             <h4>our <strong>Activities</strong></h4>
-                             <a href="#">Know more</a>
-                         </div>
-                         <div class="box-right">
-                            <img class="img-fluid" src="images/threebox/activists_bg.jpg" alt="storybg"> 
-                         </div>
-                     </div>
-                 </div>
-                 </div>
-             </div>
-         </section>
-         {{!-- featured area --}}
-         <section class="section-padding">
-           <div class="container">
-               <div class="row">
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <h4 class="ftext gradient_bg_color">featured</h4>
-                       <div class="featured-slider-wrapper" style="background-color: #E6E6E6;">
-                           <div class="single-slide-featured p-3">
-                               {{!-- single-evnent --}}
-                               <div class="single-event-inner d-flex  align-items-center p-2 border-bottom">
-                                   <div class="evnt-img">
-                                       <img src="images/blog/01.jpg" alt="blog">
-                                   </div>
-                                   <a href="#">
-                                       <h4>Member Collecting</h4>
-                                       <span>Admin 12.12.2020</span>
-                                   </a>
-                               </div>
-                                 {{!-- single-evnent --}}
-                               <div class="single-event-inner d-flex  align-items-center p-2 border-bottom">
-                                   <div class="evnt-img">
-                                       <img src="images/blog/02.jpg" alt="blog">
-                                   </div>
-                                   <a href="#">
-                                       <h4>Member Collecting</h4>
-                                       <span>Admin 12.12.2020</span>
-                                   </a>
-                               </div>
-                                 {{!-- single-evnent --}}
-                               <div class="single-event-inner d-flex  align-items-center p-2">
-                                   <div class="evnt-img">
-                                       <img src="images/blog/03.jpg" alt="blog">
-                                   </div>
-                                   <a href="#">
-                                       <h4>Member Collecting</h4>
-                                       <span>Admin 12.12.2020</span>
-                                   </a>
-                               </div>
-                          
-                           </div>
-                       </div>
-                   </div>
-                   {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="#">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="images/blog/big1.jpg" alt="">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>How to become a premium member?</h3>
-                           <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus omnis veniam quam dolorem fuga sit illo id maxime, molestiae, exercitationem tempora blanditiis labore in.</p>
-                           <div class="blog-bottom border-top">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Admin</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> 12.12.2020</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
-                   {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="#">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="images/blog/big2.jpg" alt="">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>How to become a premium member?</h3>
-                           <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus omnis veniam quam dolorem fuga sit illo id maxime, molestiae, exercitationem tempora blanditiis labore in.</p>
-                           <div class="blog-bottom border-top">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Admin</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> 12.12.2020</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
-               </div>
-           </div>
-         </section>
-         {{!-- activity --}}
-        <section style="padding-top: 40px;">
-            <div class="container">
-                   <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color"> Activity</span>
-                    </h1>
-                </div>
-                <div class="row no-gutters">
-                    <div class="col-md-6 col-lg-6 col-xl-6 col-12">
-                        <div class="row no-gutters">
-                            <div class="col-md-6 ">
-                                <a href="#">
-                                    <div class="user-blog ">
-                                    <img class="img-fluid" src="images/userblog/userblog1.jpg" alt="">
-                                    <h4>Blood Donation camp</h4>
-                                </div>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="#">
-                                    <div class="user-blog ">
-                                    <img class="img-fluid" src="images/userblog/userblog2.jpg" alt="">
-                                    <h4>Blood Donation camp</h4>
-                                </div>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="#">
-                                    <div class="user-blog ">
-                                    <img class="img-fluid" src="images/userblog/userblog3.jpg" alt="">
-                                    <h4>Blood Donation camp</h4>
-                                </div>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="#">
-                                    <div class="user-blog ">
-                                    <img class="img-fluid" src="images/userblog/userblog4.jpg" alt="">
-                                    <h4>Blood Donation camp</h4>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-12 col-xl-6">
-                        <div class="activity-wrapper">
-                           <div class="activity-img" style="height: 350px;  overflow:hidden; border-radius:4px">
-                                <img class="img-fluid" src="images/activity.jpg" alt="">
-                           </div>
-                           <div class="activity-content">
-                               <ul class="d-flex justify-content-center">
-                                   <li><span>Days</span><b>30</b></li>
-                                   <li><span>Hrs</span><b>30</b></li>
-                                   <li><span>Mins</span><b>30</b></li>
-                               </ul>
-                               
-                               <div class="activity-content-bottom text-center">
-                                 <a href="#" class="text-light"><h2>Our Next Activity</h2></a>
-                                 <ul>
-                                     <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>Rabindra sorobor,dhanmondi-8,dhaka.</a></li>
-                                     <li><i class="fa fa-calendar" aria-hidden="true"></i> 8.00 AM - 8.00 PM</li>
-                                 </ul>
-                               </div>
-                           </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </section>
-       
-        {{!-- notice-section-start   --}}
-        <section class="events" id="event" style="padding: 50px 0;">
-        <div class="container">
-              <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color">Notices</span>
-                    </h1>
-                </div>
-                
-            <div class="row">
-                {{#each noticeData}}
-                    <div class="col-md-6">
-                        <div class="event-card ">
-                            <div class="b-all col-md-4 event-img-content">
-                                {{!-- date-area --}}
-                                {{noticeDate this.created_at}}
-                                {{!-- <div class="col-md-12 notice-date-left">
-                                    <h4>10<span>Sep</span></h4>
-                                    <div class="notice_year pull-in">
-                                        <h4>2020</h4>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="event-description-content">
-                                <h4 class="m-0 line-limit-1">{{this.title}}</h4>
-                                <div class="m-t-10">
-                                    <p>{{makeShortString this.details}}</p>
-                                </div>
-                                <a href="/singlenoticeview/{{this.id}}" class="btn custom-sm-btn">Learn More</a>
-                            </div>
-
-                        </div>
-                </div>
-                {{/each}}
-           </div>
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Taijul - Personal Portfolio Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Node js developer, react js developer, html developer, mysql developer ,mongodb developer  "/>
+        <meta name="keywords" content="css3,bootstrap 4,nodejs, mysql, jquery,javascripts, mongodb, react"/>
+        <meta content="Taijul" name="author"/>
+        <!-- favicon -->
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <!-- Bootstrap -->
+        <link href="/css/portfolio/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <!-- MK Lightbox -->
+        <link href="/css/portfolio/mklb.css" rel="stylesheet" type="text/css"/>
+       <!-- icon -->
+        <link href="/css/portfolio/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.2.89/css/materialdesignicons.min.css" integrity="sha512-Tem/uYI6RjLCVQtHePMIFtgHxXjfQVUaiSuhFYBG7RSrBD4NqXsNObfHAmDn6hCV+ickebggCTdnAnZbfF9FHQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Slider -->               
+        <link href="/css/portfolio/tiny-slider.css" rel="stylesheet"/>
+        <!-- Main css File -->
+        <link href="/css/portfolio/style.css" rel="stylesheet" type="text/css" id="theme-opt"/>
+        <link href="/css/portfolio/colors/default.css" rel="stylesheet" id="color-opt"/>
         
-
-        </div>
-        </section>
-        
-        {{!-- event-section --}}
-        <section class="events py-5" id="event">
-            <div class="container">
-                <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color">Events</span>
-                    </h1>
-                   </div>
-                <div class="row"> 
-                    {{#each eventData}}
-                    {{!-- single-event --}}
-                    <div class="col-md-6">
-                            <div class="event-card">
-                                <div class="event-img-content">
-                                    <img src="data:image/png;base64,{{this.file}}" class="img-responsive" alt="img">
-                                </div>
-                                <div class="event-description-content">
-                                    <h4 class="m-0 mb-2 line-limit-1">{{this.title}}</h4>
-                                    <small><i class="fa fa-calendar"></i> {{this.start_date}} To <i class="fa fa-calendar"></i> {{this.end_date}}</small>
-                                    <small><i class="fa fa-clock-o"></i> {{this.start_time}} To <i class="fa fa-clock-o"></i> {{this.end_time}}</small>
-                                    <div class="m-t-10">
-                                        <p>{{makeshorterWithNum this.details 50}}
-                                    </p></div>
-                                    <a class="btn custom-sm-btn" href="/singleeventview/{{this.id}}">Learn More</a>
-                                </div>
-
-                            </div>
-                    </div>
-                    {{/each}}
-                  
-                </div>
-
-            </div>
-        </section>
-         {{!-- threeblog --}}
-        <section style="padding:40px 0px; ">
-            <div class="container">
-                 <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color">Blogs</span>
-                    </h1>
-                </div>
-               <div class="row">
-                   
-                   {{#each blogData}}
-                    {{!-- singleblog --}}
-                   <div class="col-md-4 col-lg-4 col-xl-4">
-                       <a href="/singleblogview/{{this.id}}">
-                            <div class="single-blog-bigthumb border">
-                           <div class="bigthump-blog media-links">
-                               <img class="img-fluid" src="data:image/png;base64,{{this.file}}" alt="blogimg">
-                           </div>
-                           <div class="blog-content-bottom p-3">
-                               <h3>{{this.title}}</h3>
-                           <p class="text-dark">{{blogShort this.details}}</p>
-                           <div class="blog-bottom border-top">
-                               <ul class="d-flex justify-content-between p-3">
-                                   <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i>{{this.created_by}}</a></li>
-                                   <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{this.created_at}}</a></li>
-                               </ul>
-                           </div>
-                        </div>
-                       </div>
-                       </a>  
-                   </div>
-                   {{/each}}
-                  
-             
-               </div>
-            </div>
-        </section>
-         {{!-- counter-area --}}
-         <section>
-           <div class="counter-area" style="padding: 40px 0px;">
-               <div class="counter-bg-layer" style="background-image: url(images/icon/caption/wave2.png);"></div>
-               <div class="container">
-                   <div class="row">
-                   {{!-- single-counter-box --}}
-                   <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
-                       <div class="single-counter-box text-center">
-                           <h1>2</h1>
-                           <p>Executive Committee</p>
-                           <div class="sinlge-counter-icon-box">
-                               <img src="images/icon/icon4.png" alt="">
-                           </div>
-                       </div>
-                   </div>
-                   {{!-- single-counter-box --}}
-                   <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
-                       <div class="single-counter-box text-center">
-                           <h1>1</h1>
-                           <p>Advisory Committee</p>
-                           <div class="sinlge-counter-icon-box">
-                               <img src="images/icon/icon5.png" alt="">
-                           </div>
-                       </div>
-                   </div>
-                   {{!-- single-counter-box --}}
-                   <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
-                       <div class="single-counter-box text-center">
-                           <h1>2</h1>
-                           <p>Sub Committee</p>
-                           <div class="sinlge-counter-icon-box">
-                               <img src="images/icon/icon6.png" alt="">
-                           </div>
-                       </div>
-                   </div>
-                   {{!-- single-counter-box --}}
-                   <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
-                       <div class="single-counter-box text-center">
-                           <h1>3</h1>
-                           <p>Active Event Committee</p>
-                           <div class="sinlge-counter-icon-box">
-                               <img src="images/icon/icon7.png" alt="">
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               </div>
-           </div>
-         </section>
-        <!-- client-area -->
-        <section>
-            <div class="testimonial-section pt-100 mb-30">
-                <div class="container-fluid" style="width: 90%;">
-                    <div class="row">
-                        <div class="col-md-8 col-xl-8 col-lg-8 offset-md-2 offset-lg-2 offset-xl-2">
-                            <!-- section-title -->
-                        <div class="section-title text-center py-5">
-                            <h5>What they Say</h5>
-                            <h2>abut <b>Law association of Bangladesh</b></h2>
-                        </div>
-                        </div>
-                        <!-- testimonial-wrapper -->
-                        <div class="col-md-12 col-xl-12 col-lg-12">
-                            <div class="testimonial-wrapper owl-carousel owl-theme">
-                            <!-- signle-testimonila -->
-                                <div class="single-testimonial">
-                                    <div class="client-photo">
-                                        <img src="images/icon/caption/testimonial-1.jpg" alt="client1.svg">
-                                    </div>
-                                    <div class="star-rating">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star text-none"></i></li>
-                                        </ul>
-                                    </div>
-                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate eveniet autem ea quas debitis quidem saepe fuga necessitatibus neque eos.</p>
-                                    <div class="client-title">
-                                        <h5>Md.Ishita Rahman</h5>
-                                        <span>Web Developer</span>
-                                    </div>
-                                </div>
-                                <!-- signle-testimonila -->
-                                <div class="single-testimonial">
-                                <div class="client-photo">
-                                    <img src="images/icon/caption/testimonial-2.jpg" alt="client1.svg">
-                                </div>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star text-none"></i></li>
-                                    </ul>
-                                </div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate eveniet autem ea quas debitis quidem saepe fuga necessitatibus neque eos.</p>
-                                <div class="client-title">
-                                    <h5>Md. Hassan Ahmed</h5>
-                                    <span>Ceo,Tajkamakha.</span>
-                                </div>
-                                </div>
-                                <!-- signle-testimonila -->
-                                <div class="single-testimonial">
-                                <div class="client-photo">
-                                    <img src="images/icon/caption/testimonial-3.jpg" alt="client1.svg">
-                                </div>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star text-none"></i></li>
-                                    </ul>
-                                </div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate eveniet autem ea quas debitis quidem saepe fuga necessitatibus neque eos.</p>
-                                <div class="client-title">
-                                    <h5>Md. Shimul Ahmed</h5>
-                                    <span>Web Developer</span>
-                                </div>
-                                </div>
-                                <!-- signle-testimonila -->
-                                <div class="single-testimonial">
-                                <div class="client-photo">
-                                    <img src="images/icon/caption/testimonial-4.jpg" alt="client1.svg">
-                                </div>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star text-none"></i></li>
-                                    </ul>
-                                </div>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate eveniet autem ea quas debitis quidem saepe fuga necessitatibus neque eos.</p>
-                                <div class="client-title">
-                                    <h5>Md. Hassan Ahmed</h5>
-                                    <span>Web Developer</span>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-          {{!-- team-section --}}
-       <section class="our-webcoderskull padding-lg">
-         <div class="container">
-             <div class="main-title2">
-                    <h1>Our
-                        <span class="text-color">Team</span>
-                    </h1>
-             </div>
-            <ul class="row">
-            <li class="col-12 col-md-6 col-lg-3">
-                <div class="cnt-block equal-hight" style="height: 349px;">
-                    <figure><img src="http://www.webcoderskull.com/img/team4.png" class="img-responsive" alt=""></figure>
-                    <h3><a href="http://www.webcoderskull.com/">Web coder skull</a></h3>
-                    <p>Freelance Web Developer</p>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    </ul>
-                    <ul class="follow-us clearfix">
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="col-12 col-md-6 col-lg-3">
-                <div class="cnt-block equal-hight" style="height: 349px;">
-                    <figure><img src="http://www.webcoderskull.com/img/team1.png" class="img-responsive" alt=""></figure>
-                    <h3><a href="#">Kappua </a></h3>
-                    <p>Freelance Web Developer</p>
-                    <ul class="follow-us clearfix">
-                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="col-12 col-md-6 col-lg-3">
-                <div class="cnt-block equal-hight" style="height: 349px;">
-                    <figure><img src="http://www.webcoderskull.com/img/team4.png" class="img-responsive" alt=""></figure>
-                    <h3><a href="http://www.webcoderskull.com/">Manish </a></h3>
-                    <p>Freelance Web Developer</p>
-                    <ul class="follow-us clearfix">
-                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="col-12 col-md-6 col-lg-3">
-                <div class="cnt-block equal-hight" style="height: 349px;">
-                    <figure><img src="http://www.webcoderskull.com/img/team2.png" class="img-responsive" alt=""></figure>
-                    <h3><a href="http://www.webcoderskull.com/">Atul </a></h3>
-                    <p>Freelance Web Developer</p>
-                    <ul class="follow-us clearfix">
-                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-            </li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- contact-us -->
-    <section>
-      <div class="contact-us-area ptb-50">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-6 col-xl-6 offset-md-3 offset-lg-3 offset-xl-3">
-                <!-- section-title -->
-                    <div class="section-title text-center py-5">
-                        <h5>Describe your demand</h5>
-                        <h2>And Get in touch with<b> LAB</b></h2>
-                    </div>
-                </div>
-                <!-- form -->
-               <form action="/contact" class="contact-form-wrap" method="POST">
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                        {{#if message}}
-                            <div class="alert alert-success" role="alert">
-                                {{message.message}}
-                            </div>
-                        {{/if}}
-                    <div class="row">
-                           
-                     <div class="col-md-8 col-lg-8 col-xl-8 col-sm-12 col-12">
-                         <div class="row">
-                             <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2">
-                              
-                                  <!-- error-success-msg -->
-                               <div class="msg-box-wrapper">
-                                <span class="msg-box"></span>
-                               </div>
-                             </div>
-                             <!-- first-name -->
-                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <input type="text" required name="firstname" placeholder="First Name" id="f_name">
-                                 </div>
-                             </div>
-                              <!-- last-name -->
-                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <input type="text"  name="lastname" placeholder="Last Name" id="l_name">
-                                 </div>
-                             </div>
-                             <!-- Email -->
-                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <input type="email" name="email" placeholder="Email" id="u_email">
-                                 </div>
-                             </div>
-                              <!-- Phone -->
-                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <input type="text"  required name="phone" placeholder="Phone" id="u_phone">
-                                 </div>
-                             </div>
-                               <!-- Select Service -->
-                               <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                   <div class="form-group">
-                                       <select id="service" required name="subject">
-                                           <option value="">-Select Service</option>
-                                           <option value="Membership">Membership</option>
-                                           <option value="Registration">Registration</option>
-                                           <option value="ID Card">ID Card</option>
-                                           <option value="Payment">Payment</option>
-                                       </select>
-                                   </div>
-                               </div>
-                                 <!-- Subject -->
-                             <div class="col-md-6 col-lg-6 col-xl-6 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <input type="text" placeholder="Subject" id="subject">
-                                 </div>
-                             </div>
-                              <!-- Message -->
-                             <div class="col-md-12 col-lg-12 col-xl-12 col-12 col-sm-12">
-                                 <div class="form-group">
-                                     <textarea name="details" id="u_message" cols="5" rows="3" placeholder="Message"></textarea>
-                                 </div>
-                             </div>
-                               <!-- submit button -->
-                               <div class="col-md-6 col-lg-6 col-xl-6 col-6 col-sm-6">
-                                   <div class="form-group">
-                                       <button type="submit" class="submit-message" id="submit"> Send Message</button>
-    
-                                   </div>
-                               </div>
-                                <!-- loader -->
-                                <div class="col-md-6 col-lg-6 col-xl-6 col-6 col-sm-6">
-                                    <div class="form-group">
-                                      <div class="loader-box">
-                                        <img src="assets/images/login/Spinner-1s-200px.gif" alt="spinner.gif">
-                                      </div>
-                                    </div>
-                                </div>
-                         </div>
-                     </div>
-                        <!-- google-map -->
-                        <div class="col-md-4 col-lg-4 col-xl-4 col-12 col-sm-12">
-                         <div class="map-wrapper">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3608.7365531999494!2d55.29768101501043!3d25.245796783873608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s3%2C%202%2C%20B%2C%20King%20of%20Dubai%20Commercial%20-!5e0!3m2!1sen!2sbd!4v1610190021835!5m2!1sen!2sbd" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                         </div>
-                     </div>
-                    </div>
-                 </div>
-               </form>
-            </div>
-        </div>
-      
-      </div>
-    </section>
-  
-    <!-- footer-section -->
-    <footer>
-      <div class="footer-section">
-          <div class="container">
-              <div class="row">
-                  <!-- single-footer-widget -->
-                  <div class="col-md-5 col-lg-5 col-xl-5 col-12 col-sm-12">
-                      <div class="single-widget">
-                        <div class="logo">
-                            <img src="assets/images/logo/logo.png" alt="logo.png">
-                        </div>
-                        <p>Get in touch with smart technology and get your Expected service from Technolt</p>
-                        <div class="social-link">
-                            <ul>
-                                <li><a href="https://www.facebook.com/polockgrp/"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></i></a></li>
-                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                            </ul>
-                        </div>
-                      </div>
-                  </div>
-                    <!-- single-footer-widget -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
-                    <div class="single-widget">
-                       <h5>Our Concern</h5>
-                        <div class="quick-link-footer">
-                            <ul>
-                                <li><a href="http://www.ngitbd.com/">NGIT</a></li>
-                                <li><a href="http://1touchbd.com/">1touch</a></li>
-                                <li><a href="https://www.facebook.com/PolockInteriorDesign">Polock Interior</a></li>
-                                <li><a href="dryexpre.com.bd">Dry Express</a></li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                        <!-- single-footer-widget -->
-                  <div class="col-md-2 col-lg-2 col-xl-2 col-12 col-sm-12">
-                    <div class="single-widget">
-                        <h5>Services</h5>
-                        <div class="quick-link-footer">
-                            <ul>
-                                <li><a href="#">Interior</a></li>
-                                <li><a href="#">Bank Management System</a></li>
-                                <li><a href="#">Home & Commercial Automation </a></li>
-                                <li><a href="#">Dry Express</a></li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- single-footer-widget -->
-                <div class="col-md-3 col-lg-3 col-xl-3 col-12 col-sm-12">
-                    <div class="single-widget">
-                        <h5>Our Address</h5>
-                         <div class="single-box">
-                            <div class="footer-icon">
-                                <i class="flaticon-house"></i>
-                            </div>  
-                             <div class="add-info">
-                                3, 2, B, King of Dubai Commercial - (Bur Dubai Mankhool )
-                             </div>
-                         </div>
-                         <div class="single-box">
-                            <div class="footer-icon">
-                                <i class="flaticon-mail"></i>
-                            </div>  
-                             <div class="add-info">
-                                info@polockgroup.com
-                             </div>
-                         </div>
-                         <div class="single-box">
-                            <div class="footer-icon">
-                                <i class="flaticon-call"></i>
-                            </div>  
-                             <div class="add-info">
-                                +971 54 746 2503
-                             </div>
-                         </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-12 col-xl-12 copyright-bottom">
-                   <div class="row">
-                       <div class="col-md-7 col-xl-7 col-lg-7 col-12 col-sm-12">
-                           <p class="text-center">Copyright ©2020 All rights reserved | technolt is made by  <a href="#">1-touch</a></p>
-                       </div>
-                       <div class="col-md-5 col-xl-5 col-lg-5 col-12 col-sm-12">
-                         <ul class="footer-link-bottom">
-                             <li><a href="#">Terms of Service</a></li>
-                             <li><a href="#">Privacy Policy</a></li>
-                             <li><a href="#">Support</a></li>
-                         </ul>
-                      </div>
-                   </div>
-                </div>
-              </div>
-          </div>
-      </div>
-    </footer>
-      </div>
-      </div>
+    </head>
      
-    </div>
-   
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-    <script src="plugins/js/owl.carousel.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/pages/frontend/home.js"></script>
-    <script src="js/pages/frontend/active.js"></script>
-    <script src="js/pages/frontend/cart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="active.js"></script>
-    <script src="formValidate.js"></script>
-    <script src="home.js"></script>
+    <body data-bs-spy="scroll" data-bs-target="#navbar-navlist" data-bs-offset="20">
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Loader -->
 
- 
+        <!-- Navbar Start -->
+        <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-light sticky">
+            <div class="container">
+                <!-- Logo container-->
+                <a class="logo" href="javascript:void(0)">Taijul</a>
 
-</body>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" 
+                aria-label="Toggle navigation">
+                    <i class="mdi mdi-menu"></i>
+                </button><!--end button-->
 
+                <div class="collapse navbar-collapse navigation" id="navbarCollapse">
+                    <ul id="navbar-navlist" class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#resume">Resume</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#projects">Projects</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#news">Blog</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li><!--end nav item-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others
+                            </a>
+                            <div class="dropdown-menu rounded m-0" aria-labelledby="navbarDropdown">
+                                <div class="container ms-0 ms-md-0">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a class="dropdown-item" href="/blog">Blog</a>
+                                            <a class="dropdown-item" href="/portfolio">Portfolio</a>
+                                            <a class="dropdown-item" href="/contact">Contact</a>
+                                            <a class="dropdown-item" href="/services">Service</a>
+                                          
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                </div><!--end container-->
+                            </div>
+                        </li><!--end nav item-->
+                    </ul>
+
+                    <ul class="top-right text-end list-unstyled list-inline mb-0 mt-2 mt-sm-0 nav-social">
+                        <li class="list-inline-item me-2"><a ><i class="mdi mdi-facebook "></i></a></li>
+                        <li class="list-inline-item me-2"><a ><i class="mdi mdi-twitter"></i></a></li>
+                        <li class="list-inline-item"><a ><i class="mdi mdi-instagram"></i></a></li>
+                    </ul>
+                    
+                </div> 
+            </div><!--end container-->
+        </nav><!--end navbar-->
+        <!-- Navbar End -->
+      
+        <!-- Hero Area -->
+        <div class="hero-area position-relative bg-half-120 pb-0" style="background-image:url('images/home-shape.png')" id="home">
+            <!--<div class="bg-overlay"></div>-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-7 align-items-center">
+                        <div class="title-heading mt-4 py--50">
+                            <div class="alert alert-transparent alert-pills shadow" role="alert">
+                                <span class="badge badge-pill badge-primary me-1">Hot</span>
+                                <span class="content">Looking for a Developer !</span>
+                            </div>
+                            <h1 class="heading text-black">Here I'am Taijul Islam</h1>
+                            <p class="pera-title text-light-muted">Obviously I'm a Web Designer. Web Developer with over 3 years of experience. Experienced with all stages of the development</p>
+                            <div class="hero-btn mt-4 pt-2">
+                                <a href="javascript:void(0)" class="btn btn-primary rounded me-2 mb-2">Hire Me</a>
+                                <a href="javascript:void(0)" class="btn btn-outline-primary rounded text-white mb-2">Download CV <i data-feather="download" class="fea icon-sm"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 mt-4 pt-2 mt-sm-0 pt-sm-0">
+                        <div class="home-image">
+                            {{!-- <img src="/images/home.png" alt="" class="img-fluid mx-auto position-relative"> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card public-profile border-0 rounded shadow" style="z-index: 1;">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3 col-md-4 text-md-start">
+                                        <div class="about-details key-feature bg-light">
+                                            <div class="media-body content">
+                                                <h6 class="title mb-2">Personal Details</h6>
+                                                <div class="bor-bottom mt-2 mb-2"></div>
+                                                <p class="text-muted mb-2 mt-3 font-14"><a href="javascript:void(0)" class="text-black">Email: </a> taijul.islam169@gmail.com</p>
+                                                <p class="text-muted mb-2 font-14"><a href="javascript:void(0)" class="text-black">Languages: </a> English,Bangla</p>
+                                                <p class="text-muted mb-0 font-14"><a href="javascript:void(0)" class="text-black">Nationality: </a> Bangladeshi</p>  
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-9 col-md-8">
+                                        <div class="row align-items-end">
+                                            <div class="col-md-12 text-md-start mt-4 mt-sm-0">
+                                                <h4 class="heading me-2">I Am <span class="element text-primary" data-elements="Web Designer, Web Developer, Photographer"></span>
+                                                    <span id="typed" class="text-primary"></span>
+                                                </h4>
+                                                <p class="text-light-muted mt-2">Obviously I'm a Web Designer. Web Developer with over 2 years of experience. 
+                                                    Experienced with all stages of the development cycle for dynamic web projects. 
+                                                    The as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <img class="d-none" src="/images/signature.png" height="35" alt="">
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section>
+        <!--end section -->
+
+        <!-- Service Start -->
+        <section class="section bg-light" id="services">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="container-title text-center mb-4 pb-2">
+                            <div class="titles">
+                                <h2 class="title text-capitalize mb-4">Awesome Service</h2>
+                                <p class="pera-title para-desc-600 text-light-muted mb-0 mx-auto">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
+                <div class="row">
+                    {{#each serviceData}}
+                    {{!-- single sevice --}}
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                 {{!-- <img style="width: 55px;" src="data:image/png;base64,{{this.icon}}" alt=""> --}}
+                                 <i data-feather="monitor" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">{{this.title}}</h3>
+                                <p class="text-light-muted mb-4">From Scratch to Deployment all the procudures will be done from ourside.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                   {{/each}}
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                <i data-feather="feather" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">Design & Planning</h3>
+                                <p class="text-light-muted mb-4">With lots of unique blocks, you can easily build a page without coding.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                <i data-feather="disc" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">Adobe Photoshop</h3>
+                                <p class="text-light-muted mb-4">With lots of unique blocks, you can easily build a page without coding.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                <i data-feather="layout" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">Digital marketing</h3>
+                                <p class="text-light-muted mb-4">With lots of unique blocks, you can easily build a page without coding.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                <i data-feather="watch" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">24 / 7</h3>
+                                <p class="text-light-muted mb-4">With lots of unique blocks, you can easily build a page without coding.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="feature-widget text-left rounded">
+                            <div class="services-icon text-primary mb-3">
+                                <i data-feather="target" class="fea icon-md"></i>
+                            </div>
+                            <div class="services-texts">
+                                <h3 class="title mb-3">Graphic Designer</h3>
+                                <p class="text-light-muted mb-4">With lots of unique blocks, you can easily build a page without coding.</p>
+                                <a href="javascript:void(0)" class="text-primary">Read more <i class="mdi mdi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end row -->
+            </div>
+        </section>
+        <!-- End Start -->
+
+
+        <!-- Start Section -->
+        <section class="section" id="resume">
+            <div class="container">
+
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-4">
+                        <div class="work-content mt-4">
+                            <h2 class="text-capitalize">Work  Participation</h2>
+                            <p class="mb-0 text-light-muted">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                            <a href="javascript:void(0)" class="btn btn btn-primary rounded mt-4 pt-2">See More <i class="mdi mdi-chevron-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="main-timeline">
+                                {{#each workperticipateData}}
+                                {{!-- single work perticipate --}}
+                                <div class="timeline mt-4">
+                                    <a href="javascript:void(0)" class="timeline-content">
+                                        <div class="timeline-icon text-primary">
+                                            <i data-feather="navigation" class="fea icon-md"></i>
+                                        </div>
+                                        <h3 class="title mb-0">{{this.title}}</h3>
+                                        <small class="company">{{this.sub_title}}</small>
+                                        <span class="badge skill-badge education-badge badge-light">{{this.start_date}} - {{this.end_date}}</span>
+                                        <p class="description text-light-muted mt-2">
+                                            {{this.details}}
+                                        </p>
+                                    </a>
+                                </div>
+                               {{/each}} 
+                                <div class="timeline mt-4">
+                                    <a href="javascript:void(0)" class="timeline-content">
+                                        <div class="timeline-icon text-primary">
+                                            <i data-feather="navigation" class="fea icon-md"></i>
+                                        </div>
+                                        <h3 class="title mb-0">Web Developer</h3>
+                                        <small class="company">Oppo - HR Manager</small>
+                                        <span class="badge skill-badge education-badge margin-50 badge-light">2012 - 2015</span>
+                                        <p class="description text-light-muted mt-2">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer males uada tellus lorem, et condimentum
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="timeline mt-4">
+                                    <a href="javascript:void(0)" class="timeline-content">
+                                        <div class="timeline-icon text-primary">
+                                            <i data-feather="package" class="fea icon-md"></i>
+                                        </div>
+                                        <h3 class="title mb-0">Graphic Designer</h3>
+                                        <small class="company">Apple - Testor</small>
+                                        <span class="badge skill-badge education-badge badge-light">2012 - 2010</span>
+                                        <p class="description text-light-muted mt-2">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer males uada tellus lorem, et condimentum
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end container -->
+        </section><!-- end section -->
+
+
+        <!-- Client Start -->
+        <section class="section fan-fact" style="background-image:url('/images/bg-pattern.png')" id="about">
+            <div class="container">
+                <div class="row" id="counter">
+                    <div class="col-lg-3 col-6 my-3">
+                        <div class="card counter-box border-0 shadow text-center rounded py-3">
+                            <div class="card-body py-5">
+                                <h2 class="mb-0"><span class="counter-value" data-target="97">97</span>%</h2>
+                                <h5 class="counter-head mb-0">Happy Client </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6 my-3">
+                        <div class="card counter-box border-0 shadow text-center rounded py-3">
+                            <div class="card-body py-5">
+                                <h2 class="mb-0"><span class="counter-value" data-target="15">1</span> M </h2>
+                                <h5 class="counter-head mb-0">Download </h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-6 my-3">
+                        <div class="card counter-box border-0 shadow text-center rounded py-3">
+                            <div class="card-body py-5">
+                                <h2 class="mb-0"><span class="counter-value" data-target="3261">30</span> + </h2>
+                                <h5 class="counter-head mb-0">Happy Users </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6 my-3">
+                        <div class="card counter-box border-0 shadow text-center rounded py-3">
+                            <div class="card-body py-5">
+                                <h2 class="mb-0"><span class="counter-value" data-target="36">3</span> + </h2>
+                                <h5 class="counter-head mb-0">Years of expe. </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end row-->
+            </div><!--end container-->
+        </section>
+        <!-- End Section Client -->
+
+
+        <!-- Skill & CTA START -->
+        <section class="cta-full">
+            <div class="container">
+                <div class="row position-relative">
+                    <div class="col-lg-4 padding-less img" style="background-image:url('images/skills.jpg')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
+                    <div class="col-lg-8 offset-lg-5">
+                        <div class="cta-full-img-box">
+                            <div class="row justify-content-center">
+                                <div class="col-12 text-center mb-3">
+                                    <div class="container-title">
+                                        <div class="titles">
+                                            <h4 class="title title-line text-capitalize mb-4">Work Expertise</h4>
+                                        </div>
+                                        <p class="text-light-muted mx-auto width-max mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+
+                            <div class="row align-items-center">
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/download.png" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">95%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                 <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/css.png" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">90%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->  
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/bootstrap.svg" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">90%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/nodejs-icon.svg" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">80%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!-- end row -->
+
+                            <div class="row align-items-center">
+                                
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/react.svg" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">60%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/mysql.png" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">70%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/android.svg" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">20%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                             
+
+                                <div class="col-lg-3 col-6 mt-4 pt-2">
+                                    <div class="card explore-feature border-0 text-center bg-white p-3">
+                                        <div class="card-body p-0">
+                                            <div class="skill-icon rounded-circle shadow-lg d-inline-block">
+                                                <img src="images/skills/mongodb.svg" alt="" class="img-fluid mx-auto">
+                                            </div>
+                                            <span class="badge skill-badge badge-light">70%</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->    
+                            </div><!-- end row -->
+
+                        </div> <!-- end about detail -->
+                    </div> <!-- end col -->        
+                </div><!--end row-->
+            </div><!--end container fluid-->
+        </section><!--end section-->   
+        <!-- Skill & CTA End -->
+
+
+        <!-- Projects/Work Start -->
+        <section class="section bg-light" id="projects">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="container-title text-center mb-4 pb-2">
+                            <div class="titles">
+                                <h2 class="title text-capitalize mb-4">My Work & Portfolio</h2>
+                                <p class="pera-title para-desc-600 text-light-muted mb-0 mx-auto">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
+
+                <div class="row">
+                    {{#each workData}}
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                        <div class="card border-0 work-container work-modern position-relative d-block overflow-hidden rounded">
+                            <div class="card-body p-0">
+                                <img src="data:image/png;base64,{{this.photo}}" class="img-fluid" alt="work-image">
+                                <div class="overlay-work bg-dark"></div>
+                                <div class="content">
+                                    <h5 class="mb-0"><a href="page-portfolio-detail.html" class="text-white title">{{this.title}}</a></h5>
+                                    <h6 class="text-light tag mb-0">{{this.sub_heading}}</h6>
+                                </div>
+                                <div class="icons text-center">
+                                    <a href="/portfolio/single-protfolio/{{this.id}}" data-src="images/portfolio/1.jpg"  data-gallery="myGal" class="text-primary work-icon bg-white d-inline-block rounded-pill mfp-image">
+                                        <i data-feather="camera" class="fea icon-sm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                    {{/each}}
+                      
+                    <div class="col-12 mt-4 pt-2">
+                        <div class="text-center">
+                            <a href="/portfolio" class="btn btn btn-primary rounded">See More <i class="mdi mdi-chevron-right"></i></a>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- Projects End -->
+
+        <!-- Testimonial Start -->
+        <section class="section bg-white">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="container-title text-center mb-4 pb-2">
+                            <div class="titles">
+                                <h2 class="title text-capitalize mb-4">Clients Say</h2>
+                                <p class="pera-title para-desc-600 text-light-muted mb-0 mx-auto">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="client-review-slider">
+                            {{#each testimonialData}}
+                            {{!-- single-slide --}}
+                            <div class="tiny-slide">
+                                <div class="client-review rounded shadow m-2">
+                                    <div class="align-items-center justify-content-start justify-content-sm-center">
+                                        <div class="col-sm-auto mb-4 mb-sm-0">
+                                            <img class="img-fluid avatar avatar-xl" src="data:image/png;base64,{{this.photo}}" alt="">
+                                        </div>
+                                        <div class="col pl-lg-4 clt-section">
+                                            <h5 class="clt-title mt-2 mb-2">{{this.title}}</h5>
+                                            <ul class="list-unstyled float-right mb-0">
+                                                <li class="list-inline-item text-warning"><i class="mdi mdi-star"></i></li>
+                                                <li class="list-inline-item text-warning"><i class="mdi mdi-star"></i></li>
+                                                <li class="list-inline-item text-warning"><i class="mdi mdi-star"></i></li>
+                                                <li class="list-inline-item text-warning"><i class="mdi mdi-star"></i></li>
+                                                <li class="list-inline-item text-warning"><i class="mdi mdi-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <p class="pera-title text-light-muted mb-0 mt-2">{{this.details}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end container -->
+        </section>
+        <!--end section -->
+
+        <!-- Blog Start -->
+        <section class="section bg-light" id="news">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="container-title text-center mb-4 pb-2">
+                            <div class="titles">
+                                <h2 class="title text-capitalize mb-4">Latest news & blog</h2>
+                                <p class="pera-title para-desc-600 text-light-muted mb-0 mx-auto">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+                
+                <div class="row"> 
+                    {{#each blogData}}
+                    {{!-- single blog    --}}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="blog-post rounded customer-testi m-1">
+                            <div class="position-relative">
+                                <img src="data:image/png;base64,{{this.file}}" class="img-fluid rounded-top" alt="">
+                            </div>
+                            <div class="content pt-4 pb-4 p-3">
+                                <h5><a href="/blog/single-blogdetail/{{this.id}}" class="title text-dark">{{this.title}}</a></h5>
+                                <p class="text-light-muted mb-3">{{ blogShort this.details}}</p>
+                                <div class="post-meta d-flex justify-content-between mt-3">
+                                    <ul class="list-unstyled mb-0 d-flex justify-content-between">
+                                        <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-light-muted date"><i class="mdi mdi-calendar-edit me-1"></i>{{this.created_at}}</a></li>
+                                    </ul>
+                                    <a href="/blog/single-blogdetail/{{this.id}}" class="text-muted readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                </div>
+                            </div><!--end content-->
+                        </div><!--end blog post-->
+                    </div>
+                   {{/each}}
+                                       
+                </div><!--end row-->
+            </div><!--end container-->
+        </section>
+        <!--end section -->
+
+
+        <!-- Contact Start -->
+        <section class="section pb-0" id="contact">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <div class="container-title text-center mb-4 pb-2">
+                            <div class="titles">
+                                <h2 class="title text-capitalize mb-4">Contact Me</h2>
+                                <p class="pera-title para-desc-600 text-light-muted mb-0 mx-auto">Obviously I'm a Web Developer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
+                <div class="row">
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="phone" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title">Phone</h5>
+                                <p class="text-light-muted">Promising development turmoil inclusive education transformative community</p>
+                                <a href="tel:+8801772488816" class="text-primary">+8801772488816</a>
+                            </div>  
+                        </div>
+                    </div><!--end col-->
+                    
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="mail" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title">Email</h5>
+                                <p class="text-light-muted">Promising development turmoil inclusive education transformative community</p>
+                                <a href="mailto:taijul.islam169@gmail.com" class="text-primary">taijul.islam169@gmail.com</a>
+                            </div>  
+                        </div>
+                    </div><!--end col-->
+                    
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="map-pin" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title">Location</h5>
+                                <p class="text-light-muted">92/C Indira Road, 1207, <br>Dahaka, Bangladesh</p>
+                                <a href="https://www.google.com/maps?q=indira+road&um=1&ie=UTF-8&sa=X&sqi=2&ved=2ahUKEwij1KSNvOfzAhV5p5UCHfwMAmwQ_AUoAXoECAEQAw" class="map-popup-view text-primary">View on Google map</a>
+                            </div>  
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <section class="section pt-5">
+            <div class="container">
+                <div class="row  justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="custom-form mb-sm-30">
+                            <div style="display: none;" id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Your Message has been sent.</strong> 
+                                
+                            </div>
+                           
+                            <form method="post" action="/contact" name="myForm" >
+                                <p id="error-msg"></p>
+                                <div id="simple-msg"></div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-6">
+                                                <div class="form-group">
+                                                    <input name="firstname" required id="name" type="text" class="form-control border rounded" placeholder="First Name :">
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-lg-12 col-md-6">
+                                                <div class="form-group">
+                                                    <input name="email" required id="email" type="email" class="form-control border rounded" placeholder="Your email :">
+                                                </div> 
+                                            </div><!--end col-->
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <input name="subject" required  id="subject" class="form-control border rounded" placeholder="Your subject :">
+                                                </div>                                                                               
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end col-->
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <textarea name="details" required id="comments" rows="4" class="form-control border rounded" placeholder="Your Message :"></textarea>
+                                        </div>
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                                <div class="row">
+                                    <div class="col-sm-12 text-end">
+                                        <input onclick="contactValidation()" type="submit" id="submit" name="send" class="submitBnt btn btn btn-primary rounded" value="Send Message"> 
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </form>
+                           
+                            <script>
+
+                                const name =  document.getElementById('name');
+                                const email =  document.getElementById('email');
+                                const subject =  document.getElementById('subject');
+                                const comments =  document.getElementById('comments');
+                                const submit =  document.getElementById('submit');
+                                function contactValidation (e){
+                                 
+                                     if(name.value != '' && email.value != '' && subject.value != '' && comments.value != '' && subject.value != ''){
+                                        document.getElementById('loader-wrapper').style.display ='block';
+                                       setTimeout(function(){
+                                            document.getElementById('loader-wrapper').style.display ='none';
+                                            document.getElementById('alert').style.display ='block';
+                                            window.stop();
+                                             },3000);
+                                                         
+                                        }  
+                                        
+                                    }
+                                   
+                            </script>
+                            <!--end form-->
+                        </div><!--end custom-form-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- Contact End -->
+       
+      
+        <!-- Footer Start -->
+        <footer class="footer bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <a href="javascript:void(0)" class="footer-logo text-black">Taijul</a>
+                        <p class="para-desc mx-auto mt-5 text-black">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                        <ul class="list-unstyled mb-0 mt-4 social-icon">
+                            <li class="list-inline-item me-1"><a href="https://www.facebook.com/profile.php?id=100009451348487" class="rounded-circle"><i class="mdi mdi-facebook"></i></a></li>
+                            <li class="list-inline-item me-1"><a href="jhttps://www.facebook.com/profile.php?id=100009451348487" class="rounded-circle"><i class="mdi mdi-twitter"></i></a></li>
+                            <li class="list-inline-item me-1"><a href="javascript:void(0)" class="rounded-circle"><i class="mdi mdi-instagram"></i></a></li>
+                            <li class="list-inline-item me-1"><a href="https://www.instagram.com/taijul169/" class="rounded-circle"><i class="mdi mdi-instagram"></i></a></li>
+                            <li class="list-inline-item me-1"><a href="https://github.com/taijul169" class="rounded-circle"><i class="mdi mdi-google-plus"></i></a></li>
+                            <li class="list-inline-item me-1"><a href="https://www.linkedin.com/in/taijul-islam-8b1a72119/" class="rounded-circle"><i class="mdi mdi-linkedin"></i></a></li>
+                        </ul>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </footer><!--end footer-->
+        <footer class="footer footer-bar bg-black">
+            <div class="container text-foot text-center">
+                <p class="mb-0 text-white-50">© <script>document.write(new Date().getFullYear())</script> Taijul. Developed by <a href="javascript:void(0)" class="text-white-50">Taijul Islam</a></p>
+            </div><!--end container-->
+        </footer><!--end footer-->
+        <!-- Footer End -->
+
+        <a href="javascript: void(0);" class="back-to-top btn btn-icon btn-soft-primary" id="back-to-top" onclick="topFunction()">
+            <i data-feather="arrow-up" class="icons"></i>
+        </a>
+        <!-- Back to top -->
+
+        <!-- Style Switcher -->
+        <div  id="style-switcher" class="bg-light border p-3 pt-2 pb-2 d-none" onclick="toggleSwitcher()">
+            <div>
+                <h6 class="color-scheme-title text-center font-weight-bolder mb-2">Select your color</h6>
+                <ul class="pattern text-center mb-0">
+                    <li class="list-inline-item">
+                        <a class="default" href="javascript: void(0);" onclick="setColor('default')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="blue" href="javascript: void(0);" onclick="setColor('red')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="green" href="javascript: void(0);" onclick="setColor('green')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="mosaic-blue" href="javascript: void(0);" onclick="setColor('mosaic-blue')"></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="light-yellow" href="javascript: void(0);" onclick="setColor('light-yellow')"></a>
+                    </li>  
+                    <li class="list-inline-item">
+                        <a class="purple" href="javascript: void(0);" onclick="setColor('purple')"></a>
+                    </li>            
+                </ul>
+                <div class="bottom">
+                    <a href="javascript: void(0);" class="settings bg-white shadow d-block"><i class="mdi mdi-settings mdi-24px position-absolute mdi-spin text-primary"></i></a>
+                </div>
+            </div>
+        </div>
+           <div class="loader-wrapper" id="loader-wrapper">
+            <img src="/images/loader.gif" alt="">
+          </div>
+         
+        <!-- End Style Switcher -->
+
+        <!-- Javascript -->
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="/js/portfolio/bootstrap.bundle.min.js"></script>
+        <!-- Slider -->
+        <script src="/js/portfolio/tiny-slider.js "></script>
+        <script src="/js/portfolio/tiny-slider-init.js "></script>
+        <!-- MK Lightbox -->
+        <script src="/js/portfolio/mklb.js"></script>
+        <!-- Contact -->
+        <script src="/js/portfolio/contact.js"></script>
+        <!-- Counter init -->
+        <script src="/js/portfolio/counter.init.js"></script>
+        <!-- Feather icon -->
+        <script src="/js/portfolio/feather.min.js"></script>
+        <!-- Typed -->
+        <script src="/js/portfolio/typed.js"></script>
+        <script src="/js/portfolio/typed.init.js"></script>
+        <!-- Switcher -->
+        <script src="/js/portfolio/switcher.js"></script>
+        <!-- Main Js -->
+        <script src="/js/portfolio/app.js"></script>
+    </body>
 </html>

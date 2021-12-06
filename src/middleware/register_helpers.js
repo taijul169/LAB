@@ -1,6 +1,14 @@
 const hbs = require("hbs");
 const { handlebars } = require("hbs");
-
+//status activate deactivate signature
+hbs.registerHelper("signatureacdec", (status,id)=>{
+    if(status == 0){
+        return new handlebars.SafeString(`<a href="/admin/activesignature/${id}" class="btn btn-readmore btn-secondary btn-sm ml-1">Activate</a>`)
+    }
+    else{
+     return new handlebars.SafeString(`<a href="/admin/deactivesignature/${id}" class="btn btn-readmore btn-warning btn-sm ml-1">Deactivate</a>`)
+    }
+});
 // block /delete according to the admin power
 hbs.registerHelper("block", (value,blockstatus, id)=>{
     if(value == 1){
@@ -25,7 +33,7 @@ hbs.registerHelper("block", (value,blockstatus, id)=>{
  //idcard designation
  hbs.registerHelper("designation", (committee_designation)=>{
     if(committee_designation !=null){
-        return committee_designation
+        return committee_designation;
     }
     else{
         return 'Member'
@@ -63,6 +71,19 @@ hbs.registerHelper("voteYesNo", (value)=>{
         return new handlebars.SafeString(`<button id="subBtnpresident" type="submit" class="btn btn-secondary" >Click for vote</button>`)
     }
  });
+ //voting notice
+hbs.registerHelper("votingtime", (start_date,status)=>{
+
+    
+               // Set the date we're counting down to
+              var startDate = new Date(start_date).getTime(); 
+               // Get today's date and time
+              var now = new Date().getTime();
+              var distance_voteStart = startDate - now;
+              if(distance_voteStart<0 && status == 1){
+                return new handlebars.SafeString(`Voting is going on`)
+              }
+ });
 //  Active/deactive
 hbs.registerHelper("activeDeactive", (value,id)=>{
     if(value == 1){
@@ -90,25 +111,51 @@ hbs.registerHelper("nomination", (value,category,type,id)=>{
         return new handlebars.SafeString(`<button style="cursor: not-allowed;" type="button" class="btn btn-sm btn-danger" disabled>You have been nominated</button>`)
     }
  });
-  // nomination list according to their designation
-hbs.registerHelper("designationlist", (value1,value2,nominationid,committee_id,name,userid,vote,del_status,attachment)=>{
-    if(value1 == value2 && del_status == 0){
-        return new handlebars.SafeString(`
-        <div class="card border text-center">
-          <div class="card-header d-flex justify-content-between">
-              <b style="font-size: 10px;">${name}</b>
-              
-              <a onclick=" return confirm('Are you sure?')" class="btn btn-sm btn-danger" href="/admin/deletenomination/${nominationid}/${committee_id} " ><i class="far fa-times-circle"></i></a>
-          </div>
-          <span style="font-size: 10px; padding:6px;"></span>
-          <div class="card-footer d-flex justify-content-between">
-            <a class="btn btn-sm btn-outline-primary" href="/users/singleuserview/${userid}">Profile</a>
-            <a onclick="displayDataIntoModal(${userid},'${name}','${value1}','${attachment}',${vote})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
-            
-          </div>
-        </div>`)
+  // user verified or not
+hbs.registerHelper("adminresultviewOrResult", (status,com_id)=>{
+    if(status == 1){
+        return new handlebars.SafeString(`<a class="btn  btn-primary" href="/admin/resultview/${com_id}" >View Result</a>`)
     }
-    else if(value1 == value2){
+    else{
+        return new handlebars.SafeString(`<a class="btn btn-primary " href="/admin/publishresult/${com_id}">Publish Result</a>`)
+    }
+ });
+  // nomination list according to their designation
+hbs.registerHelper("designationlist", (value1,value2,nominationid,committee_id,name,userid,vote,del_status,attachment,elected)=>{
+    if(value1 == value2 && del_status == 0 ){
+        if(elected == 1){
+            return new handlebars.SafeString(`
+            <div class="card border text-center">
+              <div class="card-header d-flex justify-content-between">
+                  <b style="font-size: 10px;">${name}</b>
+              </div>
+              <span style="font-size: 10px; padding:6px;"></span>
+              <div class="card-footer d-flex justify-content-between">
+                <a class="btn btn-sm btn-outline-primary" href="/users/singleuserview/${userid}">Profile</a>
+                <a onclick="displayDataIntoModal(${userid},'${name}','${value1}','${attachment}',${vote})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
+                
+              </div>
+            </div>`)
+        }
+        else{
+            return new handlebars.SafeString(`
+                <div class="card border text-center">
+                <div class="card-header d-flex justify-content-between">
+                    <b style="font-size: 10px;">${name}</b>
+                    
+                    <a onclick=" return confirm('Are you sure?')" class="btn btn-sm btn-danger" href="/admin/deletenomination/${nominationid}/${committee_id} " ><i class="far fa-times-circle"></i></a>
+                </div>
+                <span style="font-size: 10px; padding:6px;"></span>
+                <div class="card-footer d-flex justify-content-between">
+                    <a class="btn btn-sm btn-outline-primary" href="/users/singleuserview/${userid}">Profile</a>
+                    <a onclick="displayDataIntoModal(${userid},'${name}','${value1}','${attachment}',${vote})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" role="button" class="btn btn-readmore btn-info btn-sm">Details</a>
+                    
+                </div>
+                </div>`)
+        }
+      
+    }
+    else if(value1 == value2 && del_status == 1){
         return new handlebars.SafeString(`
         <div class="card border text-center">
           <div class="card-header d-flex justify-content-between">
@@ -123,7 +170,7 @@ hbs.registerHelper("designationlist", (value1,value2,nominationid,committee_id,n
           </div>
         </div>`)
     }
-    
+
 
     
     // else{
@@ -137,12 +184,6 @@ hbs.registerHelper("designationlistVote", (value1,value2,nominationid,committee_
         <option value=${userid}>${name}</option>`)
     }
     
-    
-    
-    
-    // else{
-    //     return new handlebars.SafeString(`<button style="cursor: not-allowed;" type="button" class="btn btn-sm btn-danger" disabled>You have been nominated</button>`)
-    // }
  });
 //6digit id
 hbs.registerHelper("fixedDigit",(num,size)=>{
@@ -242,6 +283,7 @@ hbs.registerHelper("navrole", function(value){
                             <span class="hide-menu">admin</span>
                         </a>
                     </li>
+                   
                     <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#profileCollapse" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#profileCollapse" 
                         aria-expanded="false">
@@ -262,6 +304,46 @@ hbs.registerHelper("navrole", function(value){
                         </a>
                        </li>
                       </ul>
+                    </li>
+                    <!-- Service-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/servicelist"
+                            aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Service</span>
+                        </a>
+                    </li>
+                    <!-- Training-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/workperticipatelist"
+                            aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Work Perticipation</span>
+                        </a>
+                    </li>
+                    <!-- Client-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/clientlist"
+                            aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Client</span>
+                        </a>
+                    </li>
+                    <!-- Client-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/worklist"
+                            aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Work/Portfolio</span>
+                        </a>
+                    </li>
+                    <!-- Testimonial-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/testimoniallist"
+                            aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Testimonial</span>
+                        </a>
                     </li>
                     <li class="sidebar-item">
                         <a  data-bs-target="#collapsetwo" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" data-bs-toggle="collapse" href="#collapsetwo" 
@@ -435,10 +517,10 @@ hbs.registerHelper("navrole", function(value){
                       
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/signature"
                                 aria-expanded="false">
                                <i class="fa fa-credit-card" aria-hidden="true"></i>
-                                <span class="hide-menu">Others</span>
+                                <span class="hide-menu">signature</span>
                             </a>
                         </li>
                     </ul>
@@ -558,7 +640,7 @@ hbs.registerHelper("navrole", function(value){
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="check-reviews"
                             aria-expanded="false">
                             <i class="fa fa-clock" aria-hidden="true"></i>
-                            <span class="hide-menu">Notice</span>
+                            <span class="hide-menu">Message</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

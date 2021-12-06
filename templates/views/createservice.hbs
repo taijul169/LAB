@@ -1,0 +1,117 @@
+{{>header}}
+
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {{>nav}}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Service page</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+                            <a href="/" target="_blank"
+                                class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View Your Site</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <a href="/admin/servicelist" class="btn btn-primary ml-3"><i class="fa fa-list-ul pr-2" aria-hidden="true"></i> Service List</a>
+                <div class="row pt-2 m-1">
+                    <div class="col-sm-12">
+                        {{#if message}}
+                            <div class="alert alert-success" role="alert">
+                                {{message.message}}
+                            </div>
+
+                        {{/if}}
+                        <div class="card card-warning card-outline shadow">
+                           <div class="card-body">
+                            <form action="/admin/createservice" enctype="multipart/form-data" method="POST" id="noticeAddform" class="form-horizontal">
+                                <!--title-->
+                                <div class="form-group">
+                                    <label for="title" class="control-label col-sm-2">Service Title <span style="color:red">*</span></label>
+                                    <div class="col-sm-12 ">
+                                        <input type="text" id="title" name="title" class="form-control" required="required" value="" >
+                                    </div>
+                                </div>
+
+                                <!--description-->
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                    <label for="description" class="control-label col-sm-">Service Description <span style="color:red">*</span></label>
+                                    <textarea name="details" required id="" cols="10" rows="10" class="form-control"></textarea>
+                                    </div>   
+                                </div>
+
+                                <!--notice file-->
+                                <div class="form-group" id="noticeFile">
+                                   <div class="col-sm-12">
+                                      <label for="notice_file" class="control-label ">Service Icon<span style="color:red">*</span></label>
+                                    <input type="file" accept="image/png, image/jpeg" class="form-control" name="file"> 
+                                   </div>
+                                 
+                                </div>    
+                                <div class="form-actions col-md-12">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle mr-2"></i>Create
+                                    </button>
+                                    
+                                </div>
+                            </form>
+                           </div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+           
+          
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+           {{>footer}}

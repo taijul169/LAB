@@ -14,8 +14,8 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-                {{!-- ID Card --}}
-            <!-- Button trigger modal -->
+              {{!-- ID Card --}}
+               <!-- Button trigger modal -->
                 <!-- Modal -->
                <div class="modal fade"  id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" >
@@ -62,22 +62,34 @@
                             <div class="info-card text-left mt-2">
                             <h4><strong>ID: <span>00000{{userData.[0].id}}</span></strong></h4>
                             <small>Blood Group: <span>{{userData.[0].bloodgroup}}</span></small>
-                            <p>Mob: <span>+88{{userData.[0].phone}}</span></p>
+                            <p>Mob: <span>+88{{userData.[0].mobile}}</span></p>
                             </div>
                             <div class="id-card-footer">
                               <div class="auth d-flex justify-content-between">
                                 <div class="auth-president">
                                   <span>President</span>
-                                  <i class="d-block">Signature</i>
+                                  <img id="secsig" class="d-block" style="width: 40px; height:10px" src="data:image/png;base64,{{userData.[0].president}}" alt="">
                                 </div>
+                               
                                 <h6>Authorised By:</h6>
                                 <div class="auth-secretary">
                                   <span>Secretary</span>
-                                  <i class="d-block">Signature</i>
+                                  <img class="d-block" id="presig"  style="width: 25px; height:10px" src="data:image/png;base64,{{userData.[0].secretary}}" alt="">
                                 </div>
                               </div>
                             </div>
                         </div>
+                         <script>
+                                     const presig =  document.getElementById('presig');
+                                     const secsig =  document.getElementById('secsig');
+                                     const img = presig.getAttribute("src");
+                                     const imgsc = secsig.getAttribute("src");
+                                     const imgdata = img.replace(/['"]+/g, '')
+                                     const imgdatasec = imgsc.replace(/['"]+/g, '')
+                                     presig.setAttribute("src",`${imgdata}`)
+                                     secsig.setAttribute("src",`${imgdatasec}`)
+                                    
+                                </script>
                          <div class="html2pdf__page-break"></div>
                         {{!-- card-Back --}}
                         <div class="card-front back mt-1  text-center position-relative" > 
@@ -90,7 +102,7 @@
                           </div>
                           <div class="contact-info-card">
                             <ul>
-                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].phone}}</li>
+                              <li><i class="fa fa-mobile mr-1" aria-hidden="true"></i> +88{{userData.[0].mobile}}</li>
                               <li><i class="fa fa-map-marker mr-1" aria-hidden="true"></i>{{userData.[0].upazila}},{{userData.[0].district}},Bangladesh</li>
                               <li><i class="fa fa-envelope mr-1" aria-hidden="true"></i> {{userData.[0].email}}</li>
                             </ul>
